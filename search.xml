@@ -851,4 +851,72 @@
         <tag>贪心</tag>
       </tags>
   </entry>
+  <entry>
+    <title>AFL调试准备</title>
+    <url>/2023/09/06/AFL%E8%B0%83%E8%AF%95%E5%87%86%E5%A4%87/</url>
+    <content><![CDATA[<ul>
+<li><p>在vscode+mingw64的条件下试图调试AFL,发现缺少头文件</p>
+<p><img src="https://picgo-buk.oss-cn-chengdu.aliyuncs.com/img/image-20230906163736865.png" alt="image-20230906163736865"></p>
+<p>考虑安装VS再尝试</p>
+</li>
+<li><p>安装vs之后仍然报头文件缺失，然后全局搜索 shm.h 文件，发现本机并没有这个文件。此时恍然大悟，AFL 可能本来就不能再win上运行，<a href="https://www.51cto.com/article/753518.html">查证</a>后果然，为此还有人开发了 win 上的 AFL 工具<a href="https://github.com/ivanfratric/winafl">WinAFL</a>。</p>
+<p><img src="https://picgo-buk.oss-cn-chengdu.aliyuncs.com/img/image-20230906171407166.png" alt="image-20230906171407166"></p>
+</li>
+<li><p>那么现在的方案有两个</p>
+<ul>
+<li>在 mac 上调试</li>
+<li>在 linux 上直接 gdb 调试。或者 gdb + vscode 可视化调试</li>
+</ul>
+</li>
+</ul>
+<p>首先尝试第二种方案：</p>
+<ul>
+<li><p>读懂 Makefile 文件，给出 -g 编译选项，方便调试。</p>
+</li>
+<li><p>研究之后发现本来的 Makefile 中编译选项已经包含了 -g 所以都可以直接调试。</p>
+</li>
+<li><p>下一步思考怎么搭建一个双机调试环境？</p>
+</li>
+<li><p>退一步学习一下怎么样使用gdb调试。</p>
+</li>
+<li><p>先进行一个小的实验：<a href="https://xz.aliyun.com/t/4314">初探AFL-Fuzz</a></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">插桩编译</span></span><br><span class="line">afl-gcc -g -o test test.c</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">模糊测试</span></span><br><span class="line">afl-fuzz -i input_dir -o output_dir program</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>开始使用GDB调试AFL</p>
+<ul>
+<li><a href="https://www.cnblogs.com/suphgcm/p/15498577.html">GDB cheetsheet</a></li>
+<li><a href="https://wenku.baidu.com/view/30c4cfbfcf22bcd126fff705cc17552707225e0f.html?_wkts_=1694057567582&bdQuery=gdb+cheetsheet">cheet sheet</a></li>
+<li><a href="https://blog.csdn.net/wxh0000mm/article/details/108582238">gdb速查表</a></li>
+<li><a href="https://github.com/yimaginer/awesome-cheatsheets/blob/master/tools/gdb.txt">awesome-cheetsheet</a></li>
+</ul>
+</li>
+</ul>
+<p>记录调试过程：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动调试</span></span><br><span class="line">gdb --args afl-fuzz -i fuzz_in -o fuzz_out ./afl_test</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">GDB 前端</span></span><br><span class="line">ctrl-x ctrl-a 更换 CLI/TUI</span><br></pre></td></tr></table></figure>
+
+<p>遇到的问题：<br><a href="http://www.taodudu.cc/news/show-5082273.html?action=onClick">GDB调试显示＜ optimized_out ＞</a></p>
+]]></content>
+      <tags>
+        <tag>Fuzz</tag>
+        <tag>AFL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>docker环境</title>
+    <url>/2023/09/07/docker%E7%8E%AF%E5%A2%83/</url>
+    <content><![CDATA[<p>docker环境</p>
+<span id="more"></span>
+
+<ol>
+<li>在linux环境安装docker：<a href="https://docs.docker.com/desktop/install/linux-install/">https://docs.docker.com/desktop/install/linux-install/</a></li>
+<li>docker权限问题：<a href="https://blog.csdn.net/AS_TS/article/details/131184815">https://blog.csdn.net/AS_TS/article/details/131184815</a></li>
+</ol>
+<h2 id="exercise1"><a href="#exercise1" class="headerlink" title="exercise1"></a>exercise1</h2><p>在docker环境中作一份代码的fuzzing</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">本机下载问题代码</span></span><br><span class="line">git clone https://github.com/alex-maleno/Fuzzing-Module.git</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">运行 AFL++ 的 docker 容器</span></span><br><span class="line">docker run --rm -it -v /home/tiger/fuzz/Fuzzing-Module://home/Fuzzing-Module 6612ffca640e</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">cmake 编译示例代码</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">生成seeds</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">开始fuzzing</span></span><br><span class="line">/AFLplusplus/afl-fuzz -i /home/Fuzzing-Module/exercise1/seeds -o out -m none -d -- /home/Fuzzing-Module/exercise1/build/simple_crash</span><br><span class="line"></span><br><span class="line">docker run --rm -it -v &quot;/home/tiger&quot;:&quot;/home/tiger&quot; 6612ffca640e</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
 </search>
