@@ -985,7 +985,9 @@
   <entry>
     <title>STL详细梳理</title>
     <url>/2024/09/05/STL%E8%AF%A6%E7%BB%86%E6%A2%B3%E7%90%86/</url>
-    <content><![CDATA[<h1 id="STL-container"><a href="#STL-container" class="headerlink" title="STL-container"></a>STL-container</h1><h2 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h2><p>构造：</p>
+    <content><![CDATA[<h1 id="STL-container"><a href="#STL-container" class="headerlink" title="STL-container"></a>STL-container</h1><span id="more"></span>
+
+<h2 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h2><p>构造：</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">array&lt;<span class="type">int</span>,5&gt; c;</span><br><span class="line"></span><br><span class="line"><span class="function">array&lt;<span class="type">int</span>,5&gt; <span class="title">c</span><span class="params">(c2)</span></span>;		<span class="comment">// 必须类型大小都一样</span></span><br><span class="line">array&lt;<span class="type">int</span>,5&gt; c = c2;</span><br><span class="line"></span><br><span class="line">array&lt;<span class="type">int</span>,5&gt; c = initlist</span><br><span class="line"></span><br><span class="line">array&lt;<span class="type">int</span>,<span class="number">5</span>&gt; <span class="built_in">c</span>(rv);</span><br><span class="line">array&lt;<span class="type">int</span>,5&gt; c = rv;</span><br></pre></td></tr></table></figure>
 
 <blockquote>
@@ -1188,5 +1190,238 @@
         <tag>c++</tag>
         <tag>STL</tag>
       </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2024/09/05/AFL%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/</url>
+    <content><![CDATA[<ul>
+<li><p>main 函数</p>
+<ul>
+<li><p>函数功能：解析命令参数，</p>
+</li>
+<li><p>具体过程：</p>
+<ul>
+<li>命令解析</li>
+<li>分别调用 setup_signal_handlers(); check_asan_opts(); 设置信号处理函数，设置 asan；如果是并行 fuzzing ，调用 fix_up_sync() 设置同步</li>
+<li>根据环境变量设置运行全局变量，检测可能存在的模式冲突</li>
+<li>调用 save_cmdline 保存命令行；调用 fix_up_banner 设置运行时窗口；调用 check_if_tty 测试终端；调用 get_core_count 获取 CPU 核心数，如果开启了 CPU 亲和性，调用 bind_to_free_cpu() 找到空闲核心；调用 check_crash_handling() 查看core pattern 是否设置为 core；调用 setup_post() 设置收尾处理函数；调用 setup_shm() 设置最关键的路径记录向量；调用 init_count_class16() 构建 count_class_lookup16[65536] 阶梯数组；调用 setup_dirs_fds() 设置好输出文件夹；调用 read_testcases() 把输入文件夹的测试用例加入测试 queue；调用 load_auto() 读取输出文件夹中自动生成的字典；<strong>啥时候生成的</strong>？调用 pivot_inputs() 在输出目录中为输入测试用例建立硬链接；<strong>目的是什么？</strong>如果使用 -x 参数设置了 extras_dir，就调用 load_extras 加载字典；如果没有设置 timeout_given，调用 find_timeout() 尝试从先前的运行中读取 exec_tmout（如果设置了 resuming_fuzz）； 调用 detect_file_args(argv + optind + 1) 对参数中的 @@ 进行替换；如果没有设置 out_file，调用 setup_stdio_file() 删除可能的遗留并新建 out_dir&#x2F;.cur_input；<strong>将来谁往里面写</strong>？调 check_binary(argv[optind]) 进行二进制文件检测。</li>
+<li>记录当前时间戳，写入 start_time</li>
+<li>如果是 qemu 模式，调用 get_qemu_argv(argv[0], argv + optind, argc - optind) 重新设置参数</li>
+</ul>
+</li>
+</ul>
+</li>
+<li></li>
+<li><p>setup_shm 设置的几个关键变量</p>
+<ul>
+<li>virgin_bits	没有触碰到的路径，在 in_bitmap 为空，也即没有外来引入 bitmap 情况下，初始化为 0xFF</li>
+<li>virgin_tmout  没有超时的路径，初始化为 0xFF，<strong>逻辑不通</strong></li>
+<li>virgin_crash   没有 crash 的路径，初始化为0xFF</li>
+<li>trace_bits       申请匿名共享内存，并加载到 fuzzer 进程空间，用 trace_bits 指向这个地址，将共享内存 id 放到环境变量 __AFL_SHM_ID 中。<strong>为什么要以字符串形式放进去？</strong></li>
+</ul>
+</li>
+<li><p>timeout_given </p>
+<ul>
+<li>-t 选项参数中 exec_tmout 有 + 后缀，timeout_given &#x3D; 2，否则为 1</li>
+<li>没设置 -t，则 timeout_given 为 0</li>
+<li>in_place_resume 模式下，超时时间来自于上次运行 out_dir&#x2F;fuzzer_stats 文件中的 exec_timeout 字段，则设置 timeout_given &#x3D; 3</li>
+</ul>
+</li>
+<li><p>resuming_fuzz</p>
+<ul>
+<li>一旦从 queue 读到名称为 id:%06u,orig:%s 测试用例的测试用例，将 resuming_fuzz 设为 1，其余情况皆为 0</li>
+</ul>
+</li>
+<li><p>in_place_resume</p>
+<ul>
+<li>如果 -i 的参数是 -，则将 in_place_resume 设置为 1。<strong>除了 in_place_resume 还有什么恢复形式</strong>？</li>
+</ul>
+</li>
+<li><p>static u32 find_start_position(void)</p>
+<ul>
+<li>函数作用：当本次模糊测试是 resuming_fuzz 时，找到继续 fuzz 的起始点</li>
+<li>具体过程：<ul>
+<li>找到 out_dir&#x2F;fuzzer_stats，读出其中的 cur_path</li>
+<li>如果 cur_path 大于 queued_paths，则返回 0，否则返回 cur_path。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>static void find_timeout(void) 函数</p>
+<ul>
+<li>函数作用：当本次模糊测试是 resuming_fuzz 时，设置 exec_tmout 和   timeout_given</li>
+<li>具体过程：</li>
+<li>如果是 in_place_resume，读取 out_dir&#x2F;fuzzer_stats 文件，否则读取 in_dir&#x2F;..&#x2F;fuzzer_stats 文件</li>
+<li>读取其中的 exec_timeout，都不到，或读到了值小于 4，直接返回没有任何改动</li>
+<li>如果读到了并且不小于 4 ，则把 exec_timeout 设置到 exec_tmout，并设置 timeout_given &#x3D; 3</li>
+</ul>
+</li>
+<li><p>EXP_ST void detect_file_args(char** argv) 函数</p>
+<ul>
+<li>函数作用：把参数中 @@ 替换</li>
+<li>具体过程：<ul>
+<li>逐个遍历 afl-fuzz 的参数，遇到含有 @@ 则停下来处理</li>
+<li>如果通过 -f 指定了 out_file，并且 out_file 是自根目录 &#x2F; 开始，则将 @@ 替换为 out_file，如果不是自根目录开始，则将 @@ 替换为 cwd&#x2F;out_file</li>
+<li>如果压根没指定 out_file，把 @@ 替换为 out_dir&#x2F;.cur_input</li>
+<li>形如 xxx@@xxx, 也对@@进行相同的替换。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>EXP_ST void setup_stdio_file(void) 函数</p>
+<ul>
+<li>函数作用：删除可能的遗留并新建 out_dir&#x2F;.cur_input</li>
+</ul>
+</li>
+<li><p>EXP_ST void check_binary(u8* fname) 函数</p>
+<ul>
+<li>函数作用：确保测试目标存在且是正常的二进制可执行文件，测试是否插桩匹配当前运行模式，</li>
+<li>函数过程：<ul>
+<li>如果 fname 含有 &#x2F; ，或者 fname 不含 &#x2F;  但 PATH 环境变量是空的，直接拿着 fname 做检测，假如不是常规文件，或者不具备执行权限，或者 size 小于 4，视为不合格 target_path，<strong>报错退出</strong>。</li>
+<li>fname 不含 &#x2F;，且 PATH 环境变量不空，就遍历 path 中的路径，并在每个路径下搜索 fname 文件，满足：是常规文件，具备执行权限， size 大于 4，视为合格 target_path，结束遍历。如果遍历所有路径，没找到满足这三个条件的 fname，视为没有合格 target_path，将 target_path 置 0，<strong>报错退出</strong>。</li>
+<li>找到合格 target_path 时候，检查 AFL_SKIP_BIN_CHECK 是否被设置，设置则返回，否则观察如果二进制文件在 &#x2F;tmp&#x2F; 或 &#x2F;var&#x2F;tmp&#x2F; 文件夹中，<strong>报错退出</strong>。</li>
+<li>将二进制文件直接用 mmap 映射到进程地址空间<ul>
+<li>检测到是 shell 脚本，则<strong>报错退出</strong>。</li>
+<li>检测到不是 ELF 文件，则<strong>报错退出</strong>。</li>
+<li>在非 qemu_mode 且非 dumb_mode 下检测是否插桩，memmem(f_data, f_len, SHM_ENV_VAR, strlen(SHM_ENV_VAR) + 1)) 检测方式是在二进制文件中搜索共享内存 id，检测到代表已经完成插桩。</li>
+<li>qemu_mode 下，如果也进行了插桩，则<strong>报错退出</strong>。</li>
+<li>在二进制文件中搜索到 libasan.so 或 __msan_init，则设置 uses_asan &#x3D; 1</li>
+<li>如果在二进制中搜索到 ##SIG_AFL_PERSISTENT## ，则把环境变量 __AFL_PERSISTENT 设为 1，把 persistent_mode &#x3D; 1；假如在二进制中没搜到 ##SIG_AFL_PERSISTENT##，但是环境变量 AFL_PERSISTENT 却被设置了，矛盾，输出报警信息。</li>
+<li>如果在二进制中搜索到 ##SIG_AFL_DEFER_FORKSRV## ，则把环境变量 __AFL_DEFER_FORKSRV 设为 1，把 deferred_mode &#x3D; 1；假如在二进制中没搜到 ##SIG_AFL_PERSISTENT##，但是环境变量 AFL_DEFER_FORKSRV 却被设置了，矛盾，输出报警信息。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>static char** get_qemu_argv(u8* own_loc, char** argv, int argc)</p>
+<ul>
+<li>函数作用：</li>
+<li>具体过程：<ul>
+<li>申请大小为 argc + 4 的 char 指针数组 new_argv</li>
+<li>把 argv[1] 开始的 argc 项拷贝到 new_argv[3] 开始的位置</li>
+<li>填充 argv[1-2], new_argv[2] &#x3D; target_path, new_argv[1] &#x3D; “–”</li>
+<li>填充 argv[0]，<ul>
+<li>先考虑 AFL_PATH&#x2F;afl-qemu-trace 文件，存在则 target_path &#x3D; new_argv[0] &#x3D; cp，返回 new_argv</li>
+<li>再看 own_loc&#x2F;afl-qemu-trace （own_loc 如果含有 &#x2F; 的话），存在则 target_path &#x3D; new_argv[0] &#x3D; cp，返回 new_argv</li>
+<li>前两个路径都没找到，看 BIN_PATH “&#x2F;afl-qemu-trace”，其中 BIN_PATH 在根 makefile 中定义，存在则操作同上</li>
+<li>前面都寻找失败，则报错退出。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>static void perform_dry_run(char** argv)</p>
+<ul>
+<li>函数作用：</li>
+<li>具体过程：<ul>
+<li>cal_failures 初始化为 0，用于，获取环境变量 AFL_SKIP_CRASHES 写进 skip_crashes</li>
+<li>遍历测试用例队列 queue，做如下事情<ul>
+<li>将测试用例内容读入新开辟内存 use_mem 上，<strong>为什么多此一举</strong>？执行 res &#x3D; calibrate_case(argv, q, use_mem, 0, 1)</li>
+<li>此时若 stop_soon 不为 0，<strong>函数返回</strong></li>
+<li>如果 res &#x3D;&#x3D; crash_mode 或者 res &#x3D;&#x3D; FAULT_NOBITS，打印一下当前元素的 q-&gt;len, q-&gt;bitmap_size, q-&gt;exec_us 三个信息</li>
+<li>然后根据 res 的值分类处理<ul>
+<li>FAULT_NONE：如果当前处理的是队列首元素，也即 q &#x3D;&#x3D; queue，调 check_map_coverage()；如果 crash_mode 被设置，<strong>报错退出</strong>。</li>
+<li>FAULT_TMOUT：依据 timeout_given 是否为 0 分别处理<ul>
+<li>timeout_given 为 0，报错退出。</li>
+<li>timeout_given 不为 0，且为 2 或 3（2代表 -t 参数有 + 号，3代表 in_place_resume 且上次执行设置了 exec_tmout），报警并 q-&gt;cal_failed &#x3D; CAL_CHANCES; cal_failures++;</li>
+</ul>
+</li>
+<li>FAULT_CRASH：</li>
+<li>如果 crash_mode 被设置，跳过不处理，结束 switch</li>
+<li>如果 skip_crashes 被设置，执行 q-&gt;cal_failed &#x3D; CAL_CHANCES; cal_failures++，结束 switch</li>
+<li>如果前面两个都没设置，而 mem_limit 被设置，打印出可能出错的原因</li>
+<li>FAULT_ERROR：代表文件不能执行，结束 switch</li>
+<li>FAULT_NOINST：文件没有被插桩，结束 switch</li>
+<li>FAULT_NOBITS：useless_at_start++，如果 in_bitmap 和 shuffle_queue 都为 0，报警，结束 switch</li>
+</ul>
+</li>
+<li>如果 q-&gt;var_behavior 被设置，报警 Instrumentation output varies across runs，<strong>什么意思</strong></li>
+</ul>
+</li>
+<li>遍历完成之后，如果 cal_failures 不为 0，根据 cal_failures 和 queued_paths 的相对数据处理<ul>
+<li>cal_failures &#x3D;&#x3D; queued_paths，所有测试用例都失败，报错退出</li>
+<li>al_failures * 5 &gt; queued_paths，超过 20% 测试用例失败，报警。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>static u8 calibrate_case(char** argv, struct queue_entry* q, u8* use_mem, u32 handicap, u8 from_queue) 函数</p>
+<ul>
+<li>函数作用：</li>
+<li><h2 id="具体过程：-局部变量-static-u8-first-trace-MAP-SIZE-first-run-q-exec-cksum-0-use-tmout-exec-tmout-old-sn-stage-name-如果-from-queue-为-0-或者-resuming-fuzz-被置位，use-tmout-适当放大-无条件-q-cal-failed-stage-name-“calibration”-stage-max-fast-cal-3-CAL-CYCLES-在没有开启-dumb-mode，且没有开启-no-forkserver，且-forksrv-pid-为-0-的情况下，调-init-forkserver-argv-初始化-forksever-如果-q-exec-cksum-不空，将-trace-bits-拷贝到-first-trace-开始计时，写入-start-us-根据前面设置的-stage-max，执行-stage-max-轮次，做如下动作：-如果不是-first-run-，并且当前轮次-stage-cur-是-stats-update-freq-的整倍数，调-show-stats-刷新仪表盘-调-write-to-testcase-use-mem-q-len-把-测试用例-q-的数据写到输入文件-out-file-或-默认的-out-dir-cur-input（根据是否有-f-设置了-out-file）。-调-run-target-argv-use-tmout-跑起来，返回错误类型写入-fault，-如果-stop-soon-被置位，或者-fault-crash-mode，跳转到-abort-calibration-暗含以上否定，如果不是-dumb-mode，不是-stage-cur-0（第一次运行），且-count-bytes-trace-bits-0，设置-fault-FAULT-NOINST，跳转到-abort-calibration-暗含以上否定，计算-cksum-hash32-trace-bits-MAP-SIZE-HASH-CONST-，看-cksum-和-q-exec-cksum-是否相等-相等，没有操作，往下流-不等，调-as-new-bits-virgin-bits-看此次运行的收获，写入-hnb-看-q-exec-cksum-是否有值-没值，把计算出的-cksum-赋给-q-exec-cksum，把-trace-bits-拷贝到-first-trace，开始下一轮-有值，逐字节对比-first-trace-和-trace-bits-向量，如果遇到二者不同的位点，并且对应的-var-bytes-i-为-0，则将-var-bytes-i-置-1，并将-stage-max-放大到-CAL-CYCLES-LONG，开始下一轮-结束计时，写入-stop-us，计算总时间-total-cal-us-stop-us-start-us，总圈数-total-cal-cycles-stage-max-统计种子-q-的-q-exec-us，q-bitmap-size，同时更新全局-total-bitmap-size-q-bitmap-size-total-bitmap-entries-调-update-bitmap-score-q-更新-q-能到达路径的最优种子-abort-calibration"><a href="#具体过程：-局部变量-static-u8-first-trace-MAP-SIZE-first-run-q-exec-cksum-0-use-tmout-exec-tmout-old-sn-stage-name-如果-from-queue-为-0-或者-resuming-fuzz-被置位，use-tmout-适当放大-无条件-q-cal-failed-stage-name-“calibration”-stage-max-fast-cal-3-CAL-CYCLES-在没有开启-dumb-mode，且没有开启-no-forkserver，且-forksrv-pid-为-0-的情况下，调-init-forkserver-argv-初始化-forksever-如果-q-exec-cksum-不空，将-trace-bits-拷贝到-first-trace-开始计时，写入-start-us-根据前面设置的-stage-max，执行-stage-max-轮次，做如下动作：-如果不是-first-run-，并且当前轮次-stage-cur-是-stats-update-freq-的整倍数，调-show-stats-刷新仪表盘-调-write-to-testcase-use-mem-q-len-把-测试用例-q-的数据写到输入文件-out-file-或-默认的-out-dir-cur-input（根据是否有-f-设置了-out-file）。-调-run-target-argv-use-tmout-跑起来，返回错误类型写入-fault，-如果-stop-soon-被置位，或者-fault-crash-mode，跳转到-abort-calibration-暗含以上否定，如果不是-dumb-mode，不是-stage-cur-0（第一次运行），且-count-bytes-trace-bits-0，设置-fault-FAULT-NOINST，跳转到-abort-calibration-暗含以上否定，计算-cksum-hash32-trace-bits-MAP-SIZE-HASH-CONST-，看-cksum-和-q-exec-cksum-是否相等-相等，没有操作，往下流-不等，调-as-new-bits-virgin-bits-看此次运行的收获，写入-hnb-看-q-exec-cksum-是否有值-没值，把计算出的-cksum-赋给-q-exec-cksum，把-trace-bits-拷贝到-first-trace，开始下一轮-有值，逐字节对比-first-trace-和-trace-bits-向量，如果遇到二者不同的位点，并且对应的-var-bytes-i-为-0，则将-var-bytes-i-置-1，并将-stage-max-放大到-CAL-CYCLES-LONG，开始下一轮-结束计时，写入-stop-us，计算总时间-total-cal-us-stop-us-start-us，总圈数-total-cal-cycles-stage-max-统计种子-q-的-q-exec-us，q-bitmap-size，同时更新全局-total-bitmap-size-q-bitmap-size-total-bitmap-entries-调-update-bitmap-score-q-更新-q-能到达路径的最优种子-abort-calibration" class="headerlink" title="具体过程：- 局部变量  - static u8 first_trace[MAP_SIZE]  - first_run &#x3D; (q-&gt;exec_cksum &#x3D;&#x3D; 0)  - use_tmout &#x3D; exec_tmout  - old_sn &#x3D; stage_name- 如果 from_queue 为 0 或者 resuming_fuzz 被置位，use_tmout 适当放大- 无条件 q-&gt;cal_failed++; stage_name &#x3D; “calibration”; stage_max  &#x3D; fast_cal ? 3 : CAL_CYCLES;- 在没有开启 dumb_mode，且没有开启 no_forkserver，且 forksrv_pid 为 0 的情况下，调 init_forkserver(argv) 初始化 forksever- 如果 q-&gt;exec_cksum 不空，将 trace_bits 拷贝到 first_trace- 开始计时，写入 start_us- 根据前面设置的 stage_max，执行 stage_max 轮次，做如下动作：  - 如果不是 first_run ，并且当前轮次 stage_cur 是 stats_update_freq 的整倍数，调 show_stats() 刷新仪表盘  - 调 write_to_testcase(use_mem, q-&gt;len) 把 测试用例 q 的数据写到输入文件 out_file 或 默认的 out_dir&#x2F;.cur_input（根据是否有 -f 设置了 out_file）。  - 调 run_target(argv, use_tmout)  跑起来，返回错误类型写入 fault，    - 如果 stop_soon 被置位，或者 fault !&#x3D; crash_mode，跳转到 abort_calibration    - 暗含以上否定，如果不是 dumb_mode，不是 stage_cur&#x3D;0（第一次运行），且 count_bytes(trace_bits)&#x3D;0，设置 fault &#x3D; FAULT_NOINST，跳转到 abort_calibration    - 暗含以上否定，计算 cksum &#x3D; hash32(trace_bits, MAP_SIZE, HASH_CONST)，看 cksum 和 q-&gt;exec_cksum  是否相等      - 相等，没有操作，往下流      - 不等，调 as_new_bits(virgin_bits) 看此次运行的收获，写入 hnb      - 看 q-&gt;exec_cksum 是否有值        - 没值，把计算出的 cksum 赋给 q-&gt;exec_cksum，把 trace_bits 拷贝到 first_trace，开始下一轮        - 有值，逐字节对比 first_trace 和 trace_bits 向量，如果遇到二者不同的位点，并且对应的 var_bytes[i] 为 0，则将 var_bytes[i] 置 1，并将 stage_max 放大到 CAL_CYCLES_LONG，开始下一轮- 结束计时，写入 stop_us，计算总时间 total_cal_us +&#x3D; stop_us - start_us，总圈数 total_cal_cycles +&#x3D; stage_max- 统计种子 q 的 q-&gt;exec_us，q-&gt;bitmap_size，同时更新全局 total_bitmap_size +&#x3D; q-&gt;bitmap_size; total_bitmap_entries++;- 调 update_bitmap_score(q) 更新 q 能到达路径的最优种子- abort_calibration"></a>具体过程：<br>- 局部变量<br>  - static u8 first_trace[MAP_SIZE]<br>  - first_run &#x3D; (q-&gt;exec_cksum &#x3D;&#x3D; 0)<br>  - use_tmout &#x3D; exec_tmout<br>  - old_sn &#x3D; stage_name<br>- 如果 from_queue 为 0 或者 resuming_fuzz 被置位，use_tmout 适当放大<br>- 无条件 q-&gt;cal_failed++; stage_name &#x3D; “calibration”; stage_max  &#x3D; fast_cal ? 3 : CAL_CYCLES;<br>- 在没有开启 dumb_mode，且没有开启 no_forkserver，且 forksrv_pid 为 0 的情况下，调 init_forkserver(argv) 初始化 forksever<br>- 如果 q-&gt;exec_cksum 不空，将 trace_bits 拷贝到 first_trace<br>- 开始计时，写入 start_us<br>- 根据前面设置的 stage_max，执行 stage_max 轮次，做如下动作：<br>  - 如果不是 first_run ，并且当前轮次 stage_cur 是 stats_update_freq 的整倍数，调 show_stats() 刷新仪表盘<br>  - 调 write_to_testcase(use_mem, q-&gt;len) 把 测试用例 q 的数据写到输入文件 out_file 或 默认的 out_dir&#x2F;.cur_input（根据是否有 -f 设置了 out_file）。<br>  - 调 run_target(argv, use_tmout)  跑起来，返回错误类型写入 fault，<br>    - 如果 stop_soon 被置位，或者 fault !&#x3D; crash_mode，跳转到 <strong>abort_calibration</strong><br>    - 暗含以上否定，如果不是 dumb_mode，不是 stage_cur&#x3D;0（第一次运行），且 count_bytes(trace_bits)&#x3D;0，设置 fault &#x3D; FAULT_NOINST，跳转到 <strong>abort_calibration</strong><br>    - 暗含以上否定，计算 cksum &#x3D; hash32(trace_bits, MAP_SIZE, HASH_CONST)，看 cksum 和 q-&gt;exec_cksum  是否相等<br>      - 相等，没有操作，往下流<br>      - 不等，调 as_new_bits(virgin_bits) 看此次运行的收获，写入 hnb<br>      - 看 q-&gt;exec_cksum 是否有值<br>        - 没值，把计算出的 cksum 赋给 q-&gt;exec_cksum，把 trace_bits 拷贝到 first_trace，开始下一轮<br>        - 有值，逐字节对比 first_trace 和 trace_bits 向量，如果遇到二者不同的位点，并且对应的 var_bytes[i] 为 0，则将 var_bytes[i] 置 1，并将 stage_max 放大到 CAL_CYCLES_LONG，开始下一轮<br>- 结束计时，写入 stop_us，计算总时间 total_cal_us +&#x3D; stop_us - start_us，总圈数 total_cal_cycles +&#x3D; stage_max<br>- 统计种子 q 的 q-&gt;exec_us，q-&gt;bitmap_size，同时更新全局 total_bitmap_size +&#x3D; q-&gt;bitmap_size; total_bitmap_entries++;<br>- 调 update_bitmap_score(q) 更新 q 能到达路径的最优种子<br>- <strong>abort_calibration</strong></h2></li>
+</ul>
+</li>
+<li><p>static void write_to_testcase(void* mem, u32 len) 函数</p>
+<ul>
+<li>函数作用：把 mem 开始的 len 字节作为测试用例写默认的或特指的文件中去。</li>
+<li>具体过程：<ul>
+<li>如果 out_file 指定了，删除原文件，把 mem 开始的 len 字节作为测试用例写进去。如果 out_file 没指定，则写到 out_fd 里</li>
+<li>如果是通过 out_fd 写，则需要截断文件，并移动文件光标。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>has_new_bits 函数</p>
+<ul>
+<li>返回 2，发现新 tuples</li>
+<li>返回 1，没发现新 tuples，但是命中数量增加</li>
+<li>返回 0，没有任何发现</li>
+</ul>
+</li>
+<li><p>persistent_mode</p>
+<ul>
+<li>“Persistent Mode”（持久模式）允许模糊测试工具在目标程序中更高效地探索执行路径。</li>
+<li>可以通过以下方式启用持久模式：<ul>
+<li>使用 <code>__AFL_LOOP()</code> 宏来指示循环的开始和结束。</li>
+<li>使用 <code>__AFL_INIT()</code> 宏来执行一次性的初始化。</li>
+<li>使用 <code>__AFL_FUZZ_TESTCASE_BUF</code> 和 <code>__AFL_FUZZ_TESTCASE_LEN</code> 宏来访问当前的测试用例数据和长度。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>deferred_mode</p>
+</li>
+<li><p>afl-qemu-trace</p>
+<ul>
+<li><a href="https://blog.csdn.net/song_lee/article/details/105082092">https://blog.csdn.net/song_lee/article/details/105082092</a></li>
+<li><a href="https://blog.csdn.net/qysh123/article/details/114792891">https://blog.csdn.net/qysh123/article/details/114792891</a></li>
+<li><a href="https://airbus-seclab.github.io/AFLplusplus-blogpost/">https://airbus-seclab.github.io/AFLplusplus-blogpost/</a></li>
+<li><a href="https://aflplus.plus/docs/env_variables/">https://aflplus.plus/docs/env_variables/</a></li>
+<li><a href="https://afl-1.readthedocs.io/en/latest/user_guide.html">https://afl-1.readthedocs.io/en/latest/user_guide.html</a></li>
+<li><a href="https://www.haoyep.com/posts/afl-install/">https://www.haoyep.com/posts/afl-install/</a></li>
+<li><a href="https://www.haoyep.com/posts/afl-install/">https://www.haoyep.com/posts/afl-install/</a></li>
+<li><a href="https://github.com/nccgroup/TriforceAFL">https://github.com/nccgroup/TriforceAFL</a></li>
+<li><a href="https://github.com/AFLplusplus/AFLplusplus/blob/stable/qemu_mode/README.md">https://github.com/AFLplusplus/AFLplusplus/blob/stable/qemu_mode/README.md</a></li>
+</ul>
+</li>
+<li><p>crash_mode</p>
+<ul>
+<li>-C 选项代表 crash_mode &#x3D; FAULT_CRASH，仅此设置</li>
+</ul>
+</li>
+<li><p>dumb_mode</p>
+<ul>
+<li>默认为 0，在有 -n 选项的情况下，如果设置了 AFL_DUMB_FORKSRV 环境变量，dumb_mode &#x3D; 2，否则 dumb_mode &#x3D; 1</li>
+</ul>
+</li>
+<li><p>out_file</p>
+<ul>
+<li>-f 指定，是等待 fuzz 的测试用例</li>
+</ul>
+</li>
+<li><p>out_fd</p>
+<ul>
+<li>setup_stdio_file 中被设置为指向 out_dir&#x2F;.cur_input</li>
+<li>out_fd 是指向 out_file 的文件描述符？可能的机制是，out_fd 默认指向 out_dir&#x2F;.cur_input，但是当用户指定了 out_file，则 out_file 顶替了默认的 out_dir&#x2F;.cur_input 的作用。</li>
+</ul>
+</li>
+<li><p>var_bytes[i]</p>
+</li>
+</ul>
+]]></content>
   </entry>
 </search>
