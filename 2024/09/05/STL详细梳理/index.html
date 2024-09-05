@@ -20,25 +20,29 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="技术，人生，思考，自我">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Focus2flow">
-<meta property="og:url" content="http://example.com/index.html">
+    <meta name="description" content="STL-containerArray构造： 123456789array&lt;int,5&gt; c;array&lt;int,5&gt; c(c2);		&#x2F;&#x2F; 必须类型大小都一样array&lt;int,5&gt; c &#x3D; c2;array&lt;int,5&gt; c &#x3D; initlistarray&lt;int,5&gt; c(rv);array&lt;int,5&gt; c &#x3D; rv;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STL详细梳理">
+<meta property="og:url" content="http://example.com/2024/09/05/STL%E8%AF%A6%E7%BB%86%E6%A2%B3%E7%90%86/index.html">
 <meta property="og:site_name" content="Focus2flow">
-<meta property="og:description" content="技术，人生，思考，自我">
+<meta property="og:description" content="STL-containerArray构造： 123456789array&lt;int,5&gt; c;array&lt;int,5&gt; c(c2);		&#x2F;&#x2F; 必须类型大小都一样array&lt;int,5&gt; c &#x3D; c2;array&lt;int,5&gt; c &#x3D; initlistarray&lt;int,5&gt; c(rv);array&lt;int,5&gt; c &#x3D; rv;">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-09-05T12:26:36.000Z">
+<meta property="article:modified_time" content="2024-09-05T12:31:45.066Z">
 <meta property="article:author" content="sky">
+<meta property="article:tag" content="c++">
+<meta property="article:tag" content="STL">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2024/09/05/STL%E8%AF%A6%E7%BB%86%E6%A2%B3%E7%90%86/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/05/STL%E8%AF%A6%E7%BB%86%E6%A2%B3%E7%90%86/","path":"2024/09/05/STL详细梳理/","title":"STL详细梳理"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Focus2flow</title>
+<title>STL详细梳理 | Focus2flow</title>
   
 
 
@@ -71,7 +75,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Focus2flow</h1>
+      <p class="site-title">Focus2flow</p>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">less is more</p>
@@ -125,7 +129,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -138,6 +142,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#STL-container"><span class="nav-text">STL-container</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Array"><span class="nav-text">Array</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vector"><span class="nav-text">vector</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deque"><span class="nav-text">deque</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#list"><span class="nav-text">list</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#forward-list"><span class="nav-text">forward_list</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set"><span class="nav-text">set</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#map"><span class="nav-text">map</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A0%E5%BA%8F%E5%AE%B9%E5%99%A8"><span class="nav-text">无序容器</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -177,16 +182,17 @@
 
     </div>
 
-    <div class="main-inner index posts-expand">
+    <div class="main-inner post posts-expand">
 
-    
+
+  
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/05/STL%E8%AF%A6%E7%BB%86%E6%A2%B3%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -200,13 +206,13 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Focus2flow">
+      <meta itemprop="name" content="STL详细梳理 | Focus2flow">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/05/STL%E8%AF%A6%E7%BB%86%E6%A2%B3%E7%90%86/" class="post-title-link" itemprop="url">STL详细梳理</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          STL详细梳理
+        </h1>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -242,8 +248,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="STL-container"><a href="#STL-container" class="headerlink" title="STL-container"></a>STL-container</h1><h2 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h2><p>构造：</p>
+    <div class="post-body" itemprop="articleBody"><h1 id="STL-container"><a href="#STL-container" class="headerlink" title="STL-container"></a>STL-container</h1><h2 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h2><p>构造：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">array&lt;<span class="type">int</span>,5&gt; c;</span><br><span class="line"></span><br><span class="line"><span class="function">array&lt;<span class="type">int</span>,5&gt; <span class="title">c</span><span class="params">(c2)</span></span>;		<span class="comment">// 必须类型大小都一样</span></span><br><span class="line">array&lt;<span class="type">int</span>,5&gt; c = c2;</span><br><span class="line"></span><br><span class="line">array&lt;<span class="type">int</span>,5&gt; c = initlist</span><br><span class="line"></span><br><span class="line">array&lt;<span class="type">int</span>,<span class="number">5</span>&gt; <span class="built_in">c</span>(rv);</span><br><span class="line">array&lt;<span class="type">int</span>,5&gt; c = rv;</span><br></pre></td></tr></table></figure>
 
 <blockquote>
@@ -438,7 +443,6 @@
 </li>
 </ul>
 
-      
     </div>
 
     
@@ -446,719 +450,26 @@
     
 
     <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
+          <div class="post-tags">
+              <a href="/tags/c/" rel="tag"># c++</a>
+              <a href="/tags/STL/" rel="tag"># STL</a>
+          </div>
 
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/05/%E7%A7%8B%E6%8B%9B%E7%AC%94%E8%AF%95%E7%9C%9F%E9%A2%98%E8%AE%B0%E5%BD%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="sky">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Focus2flow">
-      <meta itemprop="description" content="技术，人生，思考，自我">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Focus2flow">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/05/%E7%A7%8B%E6%8B%9B%E7%AC%94%E8%AF%95%E7%9C%9F%E9%A2%98%E8%AE%B0%E5%BD%95/" class="post-title-link" itemprop="url">秋招笔试真题记录</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-09-05 17:43:47 / 修改时间：19:10:24" itemprop="dateCreated datePublished" datetime="2024-09-05T17:43:47+08:00">2024-09-05</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>记录秋招过程中的笔试算法题目</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/09/05/%E7%A7%8B%E6%8B%9B%E7%AC%94%E8%AF%95%E7%9C%9F%E9%A2%98%E8%AE%B0%E5%BD%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
-    </div>
 
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/01/%E8%B4%AA%E5%BF%83/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="sky">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Focus2flow">
-      <meta itemprop="description" content="技术，人生，思考，自我">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Focus2flow">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/01/%E8%B4%AA%E5%BF%83/" class="post-title-link" itemprop="url">贪心</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-01 14:24:28" itemprop="dateCreated datePublished" datetime="2024-09-01T14:24:28+08:00">2024-09-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-05 14:34:36" itemprop="dateModified" datetime="2024-09-05T14:34:36+08:00">2024-09-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>acwing 贪心算法</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/09/01/%E8%B4%AA%E5%BF%83/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/05/%E7%A7%8B%E6%8B%9B%E7%AC%94%E8%AF%95%E7%9C%9F%E9%A2%98%E8%AE%B0%E5%BD%95/" rel="prev" title="秋招笔试真题记录">
+                  <i class="fa fa-angle-left"></i> 秋招笔试真题记录
+                </a>
             </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/07/%E6%88%BF%E5%9C%B0%E4%BA%A7%E7%A0%94%E7%A9%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="sky">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Focus2flow">
-      <meta itemprop="description" content="技术，人生，思考，自我">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Focus2flow">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/09/07/%E6%88%BF%E5%9C%B0%E4%BA%A7%E7%A0%94%E7%A9%B6/" class="post-title-link" itemprop="url">房地产研究</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-09-07 01:01:39" itemprop="dateCreated datePublished" datetime="2023-09-07T01:01:39+08:00">2023-09-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-12 21:02:59" itemprop="dateModified" datetime="2023-09-12T21:02:59+08:00">2023-09-12</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>房地产行业研究</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/09/07/%E6%88%BF%E5%9C%B0%E4%BA%A7%E7%A0%94%E7%A9%B6/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
+            <div class="post-nav-item">
             </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+          </div>
     </footer>
   </article>
 </div>
 
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/07/docker%E7%8E%AF%E5%A2%83/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="sky">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Focus2flow">
-      <meta itemprop="description" content="技术，人生，思考，自我">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Focus2flow">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/09/07/docker%E7%8E%AF%E5%A2%83/" class="post-title-link" itemprop="url">docker环境</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-09-07 01:01:39" itemprop="dateCreated datePublished" datetime="2023-09-07T01:01:39+08:00">2023-09-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-05 15:30:20" itemprop="dateModified" datetime="2024-09-05T15:30:20+08:00">2024-09-05</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>docker环境</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/09/07/docker%E7%8E%AF%E5%A2%83/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/06/AFL%E8%B0%83%E8%AF%95%E5%87%86%E5%A4%87/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="sky">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Focus2flow">
-      <meta itemprop="description" content="技术，人生，思考，自我">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Focus2flow">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/09/06/AFL%E8%B0%83%E8%AF%95%E5%87%86%E5%A4%87/" class="post-title-link" itemprop="url">AFL调试准备</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-09-06 16:34:58" itemprop="dateCreated datePublished" datetime="2023-09-06T16:34:58+08:00">2023-09-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-05 15:37:36" itemprop="dateModified" datetime="2024-09-05T15:37:36+08:00">2024-09-05</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <span id="more"></span>
-
-<ul>
-<li><p>在vscode+mingw64的条件下试图调试AFL,发现缺少头文件</p>
-<p><img src="https://picgo-buk.oss-cn-chengdu.aliyuncs.com/img/image-20230906163736865.png" alt="image-20230906163736865"></p>
-<p>考虑安装VS再尝试</p>
-</li>
-<li><p>安装vs之后仍然报头文件缺失，然后全局搜索 shm.h 文件，发现本机并没有这个文件。此时恍然大悟，AFL 可能本来就不能再win上运行，<a target="_blank" rel="noopener" href="https://www.51cto.com/article/753518.html">查证</a>后果然，为此还有人开发了 win 上的 AFL 工具<a target="_blank" rel="noopener" href="https://github.com/ivanfratric/winafl">WinAFL</a>。</p>
-<p><img src="https://picgo-buk.oss-cn-chengdu.aliyuncs.com/img/image-20230906171407166.png" alt="image-20230906171407166"></p>
-</li>
-<li><p>那么现在的方案有两个</p>
-<ul>
-<li>在 mac 上调试</li>
-<li>在 linux 上直接 gdb 调试。或者 gdb + vscode 可视化调试</li>
-</ul>
-</li>
-</ul>
-<p>首先尝试第二种方案：</p>
-<ul>
-<li><p>读懂 Makefile 文件，给出 -g 编译选项，方便调试。</p>
-</li>
-<li><p>研究之后发现本来的 Makefile 中编译选项已经包含了 -g 所以都可以直接调试。</p>
-</li>
-<li><p>下一步思考怎么搭建一个双机调试环境？</p>
-</li>
-<li><p>退一步学习一下怎么样使用gdb调试。</p>
-</li>
-<li><p>先进行一个小的实验：<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/4314">初探AFL-Fuzz</a></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">插桩编译</span></span><br><span class="line">afl-gcc -g -o test test.c</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">模糊测试</span></span><br><span class="line">afl-fuzz -i input_dir -o output_dir program</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>开始使用GDB调试AFL</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/suphgcm/p/15498577.html">GDB cheetsheet</a></li>
-<li><a target="_blank" rel="noopener" href="https://wenku.baidu.com/view/30c4cfbfcf22bcd126fff705cc17552707225e0f.html?_wkts_=1694057567582&bdQuery=gdb+cheetsheet">cheet sheet</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/wxh0000mm/article/details/108582238">gdb速查表</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/yimaginer/awesome-cheatsheets/blob/master/tools/gdb.txt">awesome-cheetsheet</a></li>
-</ul>
-</li>
-</ul>
-<p>记录调试过程：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动调试</span></span><br><span class="line">gdb --args afl-fuzz -i fuzz_in -o fuzz_out ./afl_test</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">GDB 前端</span></span><br><span class="line">ctrl-x ctrl-a 更换 CLI/TUI</span><br></pre></td></tr></table></figure>
-
-<p>遇到的问题：<br><a target="_blank" rel="noopener" href="http://www.taodudu.cc/news/show-5082273.html?action=onClick">GDB调试显示＜ optimized_out ＞</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/04/UESTC%E5%A5%96%E5%AD%A6%E9%87%91%E4%BD%93%E7%B3%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="sky">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Focus2flow">
-      <meta itemprop="description" content="技术，人生，思考，自我">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Focus2flow">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/09/04/UESTC%E5%A5%96%E5%AD%A6%E9%87%91%E4%BD%93%E7%B3%BB/" class="post-title-link" itemprop="url">UESTC奖学金体系</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2023-09-04 10:52:11 / 修改时间：10:55:20" itemprop="dateCreated datePublished" datetime="2023-09-04T10:52:11+08:00">2023-09-04</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>学习一下成电的奖学金体系</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/09/04/UESTC%E5%A5%96%E5%AD%A6%E9%87%91%E4%BD%93%E7%B3%BB/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/03/next%E4%B8%BB%E9%A2%98%E5%9F%BA%E6%9C%AC%E8%AE%BE%E7%BD%AE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="sky">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Focus2flow">
-      <meta itemprop="description" content="技术，人生，思考，自我">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Focus2flow">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/09/03/next%E4%B8%BB%E9%A2%98%E5%9F%BA%E6%9C%AC%E8%AE%BE%E7%BD%AE/" class="post-title-link" itemprop="url">next 主题基本设置</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2023-09-03 23:22:37 / 修改时间：23:30:59" itemprop="dateCreated datePublished" datetime="2023-09-03T23:22:37+08:00">2023-09-03</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" itemprop="url" rel="index"><span itemprop="name">环境搭建</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>为博客更换 next 主题，并做基础设置，使其能用。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/09/03/next%E4%B8%BB%E9%A2%98%E5%9F%BA%E6%9C%AC%E8%AE%BE%E7%BD%AE/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/03/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="sky">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Focus2flow">
-      <meta itemprop="description" content="技术，人生，思考，自我">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Focus2flow">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/09/03/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" class="post-title-link" itemprop="url">Windows  环境下利用 Github page 搭建博客环境</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-09-03 14:43:10" itemprop="dateCreated datePublished" datetime="2023-09-03T14:43:10+08:00">2023-09-03</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-07 01:11:20" itemprop="dateModified" datetime="2023-09-07T01:11:20+08:00">2023-09-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" itemprop="url" rel="index"><span itemprop="name">环境搭建</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Github + hexo 搭建个人博客</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/09/03/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
 
 
 
