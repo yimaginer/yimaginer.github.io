@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="apue 学习记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="apue 学习记录">
+<meta property="og:url" content="http://example.com/2024/06/19/apue%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="Focus2flow">
+<meta property="og:description" content="apue 学习记录">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-06-19T12:26:36.000Z">
+<meta property="article:modified_time" content="2024-09-05T13:03:53.102Z">
+<meta property="article:author" content="sky">
+<meta property="article:tag" content="linux 系统编程">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/06/19/apue%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/06/19/apue%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/","path":"2024/06/19/apue学习记录/","title":"apue 学习记录"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>apue 学习记录 | Focus2flow</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Focus2flow</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">less is more</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sky</p>
+  <div class="site-description" itemprop="description">技术，人生，思考，自我</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/06/19/apue%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Focus2flow">
+      <meta itemprop="description" content="技术，人生，思考，自我">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="apue 学习记录 | Focus2flow">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          apue 学习记录
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-06-19 20:26:36" itemprop="dateCreated datePublished" datetime="2024-06-19T20:26:36+08:00">2024-06-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-05 21:03:53" itemprop="dateModified" datetime="2024-09-05T21:03:53+08:00">2024-09-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E7%A8%8B%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">工程开发</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E7%A8%8B%E5%BC%80%E5%8F%91/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>apue 学习记录</p>
+<span id="more"></span>
+
+<ul>
+<li><p>环境搭建：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/580675705">https://zhuanlan.zhihu.com/p/580675705</a></p>
+</li>
+<li><p>文件描述符和inode关系：<a target="_blank" rel="noopener" href="https://blog.csdn.net/ambitiousssssss/article/details/124001467%EF%BC%8Chttps://blog.csdn.net/weixin_43864567/article/details/124063198">https://blog.csdn.net/ambitiousssssss/article/details/124001467，https://blog.csdn.net/weixin_43864567/article/details/124063198</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/kcloveworld/p/17989014">文件描述符、文件描述符表、文件表项、inode名词释义</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/kyang_823/article/details/79496362">https://blog.csdn.net/kyang_823/article/details/79496362</a></p>
+</li>
+<li><p>&#x2F;proc文件系统：<a target="_blank" rel="noopener" href="https://blog.51cto.com/u_15127514/4196632">https://blog.51cto.com/u_15127514/4196632</a></p>
+</li>
+<li><p>虚拟文件系统VFS原理：<a target="_blank" rel="noopener" href="https://blog.51cto.com/mingongge/2945174">https://blog.51cto.com/mingongge/2945174</a></p>
+</li>
+<li><p>重要头文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">这个头文件包含了POSIX标准中定义的一些常用函数和类型，比如fork()、exec()系列函数，以及pid_t类型等。</span><br><span class="line"></span><br><span class="line">#include &lt;sys/syscall.h&gt;</span><br><span class="line">这个头文件包含了系统调用的编号，比如SYS_gettid和SYS_tgkill等。</span><br><span class="line"></span><br><span class="line">#include &lt;sys/types.h&gt;</span><br><span class="line">这个头文件定义了一些基本的数据类型，比如pid_t、size_t等。</span><br><span class="line"></span><br><span class="line">#include &lt;signal.h&gt;</span><br><span class="line">这个头文件包含了信号相关的函数和类型，比如SIGHUP信号常量。</span><br></pre></td></tr></table></figure></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">./tools/perf/include/bpf/unistd.h</span><br><span class="line">./tools/arch/arm64/include/uapi/asm/unistd.h</span><br><span class="line">./tools/arch/arc/include/uapi/asm/unistd.h</span><br><span class="line">./tools/arch/riscv/include/uapi/asm/unistd.h</span><br><span class="line">./tools/arch/x86/include/uapi/asm/unistd.h</span><br><span class="line">./tools/arch/hexagon/include/uapi/asm/unistd.h</span><br><span class="line">./tools/include/nolibc/unistd.h</span><br><span class="line">./tools/include/uapi/asm-generic/unistd.h</span><br><span class="line">./arch/alpha/include/asm/unistd.h</span><br><span class="line">./arch/alpha/include/uapi/asm/unistd.h</span><br><span class="line">./arch/ia64/include/asm/unistd.h</span><br><span class="line">./arch/ia64/include/uapi/asm/unistd.h</span><br><span class="line">./arch/arm64/include/asm/unistd.h</span><br><span class="line">./arch/arm64/include/uapi/asm/unistd.h</span><br><span class="line">./arch/sparc/include/asm/unistd.h</span><br><span class="line">./arch/sparc/include/uapi/asm/unistd.h</span><br><span class="line">./arch/xtensa/include/asm/unistd.h</span><br><span class="line">./arch/xtensa/include/uapi/asm/unistd.h</span><br><span class="line">./arch/parisc/include/asm/unistd.h</span><br><span class="line">./arch/parisc/include/uapi/asm/unistd.h</span><br><span class="line">./arch/microblaze/include/asm/unistd.h</span><br><span class="line">./arch/microblaze/include/uapi/asm/unistd.h</span><br><span class="line">./arch/arc/include/uapi/asm/unistd.h</span><br><span class="line">./arch/riscv/include/asm/unistd.h</span><br><span class="line">./arch/riscv/include/uapi/asm/unistd.h</span><br><span class="line">./arch/s390/include/asm/unistd.h</span><br><span class="line">./arch/s390/include/uapi/asm/unistd.h</span><br><span class="line">./arch/nios2/include/uapi/asm/unistd.h</span><br><span class="line">./arch/x86/include/asm/unistd.h</span><br><span class="line">./arch/x86/include/uapi/asm/unistd.h</span><br><span class="line">./arch/hexagon/include/uapi/asm/unistd.h</span><br><span class="line">./arch/powerpc/include/asm/unistd.h</span><br><span class="line">./arch/powerpc/include/uapi/asm/unistd.h</span><br><span class="line">./arch/loongarch/include/asm/unistd.h</span><br><span class="line">./arch/loongarch/include/uapi/asm/unistd.h</span><br><span class="line">./arch/sh/include/asm/unistd.h</span><br><span class="line">./arch/sh/include/uapi/asm/unistd.h</span><br><span class="line">./arch/m68k/include/asm/unistd.h</span><br><span class="line">./arch/m68k/include/uapi/asm/unistd.h</span><br><span class="line">./arch/csky/include/asm/unistd.h</span><br><span class="line">./arch/csky/include/uapi/asm/unistd.h</span><br><span class="line">./arch/arm/include/asm/unistd.h</span><br><span class="line">./arch/arm/include/uapi/asm/unistd.h</span><br><span class="line">./arch/openrisc/include/uapi/asm/unistd.h</span><br><span class="line">./arch/mips/include/asm/unistd.h</span><br><span class="line">./arch/mips/include/uapi/asm/unistd.h</span><br><span class="line">./include/uapi/asm-generic/unistd.h</span><br><span class="line">./include/uapi/linux/unistd.h</span><br><span class="line">arch/mips/include/asm/unistd.h 通常包含了特定于MIPS架构的系统调用号码定义，这些定义是基于MIPS架构的特点定制的。</span><br><span class="line">arch/mips/include/uapi/asm/unistd.h 则包含了用户空间API的系统调用号码定义，这些定义是为了让用户空间程序能够安全地调用内核提供的服务。</span><br><span class="line">简单来说，uapi目录下的头文件通常用于定义用户空间可以使用的接口，而非特定于某个架构的内部细节。这样做的好处是，用户空间程序不必关心底层的硬件架构，只需通过统一的接口与内核通信。而asm目录下的头文件则包含了特定于某一架构的实现细节，这些细节对于用户空间程序是透明的，但对于内核开发者来说非常重要，因为它们涉及到如何在特定的硬件上实现系统调用.</span><br></pre></td></tr></table></figure>
+
+<p>学习 apue 的目的是什么？<br>1.明白 linux 系统级知识，为读 AFL 源码做准备。<br>2.进而熟悉 linux 内核源码，可以对内核进行调试，修改。<br>目前好的 apue 学习素材：<br>1.b站李慧琴的课，相关笔记<a target="_blank" rel="noopener" href="https://kisugitakumi.net/2022/11/20/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/#6-4-2-%E4%BD%BF%E7%94%A8">https://kisugitakumi.net/2022/11/20/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/#6-4-2-%E4%BD%BF%E7%94%A8</a><br>2.apue 书本<br>目前对 apue 的理解以及所能预料到的掌握后的能力：<br>1.熟悉了 linux 平台 进程 文件 信号机制 的原理，接口<br>2.能够在此基础之上进行应用程序开发</p>
+<p>对于使用 afl 本身来说，了解平台机制就可以了，想要研究 afl 更重要的就是要对 afl 的原理进行更深入的研究。<br>以上都为计算机的术的话，计算机学习的道应该是什么？</p>
+<p>6月20号：<br>1.昨天开始读 AFL 源码，主要是看 makefile ,问题是 makefile 语法还是不太熟悉，又转去看手册。makefile 里有 shell 命令，于是看 bash 手册<br>2.makefile bash 两个手册可以粗略看一下，花费一个半小时，然后开始看 AFL 源码</p>
+<p>type command  查看命令类型</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux-%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/" rel="tag"># linux 系统编程</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/06/15/LibAFL%E5%85%A5%E9%97%A8/" rel="prev" title="LibAFL入门">
+                  <i class="fa fa-angle-left"></i> LibAFL入门
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/07/06/AFL%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" rel="next" title="AFL源码阅读">
+                  AFL源码阅读 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sky</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

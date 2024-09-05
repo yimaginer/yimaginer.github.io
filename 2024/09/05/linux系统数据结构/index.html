@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="linux 系统中常见的数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux 系统数据结构">
+<meta property="og:url" content="http://example.com/2024/09/05/linux%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:site_name" content="Focus2flow">
+<meta property="og:description" content="linux 系统中常见的数据结构">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-09-05T12:26:36.000Z">
+<meta property="article:modified_time" content="2024-09-05T13:02:44.818Z">
+<meta property="article:author" content="sky">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/09/05/linux%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/05/linux%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/","path":"2024/09/05/linux系统数据结构/","title":"linux 系统数据结构"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>linux 系统数据结构 | Focus2flow</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Focus2flow</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">less is more</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#struct-itimerval"><span class="nav-text">struct itimerval</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F-stat"><span class="nav-text">文件系统 stat</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sky</p>
+  <div class="site-description" itemprop="description">技术，人生，思考，自我</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/05/linux%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Focus2flow">
+      <meta itemprop="description" content="技术，人生，思考，自我">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="linux 系统数据结构 | Focus2flow">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          linux 系统数据结构
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-09-05 20:26:36 / 修改时间：21:02:44" itemprop="dateCreated datePublished" datetime="2024-09-05T20:26:36+08:00">2024-09-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>linux 系统中常见的数据结构</p>
+<span id="more"></span>
+
+<h1 id="struct-itimerval"><a href="#struct-itimerval" class="headerlink" title="struct itimerval"></a>struct itimerval</h1><p><code>struct itimerval</code>是一个用于设置定时器的结构体。它包含了两个成员变量，分别是<code>it_interval</code>和<code>it_value</code>。</p>
+<p><code>it_interval</code>用于设置定时器的间隔时间，即每隔多少时间触发一次定时器。<code>it_value</code>用于设置定时器的初始值，即第一次触发定时器的时间。</p>
+<p>这个结构体可以在C语言中使用，用于设置定时器以及处理定时器信号。例如，可以使用<code>setitimer()</code>函数来设置定时器并启动定时器信号。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> &#123;</span></span><br><span class="line">	<span class="type">time_t</span>      tv_sec;     <span class="comment">/* seconds */</span></span><br><span class="line">	<span class="type">suseconds_t</span> tv_usec;    <span class="comment">/* microseconds */</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">and gives the number of seconds and microseconds since the <span class="title function_">Epoch</span> <span class="params">(see time(<span class="number">2</span>))</span>.</span><br><span class="line"></span><br><span class="line">The tz argument is a <span class="keyword">struct</span> timezone:</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> timezone &#123;</span><br><span class="line">	<span class="type">int</span> tz_minuteswest;     <span class="comment">/* minutes west of Greenwich */</span></span><br><span class="line">	<span class="type">int</span> tz_dsttime;         <span class="comment">/* type of DST correction */</span></span><br><span class="line">&#125;;</span><br><span class="line">Describes times in seconds and nanoseconds.</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">timespec</span> &#123;</span></span><br><span class="line">	<span class="type">time_t</span>  tv_sec;  <span class="comment">/* Seconds */</span></span><br><span class="line">	<span class="type">long</span>    tv_nsec; <span class="comment">/* Nanoseconds */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h1 id="文件系统-stat"><a href="#文件系统-stat" class="headerlink" title="文件系统 stat"></a>文件系统 stat</h1><ul>
+<li>在<code>E:\Ubuntushare\linux-6.0\arch\x86\include\uapi\asm\stat.h</code><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">stat</span> &#123;</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_dev;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_ino;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> st_mode;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> st_nlink;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> st_uid;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> st_gid;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_rdev;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_size;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_blksize;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_blocks;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_atime;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_atime_nsec;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_mtime;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_mtime_nsec;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_ctime;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_ctime_nsec;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  __unused4;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  __unused5;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p> S_ISREG(m)  is it a regular file?</p>
+<pre><code>       S_ISDIR(m)  directory?
+
+       S_ISCHR(m)  character device?
+
+       S_ISBLK(m)  block device?
+
+       S_ISFIFO(m) FIFO (named pipe)?
+
+       S_ISLNK(m)  symbolic link?  (Not in POSIX.1-1996.)
+
+       S_ISSOCK(m) socket?  (Not in POSIX.1-1996.)
+</code></pre>
+<p>成员变量的含义：</p>
+<ul>
+<li>st_dev：文件所在设备的设备号</li>
+<li>st_ino：文件的i-node号</li>
+<li>st_mode：文件的类型和访问权限</li>
+<li>st_nlink：文件的硬链接数</li>
+<li>st_uid：文件的所有者的用户ID</li>
+<li>st_gid：文件的所有者的组ID</li>
+<li>st_rdev：如果文件是设备文件，则该成员保存了设备的设备号</li>
+<li>st_size：文件的大小（以字节为单位）</li>
+<li>st_blksize：文件系统I&#x2F;O操作的最佳块大小</li>
+<li>st_blocks：文件所占用的磁盘块数</li>
+<li>st_atime：文件的最后访问时间</li>
+<li>st_atime_nsec：文件的最后访问时间的纳秒部分</li>
+<li>st_mtime：文件的最后修改时间</li>
+<li>st_mtime_nsec：文件的最后修改时间的纳秒部分</li>
+<li>st_ctime：文件的最后状态改变时间</li>
+<li>st_ctime_nsec：文件的最后状态改变时间的纳秒部分</li>
+<li>__unused4和__unused5：未使用的保留字段</li>
+</ul>
+<p>这个结构体是用于在C语言中对文件的状态进行描述和操作的一个重要数据结构。在C语言中，可以使用stat()函数来获取一个文件的状态，然后通过访问结构体的成员变量来获取文件的各种属性。</p>
+<ul>
+<li><p>本地化数据格式</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">lconv</span> &#123;</span></span><br><span class="line">	<span class="comment">/* Numeric (nonmonetary) information */</span></span><br><span class="line"></span><br><span class="line">	<span class="type">char</span> *decimal_point;     <span class="comment">/* Radix character */</span></span><br><span class="line">	<span class="type">char</span> *thousands_sep;     <span class="comment">/* Separator for digit groups to left</span></span><br><span class="line"><span class="comment">								of radix character */</span></span><br><span class="line">	<span class="type">char</span> *grouping;     <span class="comment">/* Each element is the number of digits in</span></span><br><span class="line"><span class="comment">							a group; elements with higher indices</span></span><br><span class="line"><span class="comment">							are further left.  An element with value</span></span><br><span class="line"><span class="comment">							CHAR_MAX means that no further grouping</span></span><br><span class="line"><span class="comment">							is done.  An element with value 0 means</span></span><br><span class="line"><span class="comment">							that the previous element is used for</span></span><br><span class="line"><span class="comment">							all groups further left. */</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Remaining fields are for monetary information */</span></span><br><span class="line"></span><br><span class="line">	<span class="type">char</span> *int_curr_symbol;   <span class="comment">/* First three chars are a currency</span></span><br><span class="line"><span class="comment">								symbol from ISO 4217.  Fourth char</span></span><br><span class="line"><span class="comment">								is the separator.  Fifth char</span></span><br><span class="line"><span class="comment">								is &#x27;\0&#x27;. */</span></span><br><span class="line">	<span class="type">char</span> *currency_symbol;   <span class="comment">/* Local currency symbol */</span></span><br><span class="line">	<span class="type">char</span> *mon_decimal_point; <span class="comment">/* Radix character */</span></span><br><span class="line">	<span class="type">char</span> *mon_thousands_sep; <span class="comment">/* Like thousands_sep above */</span></span><br><span class="line">	<span class="type">char</span> *mon_grouping;      <span class="comment">/* Like grouping above */</span></span><br><span class="line">	<span class="type">char</span> *positive_sign;     <span class="comment">/* Sign for positive values */</span></span><br><span class="line">	<span class="type">char</span> *negative_sign;     <span class="comment">/* Sign for negative values */</span></span><br><span class="line">	<span class="type">char</span>  int_frac_digits;   <span class="comment">/* International fractional digits */</span></span><br><span class="line">	<span class="type">char</span>  frac_digits;       <span class="comment">/* Local fractional digits */</span></span><br><span class="line">	<span class="type">char</span>  p_cs_precedes;     <span class="comment">/* 1 if currency_symbol precedes a</span></span><br><span class="line"><span class="comment">								positive value, 0 if succeeds */</span></span><br><span class="line">	<span class="type">char</span>  p_sep_by_space;    <span class="comment">/* 1 if a space separates</span></span><br><span class="line"><span class="comment">								currency_symbol from a positive</span></span><br><span class="line"><span class="comment">								value */</span></span><br><span class="line">	<span class="type">char</span>  n_cs_precedes;     <span class="comment">/* 1 if currency_symbol precedes a</span></span><br><span class="line"><span class="comment">								negative value, 0 if succeeds */</span></span><br><span class="line">	<span class="type">char</span>  n_sep_by_space;    <span class="comment">/* 1 if a space separates</span></span><br><span class="line"><span class="comment">								currency_symbol from a negative</span></span><br><span class="line"><span class="comment">								value */</span></span><br><span class="line">	<span class="comment">/* Positive and negative sign positions:</span></span><br><span class="line"><span class="comment">		0 Parentheses surround the quantity and currency_symbol.</span></span><br><span class="line"><span class="comment">		1 The sign string precedes the quantity and currency_symbol.</span></span><br><span class="line"><span class="comment">		2 The sign string succeeds the quantity and currency_symbol.</span></span><br><span class="line"><span class="comment">		3 The sign string immediately precedes the currency_symbol.</span></span><br><span class="line"><span class="comment">		4 The sign string immediately succeeds the currency_symbol. */</span></span><br><span class="line">	<span class="type">char</span>  p_sign_posn;</span><br><span class="line">	<span class="type">char</span>  n_sign_posn;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>密码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">passwd</span> &#123;</span></span><br><span class="line">	<span class="type">char</span>   *pw_name;       <span class="comment">/* username */</span></span><br><span class="line">	<span class="type">char</span>   *pw_passwd;     <span class="comment">/* user password */</span></span><br><span class="line">	<span class="type">uid_t</span>   pw_uid;        <span class="comment">/* user ID */</span></span><br><span class="line">	<span class="type">gid_t</span>   pw_gid;        <span class="comment">/* group ID */</span></span><br><span class="line">	<span class="type">char</span>   *pw_gecos;      <span class="comment">/* user information */</span></span><br><span class="line">	<span class="type">char</span>   *pw_dir;        <span class="comment">/* home directory */</span></span><br><span class="line">	<span class="type">char</span>   *pw_shell;      <span class="comment">/* shell program */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>共享内存</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">shmid_ds</span> &#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">ipc_perm</span> <span class="title">shm_perm</span>;</span>    <span class="comment">/* Ownership and permissions */</span></span><br><span class="line">	<span class="type">size_t</span>          shm_segsz;   <span class="comment">/* Size of segment (bytes) */</span></span><br><span class="line">	<span class="type">time_t</span>          shm_atime;   <span class="comment">/* Last attach time */</span></span><br><span class="line">	<span class="type">time_t</span>          shm_dtime;   <span class="comment">/* Last detach time */</span></span><br><span class="line">	<span class="type">time_t</span>          shm_ctime;   <span class="comment">/* Creation time/time of last</span></span><br><span class="line"><span class="comment">									modification via shmctl() */</span></span><br><span class="line">	<span class="type">pid_t</span>           shm_cpid;    <span class="comment">/* PID of creator */</span></span><br><span class="line">	<span class="type">pid_t</span>           shm_lpid;    <span class="comment">/* PID of last shmat(2)/shmdt(2) */</span> <span class="comment">//不关注最后一次detach的进程ID</span></span><br><span class="line">	<span class="type">shmatt_t</span>        shm_nattch;  <span class="comment">/* No. of current attaches */</span></span><br><span class="line">	...</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//其中的 ipc_perm 结构体</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ipc_perm</span> &#123;</span></span><br><span class="line">	<span class="type">key_t</span>          __key;    <span class="comment">/* Key supplied to shmget(2) */</span></span><br><span class="line">	<span class="type">uid_t</span>          uid;      <span class="comment">/* Effective UID of owner */</span></span><br><span class="line">	<span class="type">gid_t</span>          gid;      <span class="comment">/* Effective GID of owner */</span></span><br><span class="line">	<span class="type">uid_t</span>          cuid;     <span class="comment">/* Effective UID of creator */</span></span><br><span class="line">	<span class="type">gid_t</span>          cgid;     <span class="comment">/* Effective GID of creator */</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> mode;     <span class="comment">/* Permissions + SHM_DEST and</span></span><br><span class="line"><span class="comment">								SHM_LOCKED flags */</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> __seq;    <span class="comment">/* Sequence number */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>资源限制</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">rlimit</span> &#123;</span></span><br><span class="line">	<span class="type">rlim_t</span> rlim_cur;  <span class="comment">/* Soft limit */</span></span><br><span class="line">	<span class="type">rlim_t</span> rlim_max;  <span class="comment">/* Hard limit (ceiling for rlim_cur) */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/05/%E7%A7%8B%E6%8B%9B%E7%AC%94%E8%AF%95%E7%9C%9F%E9%A2%98%E8%AE%B0%E5%BD%95/" rel="prev" title="秋招笔试真题记录">
+                  <i class="fa fa-angle-left"></i> 秋招笔试真题记录
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/05/STL%E8%AF%A6%E7%BB%86%E6%A2%B3%E7%90%86/" rel="next" title="STL详细梳理">
+                  STL详细梳理 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sky</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
