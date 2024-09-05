@@ -20,32 +20,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="在vscode+mingw64的条件下试图调试AFL,发现缺少头文件  考虑安装VS再尝试  安装vs之后仍然报头文件缺失，然后全局搜索 shm.h 文件，发现本机并没有这个文件。此时恍然大悟，AFL 可能本来就不能再win上运行，查证后果然，为此还有人开发了 win 上的 AFL 工具WinAFL。   那么现在的方案有两个  在 mac 上调试 在 linux 上直接 gdb 调试。或者">
+    <meta name="description" content="记录秋招过程中的笔试算法题目">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AFL调试准备">
-<meta property="og:url" content="http://example.com/2023/09/06/AFL%E8%B0%83%E8%AF%95%E5%87%86%E5%A4%87/index.html">
+<meta property="og:title" content="秋招笔试真题记录">
+<meta property="og:url" content="http://example.com/2024/09/05/%E7%A7%8B%E6%8B%9B%E7%AC%94%E8%AF%95%E7%9C%9F%E9%A2%98%E8%AE%B0%E5%BD%95/index.html">
 <meta property="og:site_name" content="Focus2flow">
-<meta property="og:description" content="在vscode+mingw64的条件下试图调试AFL,发现缺少头文件  考虑安装VS再尝试  安装vs之后仍然报头文件缺失，然后全局搜索 shm.h 文件，发现本机并没有这个文件。此时恍然大悟，AFL 可能本来就不能再win上运行，查证后果然，为此还有人开发了 win 上的 AFL 工具WinAFL。   那么现在的方案有两个  在 mac 上调试 在 linux 上直接 gdb 调试。或者">
+<meta property="og:description" content="记录秋招过程中的笔试算法题目">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://picgo-buk.oss-cn-chengdu.aliyuncs.com/img/image-20230906163736865.png">
-<meta property="og:image" content="https://picgo-buk.oss-cn-chengdu.aliyuncs.com/img/image-20230906171407166.png">
-<meta property="article:published_time" content="2023-09-06T08:34:58.000Z">
-<meta property="article:modified_time" content="2024-09-05T07:37:36.456Z">
+<meta property="article:published_time" content="2024-09-05T09:43:47.000Z">
+<meta property="article:modified_time" content="2024-09-05T11:07:51.494Z">
 <meta property="article:author" content="sky">
-<meta property="article:tag" content="Fuzz">
-<meta property="article:tag" content="AFL">
+<meta property="article:tag" content="秋招">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://picgo-buk.oss-cn-chengdu.aliyuncs.com/img/image-20230906163736865.png">
 
 
-<link rel="canonical" href="http://example.com/2023/09/06/AFL%E8%B0%83%E8%AF%95%E5%87%86%E5%A4%87/">
+<link rel="canonical" href="http://example.com/2024/09/05/%E7%A7%8B%E6%8B%9B%E7%AC%94%E8%AF%95%E7%9C%9F%E9%A2%98%E8%AE%B0%E5%BD%95/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/09/06/AFL%E8%B0%83%E8%AF%95%E5%87%86%E5%A4%87/","path":"2023/09/06/AFL调试准备/","title":"AFL调试准备"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/05/%E7%A7%8B%E6%8B%9B%E7%AC%94%E8%AF%95%E7%9C%9F%E9%A2%98%E8%AE%B0%E5%BD%95/","path":"2024/09/05/秋招笔试真题记录/","title":"秋招笔试真题记录"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>AFL调试准备 | Focus2flow</title>
+<title>秋招笔试真题记录 | Focus2flow</title>
   
 
 
@@ -195,7 +191,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/06/AFL%E8%B0%83%E8%AF%95%E5%87%86%E5%A4%87/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/05/%E7%A7%8B%E6%8B%9B%E7%AC%94%E8%AF%95%E7%9C%9F%E9%A2%98%E8%AE%B0%E5%BD%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -208,12 +204,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="AFL调试准备 | Focus2flow">
+      <meta itemprop="name" content="秋招笔试真题记录 | Focus2flow">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          AFL调试准备
+          秋招笔试真题记录
         </h1>
 
         <div class="post-meta-container">
@@ -223,15 +219,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2023-09-06 16:34:58" itemprop="dateCreated datePublished" datetime="2023-09-06T16:34:58+08:00">2023-09-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-05 15:37:36" itemprop="dateModified" datetime="2024-09-05T15:37:36+08:00">2024-09-05</time>
+      <time title="创建时间：2024-09-05 17:43:47 / 修改时间：19:07:51" itemprop="dateCreated datePublished" datetime="2024-09-05T17:43:47+08:00">2024-09-05</time>
     </span>
 
   
@@ -243,49 +233,47 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><span id="more"></span>
+    <div class="post-body" itemprop="articleBody"><p>记录秋招过程中的笔试算法题目</p>
+<span id="more"></span>
 
 <ul>
-<li><p>在vscode+mingw64的条件下试图调试AFL,发现缺少头文件</p>
-<p><img src="https://picgo-buk.oss-cn-chengdu.aliyuncs.com/img/image-20230906163736865.png" alt="image-20230906163736865"></p>
-<p>考虑安装VS再尝试</p>
-</li>
-<li><p>安装vs之后仍然报头文件缺失，然后全局搜索 shm.h 文件，发现本机并没有这个文件。此时恍然大悟，AFL 可能本来就不能再win上运行，<a target="_blank" rel="noopener" href="https://www.51cto.com/article/753518.html">查证</a>后果然，为此还有人开发了 win 上的 AFL 工具<a target="_blank" rel="noopener" href="https://github.com/ivanfratric/winafl">WinAFL</a>。</p>
-<p><img src="https://picgo-buk.oss-cn-chengdu.aliyuncs.com/img/image-20230906171407166.png" alt="image-20230906171407166"></p>
-</li>
-<li><p>那么现在的方案有两个</p>
-<ul>
-<li>在 mac 上调试</li>
-<li>在 linux 上直接 gdb 调试。或者 gdb + vscode 可视化调试</li>
+<li>0905 小米</li>
 </ul>
-</li>
-</ul>
-<p>首先尝试第二种方案：</p>
-<ul>
-<li><p>读懂 Makefile 文件，给出 -g 编译选项，方便调试。</p>
-</li>
-<li><p>研究之后发现本来的 Makefile 中编译选项已经包含了 -g 所以都可以直接调试。</p>
-</li>
-<li><p>下一步思考怎么搭建一个双机调试环境？</p>
-</li>
-<li><p>退一步学习一下怎么样使用gdb调试。</p>
-</li>
-<li><p>先进行一个小的实验：<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/4314">初探AFL-Fuzz</a></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">插桩编译</span></span><br><span class="line">afl-gcc -g -o test test.c</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">模糊测试</span></span><br><span class="line">afl-fuzz -i input_dir -o output_dir program</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>开始使用GDB调试AFL</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/suphgcm/p/15498577.html">GDB cheetsheet</a></li>
-<li><a target="_blank" rel="noopener" href="https://wenku.baidu.com/view/30c4cfbfcf22bcd126fff705cc17552707225e0f.html?_wkts_=1694057567582&bdQuery=gdb+cheetsheet">cheet sheet</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/wxh0000mm/article/details/108582238">gdb速查表</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/yimaginer/awesome-cheatsheets/blob/master/tools/gdb.txt">awesome-cheetsheet</a></li>
-</ul>
-</li>
-</ul>
-<p>记录调试过程：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动调试</span></span><br><span class="line">gdb --args afl-fuzz -i fuzz_in -o fuzz_out ./afl_test</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">GDB 前端</span></span><br><span class="line">ctrl-x ctrl-a 更换 CLI/TUI</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>做面包</p>
+<p>小明每天早上需要AB两种面包各一个，同时已知小明有 n 个面包机，n 个面包机做 A B 两种面包的时间分别是 a<del>i</del> ，b<del>i</del> 。可以选择用同一台面包机先后制作 A 和 B，这样时间是累加的，也可以选择用不同的面包机并行制作 A B, 这样时间取两块面包制作时间的大者。</p>
+<p><strong>输入格式：</strong></p>
+<p>首行 n, 代表拥有面包机的数量。接下来有两行，每行 n 个数，第一行 n 个数代表 n 台面包机制作 A 面包的时间，第二行 n 个数代表 n 台面包机制作 B 面包的时间。</p>
+<p><strong>输出格式：</strong></p>
+<p>输出一个数，代表最短制作用时</p>
+<p><strong>输入样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">3</span><br><span class="line">2 5 7</span><br><span class="line">2 6 8</span><br></pre></td></tr></table></figure>
 
-<p>遇到的问题：<br><a target="_blank" rel="noopener" href="http://www.taodudu.cc/news/show-5082273.html?action=onClick">GDB调试显示＜ optimized_out ＞</a></p>
+<p><strong>输出样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">4</span><br></pre></td></tr></table></figure>
+
+<p>答案：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">   ```</span><br><span class="line"></span><br><span class="line">   这个想对简单只需要把各自AB两种面包最小值算出来即可。略</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span> 序列操作</span><br><span class="line"></span><br><span class="line">   给出一个数字序列，你可以有两种操作，一种是把某个元素加 <span class="number">1</span>，第二种是直接删除某元素，最终期望达到的效果是所有元素之和是 x 的倍数</span><br><span class="line"></span><br><span class="line">   **输入格式：**</span><br><span class="line"></span><br><span class="line">   首行两个数字 n , x。n 代表数组长度， x 为上文描述的意义。</span><br><span class="line"></span><br><span class="line">   **输出格式：**</span><br><span class="line"></span><br><span class="line">   输出最少操作次数</span><br><span class="line"></span><br><span class="line">   **输入样例：**</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>3 5<br>2 5 7</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">**输出样例：**</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>1</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```cpp</span><br><span class="line">// 目前 还没有太成熟的解法，想法是直接根据数据总和，以及数据元素，推算用两种方式各自需要多少次</span><br><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#define N 1010</span><br><span class="line">using namespace std;</span><br><span class="line">vector&lt;int&gt; a;</span><br><span class="line">int main()&#123;</span><br><span class="line">    int n, x; cin &gt;&gt; n &gt;&gt; x;</span><br><span class="line">    int sum = 0;</span><br><span class="line">    for(int i = 0; i &lt; n; i ++) &#123;int t; cin &gt;&gt; t; a.push_back(t), sum += t;&#125;</span><br><span class="line">    for(int i = 0; i &lt; n; i ++) cout &lt;&lt; a[i] &lt;&lt; &#x27; &#x27;; cout &lt;&lt; endl;</span><br><span class="line">    sort(a.begin(),a.end());</span><br><span class="line">    for(int i = 0; i &lt; n; i ++) cout &lt;&lt; a[i] &lt;&lt; &#x27; &#x27;; cout &lt;&lt; endl;</span><br><span class="line">    </span><br><span class="line">    if(sum % x  == 0) </span><br><span class="line">        &#123; cout &lt;&lt; 0 &lt;&lt; endl; return 0;&#125;</span><br><span class="line">    else if( (sum + 1) % x == 0) </span><br><span class="line">        &#123; cout &lt;&lt; 1 &lt;&lt; endl; return 0;&#125;</span><br><span class="line">    else</span><br><span class="line">    &#123;</span><br><span class="line">        auto pos = lower_bound(a.begin(),a.end(), sum % x);</span><br><span class="line">        if(pos != a.end() &amp;&amp; *pos == sum % x) </span><br><span class="line">            &#123; cout &lt;&lt; 1 &lt;&lt; endl; return 0; &#125;</span><br><span class="line">        else if(*pos &gt; sum % x &amp;&amp; pos != a.begin())</span><br><span class="line">        &#123;</span><br><span class="line">            int s1 = </span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>这个题目有点像动态规划，但是似乎常规方法也可以，暂时没有很好的解法</li>
+</ul>
+</li>
+<li><p>总结：</p>
+<ol>
+<li>其实题目算是很基础了，但一是心态，而是技术，两方面都需要加强<ol>
+<li>心态应该更淡定一些</li>
+<li>技术就是要多练</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<p>​	</p>
 
     </div>
 
@@ -295,22 +283,18 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Fuzz/" rel="tag"># Fuzz</a>
-              <a href="/tags/AFL/" rel="tag"># AFL</a>
+              <a href="/tags/%E7%A7%8B%E6%8B%9B/" rel="tag"># 秋招</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/09/04/UESTC%E5%A5%96%E5%AD%A6%E9%87%91%E4%BD%93%E7%B3%BB/" rel="prev" title="UESTC奖学金体系">
-                  <i class="fa fa-angle-left"></i> UESTC奖学金体系
+                <a href="/2024/09/01/%E8%B4%AA%E5%BF%83/" rel="prev" title="贪心">
+                  <i class="fa fa-angle-left"></i> 贪心
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/09/07/docker%E7%8E%AF%E5%A2%83/" rel="next" title="docker环境">
-                  docker环境 <i class="fa fa-angle-right"></i>
-                </a>
             </div>
           </div>
     </footer>

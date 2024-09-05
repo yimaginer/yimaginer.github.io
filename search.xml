@@ -921,4 +921,53 @@
         <tag>docker</tag>
       </tags>
   </entry>
+  <entry>
+    <title>秋招笔试真题记录</title>
+    <url>/2024/09/05/%E7%A7%8B%E6%8B%9B%E7%AC%94%E8%AF%95%E7%9C%9F%E9%A2%98%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<p>记录秋招过程中的笔试算法题目</p>
+<span id="more"></span>
+
+<ul>
+<li>0905 小米</li>
+</ul>
+<ol>
+<li><p>做面包</p>
+<p>小明每天早上需要AB两种面包各一个，同时已知小明有 n 个面包机，n 个面包机做 A B 两种面包的时间分别是 a<del>i</del> ，b<del>i</del> 。可以选择用同一台面包机先后制作 A 和 B，这样时间是累加的，也可以选择用不同的面包机并行制作 A B, 这样时间取两块面包制作时间的大者。</p>
+<p><strong>输入格式：</strong></p>
+<p>首行 n, 代表拥有面包机的数量。接下来有两行，每行 n 个数，第一行 n 个数代表 n 台面包机制作 A 面包的时间，第二行 n 个数代表 n 台面包机制作 B 面包的时间。</p>
+<p><strong>输出格式：</strong></p>
+<p>输出一个数，代表最短制作用时</p>
+<p><strong>输入样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3</span><br><span class="line">2 5 7</span><br><span class="line">2 6 8</span><br></pre></td></tr></table></figure>
+
+<p><strong>输出样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">4</span><br></pre></td></tr></table></figure>
+
+<p>答案：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">   ```</span><br><span class="line"></span><br><span class="line">   这个想对简单只需要把各自AB两种面包最小值算出来即可。略</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span> 序列操作</span><br><span class="line"></span><br><span class="line">   给出一个数字序列，你可以有两种操作，一种是把某个元素加 <span class="number">1</span>，第二种是直接删除某元素，最终期望达到的效果是所有元素之和是 x 的倍数</span><br><span class="line"></span><br><span class="line">   **输入格式：**</span><br><span class="line"></span><br><span class="line">   首行两个数字 n , x。n 代表数组长度， x 为上文描述的意义。</span><br><span class="line"></span><br><span class="line">   **输出格式：**</span><br><span class="line"></span><br><span class="line">   输出最少操作次数</span><br><span class="line"></span><br><span class="line">   **输入样例：**</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>3 5<br>2 5 7</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">**输出样例：**</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>1</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">```cpp</span><br><span class="line">// 目前 还没有太成熟的解法，想法是直接根据数据总和，以及数据元素，推算用两种方式各自需要多少次</span><br><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#define N 1010</span><br><span class="line">using namespace std;</span><br><span class="line">vector&lt;int&gt; a;</span><br><span class="line">int main()&#123;</span><br><span class="line">    int n, x; cin &gt;&gt; n &gt;&gt; x;</span><br><span class="line">    int sum = 0;</span><br><span class="line">    for(int i = 0; i &lt; n; i ++) &#123;int t; cin &gt;&gt; t; a.push_back(t), sum += t;&#125;</span><br><span class="line">    for(int i = 0; i &lt; n; i ++) cout &lt;&lt; a[i] &lt;&lt; &#x27; &#x27;; cout &lt;&lt; endl;</span><br><span class="line">    sort(a.begin(),a.end());</span><br><span class="line">    for(int i = 0; i &lt; n; i ++) cout &lt;&lt; a[i] &lt;&lt; &#x27; &#x27;; cout &lt;&lt; endl;</span><br><span class="line">    </span><br><span class="line">    if(sum % x  == 0) </span><br><span class="line">        &#123; cout &lt;&lt; 0 &lt;&lt; endl; return 0;&#125;</span><br><span class="line">    else if( (sum + 1) % x == 0) </span><br><span class="line">        &#123; cout &lt;&lt; 1 &lt;&lt; endl; return 0;&#125;</span><br><span class="line">    else</span><br><span class="line">    &#123;</span><br><span class="line">        auto pos = lower_bound(a.begin(),a.end(), sum % x);</span><br><span class="line">        if(pos != a.end() &amp;&amp; *pos == sum % x) </span><br><span class="line">            &#123; cout &lt;&lt; 1 &lt;&lt; endl; return 0; &#125;</span><br><span class="line">        else if(*pos &gt; sum % x &amp;&amp; pos != a.begin())</span><br><span class="line">        &#123;</span><br><span class="line">            int s1 = </span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>这个题目有点像动态规划，但是似乎常规方法也可以，暂时没有很好的解法</li>
+</ul>
+</li>
+<li><p>总结：</p>
+<ol>
+<li>其实题目算是很基础了，但一是心态，而是技术，两方面都需要加强<ol>
+<li>心态应该更淡定一些</li>
+<li>技术就是要多练</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<p>​	</p>
+]]></content>
+      <tags>
+        <tag>秋招</tag>
+      </tags>
+  </entry>
 </search>
