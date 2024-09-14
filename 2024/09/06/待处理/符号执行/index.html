@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="符号执行：在好情况下做到最好 — Atredis Partners 符号执行有时会被误解。通用的符号执行工具在面对足够复杂的目标时，很难证明其价值。然而，我发现在某些特定的情况下，符号执行可以非常有帮助。其中一种情况是在处理来自模糊测试器的大量崩溃时，尤其是在处理复杂或不透明的目标时。这就是我之前遇到的“好情况”，我的模糊测试器给了我大量的崩溃，这些崩溃抵抗了常规的最小化和去重。通过构建一个小型的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Focus2flow">
+<meta property="og:url" content="http://example.com/2024/09/06/%E5%BE%85%E5%A4%84%E7%90%86/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/index.html">
+<meta property="og:site_name" content="Focus2flow">
+<meta property="og:description" content="符号执行：在好情况下做到最好 — Atredis Partners 符号执行有时会被误解。通用的符号执行工具在面对足够复杂的目标时，很难证明其价值。然而，我发现在某些特定的情况下，符号执行可以非常有帮助。其中一种情况是在处理来自模糊测试器的大量崩溃时，尤其是在处理复杂或不透明的目标时。这就是我之前遇到的“好情况”，我的模糊测试器给了我大量的崩溃，这些崩溃抵抗了常规的最小化和去重。通过构建一个小型的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/1325b83b-f8de-419b-b515-2802b291355d/crash.png">
+<meta property="og:image" content="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/41d0f85f-c26e-4c2e-9ae9-ba6e318403c6/check_value.png">
+<meta property="og:image" content="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/7a06203f-edfd-4b81-816a-99f01c6d8a79/crashast.png">
+<meta property="og:image" content="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/8f5fd529-b03a-4a4a-8527-1d29f63cfa2c/backslice_sm.png">
+<meta property="og:image" content="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/3ce16869-7e3a-4bf6-8aa5-8ed45016f63c/abort_constraint.png">
+<meta property="og:image" content="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/00f6dda5-90e0-4f16-b572-391f25baf398/constraint_path.png">
+<meta property="article:published_time" content="2024-09-06T01:25:57.439Z">
+<meta property="article:modified_time" content="2024-07-19T06:19:28.158Z">
+<meta property="article:author" content="sky">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/1325b83b-f8de-419b-b515-2802b291355d/crash.png">
+
+
+<link rel="canonical" href="http://example.com/2024/09/06/%E5%BE%85%E5%A4%84%E7%90%86/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/09/06/%E5%BE%85%E5%A4%84%E7%90%86/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/","path":"2024/09/06/待处理/符号执行/","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title> | Focus2flow</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Focus2flow</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">less is more</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E8%B0%83%E8%AF%95%E5%99%A8"><span class="nav-text">一个简单的调试器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A9%E6%88%91%E4%BB%AC%E7%9A%84%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C%E8%BF%90%E8%A1%8C%E8%B5%B7%E6%9D%A5%EF%BC%8C%E4%BB%A5%E5%8F%8A%E4%B8%80%E4%BA%9B%E6%8A%80%E5%B7%A7"><span class="nav-text">让我们的符号执行运行起来，以及一些技巧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%88%91%E4%BB%AC%E7%9A%84%E8%B1%A1%E5%BE%81%E6%80%A7%E8%B0%83%E8%AF%95%E5%99%A8"><span class="nav-text">使用我们的象征性调试器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E8%BF%99%E9%87%8C%E5%8E%BB%E5%93%AA%E9%87%8C"><span class="nav-text">从这里去哪里</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%8C%E6%9C%9B%E8%BF%99%E6%9C%89%E6%89%80%E5%B8%AE%E5%8A%A9%EF%BC%81%E6%9D%A5%E5%8F%82%E5%8A%A0%E8%AF%BE%E7%A8%8B%E5%90%A7%EF%BC%81"><span class="nav-text">希望这有所帮助！来参加课程吧！</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sky</p>
+  <div class="site-description" itemprop="description">技术，人生，思考，自我</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/09/06/%E5%BE%85%E5%A4%84%E7%90%86/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Focus2flow">
+      <meta itemprop="description" content="技术，人生，思考，自我">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Focus2flow">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-06 09:25:57" itemprop="dateCreated datePublished" datetime="2024-09-06T09:25:57+08:00">2024-09-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-07-19 14:19:28" itemprop="dateModified" datetime="2024-07-19T14:19:28+08:00">2024-07-19</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><strong>符号执行：在好情况下做到最好 — Atredis Partners</strong></p>
+<p>符号执行有时会被误解。通用的符号执行工具在面对足够复杂的目标时，很难证明其价值。然而，我发现在某些特定的情况下，符号执行可以非常有帮助。其中一种情况是在处理来自模糊测试器的大量崩溃时，尤其是在处理复杂或不透明的目标时。这就是我之前遇到的“好情况”，我的模糊测试器给了我大量的崩溃，这些崩溃抵抗了常规的最小化和去重。通过构建一个小型的符号调试器，我管理了一个从模糊测试案例到完全理解的更快的响应时间。</p>
+<p>在这篇文章中，我想分享我为崩溃分类编写符号执行工具的过程，并尝试突出我使用的一些技巧，使工具更有效和灵活。这里的例子都使用了伟大的<a target="_blank" rel="noopener" href="https://triton-library.github.io/">Triton</a>库来进行我们的象征执行和求解。所有示例的代码都托管在：<a target="_blank" rel="noopener" href="https://github.com/atredis-jordan/SymbolicTriagePost">github.com&#x2F;atredis-jordan&#x2F;SymbolicTriagePost</a></p>
+<blockquote>
+<p>（顺便说一下，我们有一个课程！）你是否在你的工作流程中进行逆向工程和符号执行，或者想要这样做？</p>
+<p>你是否正在使用模糊测试，但希望找到更多机会来改进它，并发现更深入、更有趣的漏洞？</p>
+<p>你能否在网络空间与控制台牛仔一起混？</p>
+<p>我们开发了一个为期4天的课程，名为“实用符号执行用于VR和RE”，专为这些目标量身定制。它既有趣又实用，有很多演示和实验室，让你练习以创造性的方式应用这些概念。如果你对此感兴趣，可以在本文底部找到更多信息。希望在那里见到你！</p>
+</blockquote>
+<p>我们将使用_Procmon64.exe_中的一堆崩溃作为我们的示例。Procmon解析PML（进程监视器日志）文件非常容易出错，我们可以在短时间内从模糊测试会话中快速获得大量崩溃。它是一个大型的不透明二进制文件，崩溃具有一些非确定性，因此有用的工具将帮助我们加快逆向工程的努力。请注意，我们并没有尝试在Procmon中找到漏洞；因此，尽管我们将在这里讨论的这些漏洞对攻击者来说似乎并不特别有用，但我也不会在不久的将来打开任何不受信任的PML文件。</p>
+<p>我通过制作一些非常小的PML文件并将Jackalope对准目标，收集了一堆崩溃。几个小时后，我们有大约200个奇怪的崩溃可以玩。许多崩溃是不稳定的，偶尔才会重现。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">..\\Jackalope\\Release\\fuzzer.exe -iterations_per_round 30 -minimize_samples false -crash_retry 0 -nthreads 32 -in - -resume -out .\\out -t 5000 -file_extension PML -instrument_module procmon64.exe -- procmon64.exe /OpenLog @@ /Quiet /Runtime 1 /NoFilter /NoConnect</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用Jackalope对Procmon的PML解析器进行模糊测试</p>
+</blockquote>
+<h2 id="一个简单的调试器"><a href="#一个简单的调试器" class="headerlink" title="一个简单的调试器"></a>一个简单的调试器</h2><p>在所有这些符号执行的炒作中，我们的第一步是不要使用符号执行！知道何时转向符号执行，何时仅使用仿真或调试器是一个好技能。在这种情况下，我们将编写一个非常简单的调试器，使用Windows调试API。这个调试器可以用来重新运行我们的崩溃输入，找出它们的稳定性，看看它们是否都发生在主线程中，收集堆栈跟踪等。</p>
+<p>此外，拥有一个程序化调试器在我们开始符号执行时将非常有用。我们将在稍后讨论这个问题，首先让我们的调试器启动。</p>
+<blockquote>
+<p>快速旁注。我这里所有的代码示例都是用Python编写的，因为我喜欢在调试器中能够进入IPython。我在<a target="_blank" rel="noopener" href="https://github.com/atredis-jordan/SymbolicTriagePost/blob/main/win_types.py">win_types.py</a>文件中定义了一堆ctypes结构。我建议有一些程序化的方式来生成你需要的类型。可以查看<a target="_blank" rel="noopener" href="https://github.com/horsicq/PDBRipper">PDBRipper</a>或<a target="_blank" rel="noopener" href="https://github.com/microsoft/microsoft-pdb/blob/master/cvdump/cvdump.exe">cvdump</a>作为一个好的开始。</p>
+</blockquote>
+<p>好的，所以我们首先想要一个调试器，可以运行进程直到它崩溃并收集异常信息。基本前提是我们开始一个被调试的进程（我们在<a target="_blank" rel="noopener" href="https://github.com/atredis-jordan/SymbolicTriagePost/blob/main/triage.py#L77">triage.py中的_connect_debugger_函数</a>），然后等待它直到我们得到一个未处理的异常。像这样：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">handle, main_tid = connect_debugger(cmd)</span><br><span class="line"></span><br><span class="line">log(<span class="string">&quot;process&quot;</span>, <span class="number">3</span>, <span class="string">f&quot;: -- &quot;</span>)</span><br><span class="line"></span><br><span class="line">event = dbg_wait(handle, <span class="literal">None</span>)</span><br><span class="line">code = event.dwDebugEventCode</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> code == EXIT_PROCESS_DEBUG_EVENT:</span><br><span class="line">    log(<span class="string">&quot;crash&quot;</span>, <span class="number">1</span>, <span class="string">f&quot; Closed with no crash&quot;</span>)</span><br><span class="line"><span class="keyword">elif</span> code == EXCEPTION_DEBUG_EVENT:</span><br><span class="line">    <span class="comment"># 需要调查的异常</span></span><br><span class="line">    log(<span class="string">&quot;crash&quot;</span>, <span class="number">1</span>, <span class="string">f&quot; crashed:&quot;</span>)</span><br><span class="line">    er = event.u.Exception.ExceptionRecord</span><br><span class="line">    log(<span class="string">&quot;crash&quot;</span>, <span class="number">1</span>, exceptionstr(handle, er, event.dwThreadId))</span><br><span class="line"></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    log(<span class="string">&quot;process&quot;</span>, <span class="number">1</span>, <span class="string">f&quot; hit unexpected Debug Event &quot;</span>)</span><br><span class="line"></span><br><span class="line">dbg_kill(handle)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>triage.py的handle_case的一部分，运行单个测试案例</p>
+</blockquote>
+<p><img src="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/1325b83b-f8de-419b-b515-2802b291355d/crash.png" alt="img"></p>
+<p><em>运行上述代码以获取崩溃的异常信息</em></p>
+<p>许多崩溃不会每次都发生，因为某些非确定性。在我们的调试器中多次运行所有测试案例，我们可以构建一个最稳定的崩溃的图景，如果它们保持在主线程中，以及发生了什么类型的异常。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">.\\crsh\\access_violation_0000xxxxxxxxx008_00000xxxxxxxx5AA_1.PML -- 100% (18) -- main thread</span><br><span class="line">        EXCEPTION_ACCESS_VIOLATION(0xc0000005) @ 0x520 read at 0x5aa</span><br><span class="line">        EXCEPTION_STACK_BUFFER_OVERRUN(0xc0000409) @ 0x83c</span><br><span class="line">.\\crsh\\access_violation_0000xxxxxxxxx008_00000xxxxxxxx5AA_2.PML -- 100% (34) -- main thread</span><br><span class="line">        EXCEPTION_ACCESS_VIOLATION(0xc0000005) @ 0x520 read at 0x5aa</span><br><span class="line">.\\crsh\\access_violation_0000xxxxxxxxx063_00000xxxxxxxx3ED_1.PML -- 100% (34) -- main thread</span><br><span class="line">        EXCEPTION_ACCESS_VIOLATION(0xc0000005) @ 0x520 read at 0x3ed</span><br><span class="line">...</span><br><span class="line">.\\crsh\\access_violation_0000xxxxxxxxx3D4_00000xxxxxxxxED1_2.PML -- 52% (23) -- main thread</span><br><span class="line">        EXCEPTION_ACCESS_VIOLATION(0xc0000005) @ 0x87a read at 0xed1</span><br><span class="line">.\\crsh\\access_violation_0000xxxxxxxxx234_00000xxxxxxxxED4_3.PML -- 45% (22) -- main thread</span><br><span class="line">        EXCEPTION_ACCESS_VIOLATION(0xc0000005) @ 0x649 read at 0xa2</span><br><span class="line">        EXCEPTION_ACCESS_VIOLATION(0xc0000005) @ 0x87a read at 0xed4</span><br><span class="line">.\\crsh\\access_violation_0000xxxxxxxxx3CA_00000xxxxxxxxED1_1.PML -- 45% (22) -- main thread</span><br><span class="line">        EXCEPTION_ACCESS_VIOLATION(0xc0000005) @ 0x87a read at 0xed1</span><br><span class="line">.\\crsh\\access_violation_0000xxxxxxxxx5EC_00000xxxxxxxx0A2_1.PML -- 45% (22) -- main thread</span><br><span class="line">        EXCEPTION_ACCESS_VIOLATION(0xc0000005) @ 0x87a read at 0xed4</span><br><span class="line">.\\crsh\\access_violation_0000xxxxxxxxx5EF_00000xxxxxxxxF27_1.PML -- 45% (22) -- main thread</span><br><span class="line">        EXCEPTION_ACCESS_VIOLATION(0xc0000005) @ 0x649 read at 0xa2</span><br><span class="line">        EXCEPTION_ACCESS_VIOLATION(0xc0000005) @ 0x87a read at 0xecb</span><br><span class="line">.\\crsh\\access_violation_0000xxxxxxxxxB46_00000xxxxxxxxFF4_1.PML -- 44% (18) -- main thread</span><br><span class="line">        EXCEPTION_ACCESS_VIOLATION(0xc0000005) @ 0x87a read at 0xed4</span><br><span class="line">        EXCEPTION_ACCESS_VIOLATION(0xc0000005) @ 0x649 read at 0xa2</span><br><span class="line">.\\crsh\\access_violation_0000xxxxxxxxx25A_00000xxxxxxxxED4_1.PML -- 38% (21) -- main thread</span><br><span class="line">        EXCEPTION_ACCESS_VIOLATION(0xc0000005) @ 0x649 read at 0xa2</span><br><span class="line">        EXCEPTION_ACCESS_VIOLATION(0xc0000005) @ 0x87a read at 0xecb</span><br><span class="line">        EXCEPTION_ACCESS_VIOLATION(0xc0000005) @ 0x19d read at 0x184</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>从多次运行中收集的信息</p>
+</blockquote>
+<blockquote>
+<p>让我再快速旁注一下。Windows异常很棒，因为它们可以包含额外的信息。异常记录告诉我们访问违规是读取还是写入，以及导致故障的指针。在Linux上，这很难以编程方式获取，因为SEGFAULT只是一个SEGFAULT。在这里，我们可以使用我们的符号执行引擎仅提升出错的指令。引擎将为我们提供有关发生什么加载或存储的缺失信息，让我们区分无聊的NULL读取和令人兴奋的超出页面末尾的写入。</p>
+</blockquote>
+<h2 id="让我们的符号执行运行起来，以及一些技巧"><a href="#让我们的符号执行运行起来，以及一些技巧" class="headerlink" title="让我们的符号执行运行起来，以及一些技巧"></a>让我们的符号执行运行起来，以及一些技巧</h2><p>现在我们有一个使用Windows调试API（或_ptrace_或任何其他）的简单调试器。现在我们可以将我们的符号引擎混合到其中。计划是使用我们的调试器运行目标，直到我们的输入在某个地方的内存中。然后我们将输入标记为符号，并在我们的符号引擎中跟踪其余的指令。</p>
+<blockquote>
+<p>将输入标记为“符号”这里意味着我们正在告诉我们的引擎这些值将被跟踪为变量，而不仅仅是数字。这将让我们看到的所有表达式都是以我们的输入变量的形式，比如“rax: (add INPUT_12 0x12)”而不是只是“rax: 0x53”。一个更好的术语可能是“混合的”（具体-符号），因为我们仍然使用这些输入字节的实际值，只是在它们上面添加了符号信息。不过，我在这篇文章中还是使用了符号这个术语。</p>
+</blockquote>
+<p>我们的调试器会告诉我们何时到达异常。从那里我们可以在崩溃时的状态中检查我们符号输入的信息。对于访问违规，我们希望能够看到被解引用的指针是符号的“_(0xwhatever + INPUT_3c)_”或其他一些符号表达式，显示我们的输入中是什么导致了崩溃。</p>
+<p>这些信息对于根本原因分析崩溃（我们将在下一节中看到一些处理这些信息的很酷的技巧）非常有用。我们收集这些符号信息，这样我们就可以利用保持我们在崩溃路径上的约束，以及我们自己的约束，并将这些发送到求解器。使用求解器，我们可以问“什么输入会使这个指针变成X？”这让我们能够快速识别一个Write-What-Where从Read8-AroundHere，或者一个Write-That-ThereGiveOrTake100。我们可以在跟踪的任何点中断我们的象征性调试器，并使用求解器来回答我们的问题。</p>
+<p><img src="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/41d0f85f-c26e-4c2e-9ae9-ba6e318403c6/check_value.png" alt="img"></p>
+<p><em>在断点处停止，并看到什么输入会使RBX等于0x12340000</em></p>
+<p>注意：我应该指出，严格来说，使用调试器并不是必需的。我们可以只加载_procmon64.exe_及其库到我们的象征执行引擎中，然后在没有调试器的帮助下模拟指令。如果你看到<a target="_blank" rel="noopener" href="https://github.com/JonathanSalwan/Triton/tree/master/src/examples">Triton存储库中的伟大示例</a>，你会注意到它们没有跟随调试器步骤。我喜欢将符号执行引擎与调试器一起使用有几个原因。我将在以下段落中突出其中一些原因。</p>
+<p>主要原因可能是为了避免自己被误导。有了调试器或具体执行跟踪，我可以跟随一个我可以跟随的真实情况。没有它，当我在设置我们的执行环境时犯错误时，很容易直到后来才意识到。比如不正确地加载库、处理重定位或在Windows上设置_TEB_和_PEB_。通过使用调试器，我们可以通过从实际进程中拉取内存块来设置我们的执行环境。我们还可以按需加载内存，这样我们可以在非常大的进程上节省时间。在<a target="_blank" rel="noopener" href="https://github.com/atredis-jordan/SymbolicTriagePost/blob/main/triage.py#L643">我们的示例中</a>，我们使用Triton的_GET&#x2F;SET_CONCRETE_MEMORY_VALUE_回调懒加载内存。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">tri_init</span>(<span class="params">handle, onlyonsym=<span class="literal">False</span>, memarray=<span class="literal">False</span></span>):</span><br><span class="line">    <span class="comment"># 进行TritonContext的基本初始化</span></span><br><span class="line"></span><br><span class="line">    ctx = TritonContext(ARCH.X86_64)</span><br><span class="line">    ctx.setMode(MODE.ONLY_ON_SYMBOLIZED, onlyonsym)</span><br><span class="line">    <span class="keyword">if</span> memarray:</span><br><span class="line">        ctx.setMode(MODE.MEMORY_ARRAY, <span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        ctx.setMode(MODE.ALIGNED_MEMORY, <span class="literal">True</span>)</span><br><span class="line">    ctx.setMode(MODE.AST_OPTIMIZATIONS, <span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 设置延迟内存加载</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">getmemcb</span>(<span class="params">ctx, ma</span>):</span><br><span class="line">        addr = ma.getAddress()</span><br><span class="line">        sz = ma.getSize()</span><br><span class="line">        <span class="comment"># 只会加载之前没有加载过的页面</span></span><br><span class="line">        tri_load_dbg_mem(ctx, handle, addr, sz, <span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">setmemcb</span>(<span class="params">ctx, ma, val</span>):</span><br><span class="line">        addr = ma.getAddress()</span><br><span class="line">        sz = ma.getSize()</span><br><span class="line">        <span class="comment"># 只会加载之前没有加载过的页面</span></span><br><span class="line">        tri_load_dbg_mem(ctx, handle, addr, sz, <span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    ctx.addCallback(CALLBACK.GET_CONCRETE_MEMORY_VALUE, getmemcb)</span><br><span class="line">    ctx.addCallback(CALLBACK.SET_CONCRETE_MEMORY_VALUE, setmemcb)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> ctx</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在triage.py中设置Triton</p>
+</blockquote>
+<p>调试器还让我们处理我们的象征执行引擎不知道的指令。例如，Triton没有定义’<em>rdrand</em>‘指令。通过与我们的调试器单步执行，我们可以在遇到未知指令时简单地修正任何更改的寄存器。这可能会导致如果我们的符号输入与指令一起做某些事情时，符号信息的丢失，但大多数情况下我们可以忽略这些指令。</p>
+<p>最后，使用我们的调试器给我们带来了另一个非常好的好处；我们可以跳过整个无关代码的区域！我们必须非常小心地标记什么为无关，因为做错了可能意味着我们失去了很多符号信息。对于procmon，我将大部分绘图代码标记为无关。当从user32或gdi32中击中这些导入之一时，我们放置一个断点并让调试器跨过这些调用，然后恢复与Triton的单步执行。这节省了大量的时间，因为符号执行比实际执行慢了几个数量级。我们可以跨过的任何无关代码都可以产生巨大的差异。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 跳过绘图代码</span></span><br><span class="line"><span class="keyword">if</span> skip_imports:</span><br><span class="line">    impfuncs = dbg_get_imports_from(handle, base, [<span class="string">&quot;user32.dll&quot;</span>, <span class="string">&quot;gdi32.dll&quot;</span>, <span class="string">&quot;comdlg32.dll&quot;</span>, <span class="string">&quot;comctl32.dll&quot;</span>])</span><br><span class="line">    <span class="keyword">for</span> name <span class="keyword">in</span> impfuncs:</span><br><span class="line">        addr = impfuncs[name]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 不跳过一些user32的</span></span><br><span class="line">        skip = <span class="literal">True</span></span><br><span class="line">        <span class="keyword">for</span> ds <span class="keyword">in</span> [<span class="string">&quot;PostMessage&quot;</span>, <span class="string">&quot;DefWindowProc&quot;</span>, <span class="string">&quot;PostQuitMessage&quot;</span>, <span class="string">&quot;GetMessagePos&quot;</span>, <span class="string">&quot;PeekMessage&quot;</span>, <span class="string">&quot;DispatchMessage&quot;</span>, <span class="string">&quot;GetMessage&quot;</span>, <span class="string">&quot;TranslateMessage&quot;</span>, <span class="string">&quot;SendMessage&quot;</span>, <span class="string">&quot;CallWindowProc&quot;</span>, <span class="string">&quot;CallNextHook&quot;</span>]:</span><br><span class="line">            <span class="keyword">if</span> ds.lower() <span class="keyword">in</span> name.lower():</span><br><span class="line">                skip = <span class="literal">False</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> skip:</span><br><span class="line">            hooks[addr] = (skipfunc_hook, name)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在triage.py中跳过不需要的导入</p>
+</blockquote>
+<p>对于我们的目标，跳过导入还不够。我们仍然在procmon二进制文件中的循环中花费大量时间。快速查看确认这些是静态包含的_memset_和_memcpy_。我们不能只是跳过_memcpy_，因为我们会失去正在复制的符号信息。因此对于这两个，我们编写了一个钩子，会在Python中以符号方式处理操作，而不必模拟每条指令。我们确保复制的字节在源数据中获得了符号表达式的副本。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(size):</span><br><span class="line">    sa = MemoryAccess(src + i, <span class="number">1</span>)</span><br><span class="line">    da = MemoryAccess(dst + i, <span class="number">1</span>)</span><br><span class="line">    cell = ctx.getMemoryAst(sa)</span><br><span class="line">    expr = ctx.newSymbolicExpression(cell, <span class="string">&quot;memcpy byte&quot;</span>)</span><br><span class="line">    ctx.assignSymbolicExpressionToMemory(expr, da)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在我们的memcpy钩子中传输符号信息</p>
+</blockquote>
+<p>这些类型的钩子不仅节省了我们的时间，而且是一个检查_memcpy_或_memset_中符号参数的绝佳机会。即使当前跟踪不会在_memcpy_中崩溃，我们也有能力查看这些符号参数并询问“这个_memcpy_能否到达未映射的内存？”或者“大小参数是否不合理地大？”。这可以帮助我们找到其他漏洞，或者我们已经跟踪的问题的其他表达方式。以下是一个小检查，试图看看_memcpy_的目的地的结尾是否可以很远。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">astctx = ctx.getAstContext()</span><br><span class="line">cond = ctx.getPathPredicate()</span><br><span class="line"><span class="comment"># dst + size</span></span><br><span class="line">dstendast = ctx.getRegisterAst(ctx.registers.rcx) + ctx.getRegisterAst(ctx.registers.r8)</span><br><span class="line"><span class="comment"># dst + size的具体值</span></span><br><span class="line">dstendcon = dst + size</span><br><span class="line">testpast = <span class="number">0x414141</span></span><br><span class="line">cond = astctx.land([cond, (dstendcon + testpast) &lt;= dstendast])</span><br><span class="line"></span><br><span class="line">log(<span class="string">&quot;hook&quot;</span>, <span class="number">5</span>, <span class="string">&quot;Trying to solve for a big memcpy&quot;</span>)</span><br><span class="line">model, status, _ = ctx.getModel(cond, <span class="literal">True</span>)</span><br><span class="line"><span class="keyword">if</span> status == SOLVER_STATE.SAT:</span><br><span class="line">    <span class="comment"># 可以走那么远</span></span><br><span class="line">    <span class="comment"># 这可能不是我们崩溃的原因，所以让我们只是报告它，而不是引发它</span></span><br><span class="line">    log(<span class="string">&quot;crash&quot;</span>, <span class="number">2</span>, <span class="string">&quot;Symbolic memcpy could go really far!&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在triage.py的memcpy钩子中的一个简单检查</p>
+</blockquote>
+<p>这些检查的权衡是经常调用求解器可能会增加我们的运行时间，你可能不希望它们一直启用。</p>
+<p>到目前为止，我们已经拥有了运行我们的崩溃案例并开始去重和根本原因分析所需的大部分内容。然而，我们的一些访问违规仍然表示错误的解引用不依赖于我们的输入。这对我来说没有意义，因此我怀疑我们在某个地方丢失了符号信息。有时这可能由于指针的具体化而发生，因此打开Triton的新_MEMORY_ARRAY_模式可以帮助我们恢复该信息（以速度为代价）。</p>
+<p>在这种情况下，我让我的工具在跟踪过程中打印出所有被调用的导入函数。我想看看路径上的任何系统调用是否会导致符号信息的丢失。或者是否有一个调用重新引入了输入而没有被符号化。我发现还有一个对_MapViewOfFile_的第二个调用，它将我们的输入文件重新映射到内存中的另一个位置。通过<a target="_blank" rel="noopener" href="https://github.com/atredis-jordan/SymbolicTriagePost/blob/main/triage.py#L861">添加一个钩子</a>来符号化重新映射的输入，现在所有的崩溃都正确地报告了它们与输入的符号关系！</p>
+<p><img src="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/7a06203f-edfd-4b81-816a-99f01c6d8a79/crashast.png" alt="img"></p>
+<p><em>我们的工具显示了一个坏解引用的AST</em></p>
+<h2 id="使用我们的象征性调试器"><a href="#使用我们的象征性调试器" class="headerlink" title="使用我们的象征性调试器"></a>使用我们的象征性调试器</h2><p>酷！现在我们有了我们崩溃的符号信息。我们用它做什么？</p>
+<p>首先，我们可以快速根据它们依赖的输入将我们的崩溃进行分组。这非常有帮助；即使一些问题可能导致多个位置的崩溃，我们仍然可以根据确切的输入缺乏边界检查将它们组合在一起。这可以帮助我们更好地理解一个错误，并看到错误与系统的不同交互方式。</p>
+<p>通过分组我们的崩溃，看起来我们的200个左右的崩溃可以归结为四个不同的组：三个被控制的指针被读取和一个调用___fastfail_。</p>
+<p>Triton给我们的一个很酷的工具是反向切片！因为Triton在构建它的符号表达式时可以保持与相关指令的引用，我们可以生成一个只包含与我们最终表达式相关的指令的指令跟踪。我使用这个来削减大部分代码作为无关的，并能够只走输入和崩溃之间的相关代码片段。以下是我们收集的有关一个崩溃中被解引用的坏指针的相关指令。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">backslice_expr</span>(<span class="params">ctx, symbexp, print_expr=<span class="literal">True</span></span>):</span><br><span class="line">    <span class="comment"># 按refId排序以按时间顺序</span></span><br><span class="line">    <span class="comment"># 从加载访问中获取符号表达式，可以这样做：</span></span><br><span class="line">    <span class="comment"># symbexp = inst.getLoadAccess()[0][0].getLeaAst().getSymbolicExpression()</span></span><br><span class="line">    items = <span class="built_in">sorted</span>(ctx.sliceExpressions(symbexp).items(), key=<span class="keyword">lambda</span> x: x[<span class="number">0</span>])</span><br><span class="line">    <span class="keyword">for</span> _, expr <span class="keyword">in</span> items:</span><br><span class="line">        <span class="keyword">if</span> print_expr:</span><br><span class="line">            <span class="built_in">print</span>(expr)</span><br><span class="line">        da = expr.getDisassembly()</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(da) &gt; <span class="number">0</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;\t&quot;</span> <span class="keyword">if</span> print_expr <span class="keyword">else</span> <span class="string">&quot;&quot;</span>, da)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>triage.py中的一个反向切片助手</p>
+</blockquote>
+<p><img src="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/8f5fd529-b03a-4a4a-8527-1d29f63cfa2c/backslice_sm.png" alt="img"></p>
+<p><em>使用上述代码进行反向切片</em></p>
+<p>能够在跟踪的任何点进入IPython REPL并看到程序状态以我的输入为依据在我的RE过程中非常有帮助。</p>
+<p>对于调用___fastfail_（有点像Windows的_abort_），我们这里没有坏解引用来进行反向切片，相反我们有我们的引擎收集的路径约束。这些约束是任何时候引擎看到我们可以在交叉路口象征性地走两条路时捕获的。为了保持与我们的具体路径的联系，引擎记录了我们路径所需的条件。例如：如果我们在将INPUT_5字节与0比较后采取了一个_jne_分支，引擎将添加一个路径约束，说“如果你想继续我们走的路径，请确保INPUT_5不是0”，或者用AST的话说“_(not (&#x3D; INPUT_5 (_ bv0 8))_)”。</p>
+<p>这些路径约束非常有用。我们可以使用它们来生成其他输入，这些输入会走未探索的路径。有很多不错的符号执行工具使用这个来帮助模糊测试器生成有趣的新输入。（<a target="_blank" rel="noopener" href="https://github.com/eurecom-s3/symcc">SymCC</a>、<a target="_blank" rel="noopener" href="http://klee.github.io/">KLEE</a>、<a target="_blank" rel="noopener" href="https://github.com/shellphish/driller">Driller</a>，举三个例子）</p>
+<p>在我们的情况下，我们可以检查它们来找出为什么我们最终到达了___fastfail_。通过仅查看最近的路径约束，我们可以看到由于我们的输入，我们的路径最近在哪里分叉。</p>
+<p><img src="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/3ce16869-7e3a-4bf6-8aa5-8ed45016f63c/abort_constraint.png" alt="img"></p>
+<p><em>导致___fastfail_的最最近的路径约束</em></p>
+<p><img src="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/00f6dda5-90e0-4f16-b572-391f25baf398/constraint_path.png" alt="img"></p>
+<p><em>最最近的路径约束周围的汇编</em></p>
+<p>路径约束告诉我们，上面的汇编中的条件跳转在_0x7FF7A3F43517_是我们的路径由于我们的输入值而最后一次分叉的地方。当我们在分叉后跟踪路径时，我们可以看到它总是直接导致我们的致命条件。为了获取更多关于分叉前的比较失败的信息，我为我们在该连接处进入了一个IPython shell。我们的工具使我们可以轻松地确定我们在分支前解引用的RCX指针的控制。这使这成为另一个由于控制指针读取而导致的崩溃。</p>
+<p>显示分支前解引用寄存器的AST</p>
+<h2 id="从这里去哪里"><a href="#从这里去哪里" class="headerlink" title="从这里去哪里"></a>从这里去哪里</h2><p>所以从这里我们对_procmon64.exe_中存在的问题有了一个很好的理解。更深入地研究崩溃显示它们可能不适用于制作恶意PML文件。如果我想继续走这条路，我的下一步将包括：</p>
+<ul>
+<li>根据已知的输入中未检查的区域为我们的模糊测试器生成有趣的测试案例</li>
+<li>识别我们利用路径中看起来很有吸引力的函数。有了我们的工具，我们可以收集有关我们在这些函数中拥有的控制的信息。有了这些信息，我们可以开始路径探索或生成遵循我们对看起来有趣的区域的直觉的模糊测试案例。</li>
+<li>修补不感兴趣的崩溃位置，并让我们的模糊测试器在不被低挂的果实阻止的情况下找到更好的路径。</li>
+<li><a target="_blank" rel="noopener" href="https://forum.spacehey.com/topic?id=93101">为了好玩，生成一个非常小的崩溃输入</a>。</li>
+</ul>
+<p>微软的官方政策是“所有Sysinternals工具都是‘按原样’提供的，没有官方的微软支持。”我们未能找到一个合适的地方来报告这些问题。如果任何与Sysinternals套件有联系的人想要更多信息，请与我们联系。</p>
+<h2 id="希望这有所帮助！来参加课程吧！"><a href="#希望这有所帮助！来参加课程吧！" class="headerlink" title="希望这有所帮助！来参加课程吧！"></a>希望这有所帮助！来参加课程吧！</h2><p>我希望这篇文章能帮助你看到创造性的符号执行工具如何帮助他们的工作流程！如果有人有任何问题或想要谈论它，可以通过@jordan9001或<a href="mailto:&#106;&#111;&#114;&#x64;&#97;&#x6e;&#46;&#x77;&#x68;&#x69;&#116;&#101;&#x68;&#x65;&#x61;&#100;&#64;&#97;&#x74;&#114;&#x65;&#x64;&#x69;&#115;&#46;&#99;&#x6f;&#x6d;">&#106;&#111;&#114;&#x64;&#97;&#x6e;&#46;&#x77;&#x68;&#x69;&#116;&#101;&#x68;&#x65;&#x61;&#100;&#64;&#97;&#x74;&#114;&#x65;&#x64;&#x69;&#115;&#46;&#99;&#x6f;&#x6d;</a>给我发消息。</p>
+<p>如果你读到了这篇文章的最后，你可能会喜欢我们的课程！</p>
+<p>“实用符号执行用于VR和RE”是动手的。制作它我有很多乐趣，我们查看了应用这些概念的各种方式。学生们花时间熟悉一些框架，去混淆二进制文件，检测检查时间-使用时间的漏洞，以及其他有趣的事情。</p>
+<p>你可以在下面提供你的信息，我们将在下次提供公开课程时通过电子邮件通知你。（没有垃圾邮件或其他任何东西，我保证。）</p>
+<p>如果你有一个团队对接受这种培训感兴趣，也可以与我们联系，我们也可以私下提供这种培训！我希望有一天能在课堂上见到你！</p>
+<p>谢谢！</p>
+<p>我们尊重你的隐私，不会将你的联系信息用于除Atredis培训新闻之外的任何其他用途。</p>
+<p>谢谢！</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/06/%E5%BE%85%E5%A4%84%E7%90%86/libfuzz%E6%8B%93%E8%8D%92/" rel="prev" title="">
+                  <i class="fa fa-angle-left"></i> 
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/06/%E5%BE%85%E5%A4%84%E7%90%86/XP%E7%B3%BB%E7%BB%9F%E4%B8%8A%E5%81%9A%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/" rel="next" title="">
+                   <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sky</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

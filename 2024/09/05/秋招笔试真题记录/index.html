@@ -28,7 +28,7 @@
 <meta property="og:description" content="记录秋招过程中的笔试算法题目">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-09-05T09:43:47.000Z">
-<meta property="article:modified_time" content="2024-09-05T11:10:24.471Z">
+<meta property="article:modified_time" content="2024-09-14T12:48:40.952Z">
 <meta property="article:author" content="sky">
 <meta property="article:tag" content="秋招">
 <meta name="twitter:card" content="summary">
@@ -128,7 +128,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -141,6 +141,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#0905-%E5%B0%8F%E7%B1%B3"><span class="nav-text">0905 小米</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0908-%E9%A5%BF%E4%BA%86%E5%90%97"><span class="nav-text">0908 饿了吗</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0914-%E5%B0%8F%E7%BA%A2%E4%B9%A6"><span class="nav-text">0914 小红书</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -153,7 +154,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -164,7 +165,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -219,9 +220,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-09-05 17:43:47 / 修改时间：19:10:24" itemprop="dateCreated datePublished" datetime="2024-09-05T17:43:47+08:00">2024-09-05</time>
+      <time title="创建时间：2024-09-05 17:43:47" itemprop="dateCreated datePublished" datetime="2024-09-05T17:43:47+08:00">2024-09-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-14 20:48:40" itemprop="dateModified" datetime="2024-09-14T20:48:40+08:00">2024-09-14</time>
     </span>
 
   
@@ -236,10 +243,7 @@
     <div class="post-body" itemprop="articleBody"><p>记录秋招过程中的笔试算法题目</p>
 <span id="more"></span>
 
-<ul>
-<li>0905 小米</li>
-</ul>
-<ol>
+<h4 id="0905-小米"><a href="#0905-小米" class="headerlink" title="0905 小米"></a>0905 小米</h4><ol>
 <li><p>做面包</p>
 <p>小明每天早上需要AB两种面包各一个，同时已知小明有 n 个面包机，n 个面包机做 A B 两种面包的时间分别是 a<del>i</del> ，b<del>i</del> 。可以选择用同一台面包机先后制作 A 和 B，这样时间是累加的，也可以选择用不同的面包机并行制作 A B, 这样时间取两块面包制作时间的大者。</p>
 <p><strong>输入格式：</strong></p>
@@ -285,7 +289,115 @@
 </ol>
 </li>
 </ol>
-<p>​	</p>
+<h4 id="0908-饿了吗"><a href="#0908-饿了吗" class="headerlink" title="0908 饿了吗"></a>0908 饿了吗</h4><ol>
+<li><p>排队时间</p>
+<p>给出一个表示任务执行时间的序列，判断是否可以通过交换其中两个任务的位置，使得总等待时间尽可能小，若存在输出两个位置，不存在就输出 -1</p>
+<p><strong>输入格式：</strong></p>
+<p>首行 n, 代表任务的数量。接下来是 n 个数字，表示各个任务的处理时间</p>
+<p><strong>输出格式：</strong></p>
+<p>若存在输出两个位置，不存在就输出 -1</p>
+<p><strong>输入样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">5</span><br><span class="line">12131</span><br></pre></td></tr></table></figure>
+
+<p><strong>输出样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2 5</span><br></pre></td></tr></table></figure>
+
+<p>答案：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>权益值最小化</p>
+<p>对整型数 a, b 来说，你可以有两种操作，分别变换为（a - b, b)  或 （a, b -a), 我们称 abs(a-b) 为 这队数字的权益值，给出一组这样的整数对，<strong>在使得他们的权益值之和最小前提下</strong>，问最小的操作次数。</p>
+<p><strong>输入格式：</strong></p>
+<p>首行 n, 代表整数对数量，接下来 n 行，每行是两个整型数， 代表一个数对</p>
+<p><strong>输出格式：</strong></p>
+<p>输出分两行，第一行是最小权益值之和，第二行是对应操作次数</p>
+<p><strong>输入样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">3</span><br><span class="line">2 5 7</span><br><span class="line">2 6 8</span><br></pre></td></tr></table></figure>
+
+<p><strong>输出样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">4</span><br></pre></td></tr></table></figure>
+
+<p>答案：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s</span><br></pre></td></tr></table></figure>
+
+<p>这个想对简单只需要把各自AB两种面包最小值算出来即可。略</p>
+</li>
+<li><p>都市圈</p>
+<p>n 个城市按批次规划高铁，每次规划会给出规划时间，联通城市数，对应的联通城市；被联通的城市称之为都市圈，然后询问在某个时间点上某个城市圈的人数总数？如果规划时间和询问时间一致，那么按照先执行规划再询问处理</p>
+<p><strong>输入格式：</strong></p>
+<p>首行 n, 代表拥有面包机的数量。接下来有两行，每行 n 个数，第一行 n 个数代表 n 台面包机制作 A 面包的时间，第二行 n 个数代表 n 台面包机制作 B 面包的时间。</p>
+<p><strong>输出格式：</strong></p>
+<p>输出一个数，代表最短制作用时</p>
+<p><strong>输入样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">5 3 4</span><br><span class="line">1 2 3 4 5</span><br><span class="line">1 2 1 3</span><br><span class="line">3 2 3 4</span><br><span class="line">5 2 2 5</span><br><span class="line">1 1</span><br><span class="line">5 5</span><br><span class="line">2 1</span><br><span class="line">4 3</span><br></pre></td></tr></table></figure>
+
+<p><strong>输出样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">4</span><br></pre></td></tr></table></figure>
+
+<p>答案：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s</span><br></pre></td></tr></table></figure>
+
+<p>这个想对简单只需要把各自AB两种面包最小值算出来即可。略</p>
+</li>
+</ol>
+<h4 id="0914-小红书"><a href="#0914-小红书" class="headerlink" title="0914 小红书"></a>0914 小红书</h4><ol>
+<li><p>相似笔记（15分）</p>
+<p>小红书笔记有点赞数，如果两篇笔记点赞数异或之后等于我们给定的 k 值，称两篇笔记相似。给你一个表示笔记点赞数的数组，判断这些笔记中有多少相似的。</p>
+<p><strong>输入格式：</strong></p>
+<p>首行 n, k。分别代表笔记数量，上文中的 k 值，接下来是 n 个数字，表示 n 篇笔记点赞数</p>
+<p><strong>输出格式：</strong></p>
+<p>相似笔记的对数</p>
+<p><strong>输入样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">4 5</span><br><span class="line">1 1 3 4</span><br></pre></td></tr></table></figure>
+
+<p><strong>输出样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>说明：1 ^ 4 &#x3D; 5, 所以相似数量为2，(1,4) 和 (1,4)</p>
+<p>n 的范围 1 - 10^5	k 及 点赞数范围 1 - 10^9</p>
+</blockquote>
+<p>答案：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">   </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>桌子最大摆放方式</p>
+<p>小红书有一个阅览室长宽高分别为 x y z, 这个阅览室是无重力的，因此里面的桌子可以随意漂浮，给你一个体积为 V 的桌子，桌子的边长可以是任意整数，只要保证体积是 v ,让桌子各边平行于阅览室各轴，并且各个角都位于整数坐标。问桌子可能的最大可摆放的位置数量</p>
+<p><strong>输入格式：</strong></p>
+<p>首行T, 代表接下来的数据组数。每组数构成为 x y z v，四个数的意义与上面一致</p>
+<p><strong>输出格式：</strong></p>
+<p>每组情况下桌子的最大摆放方式</p>
+<p><strong>输入样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2</span><br><span class="line">3 1 2 2</span><br><span class="line">1 2 3 7</span><br></pre></td></tr></table></figure>
+
+<p><strong>输出样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">4</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
+
+<p>答案：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s</span><br></pre></td></tr></table></figure>
+
+<p>完全没有思路！</p>
+</li>
+<li><p>树上距离</p>
+<p>小红有一棵 n 个节点， n - 1条变构成的树，边的权重为 w<del>i</del>, 定义树的两个点(u,v)权值为，从 u 到 v 的简单路径上全部边的异或和，特别的当 u 和 v 是同一个点，权值为 0，小红会进行 q 次询问，询问有多少个点到 u 的路径和恰好为 k</p>
+<p><strong>输入格式：</strong></p>
+<p>首行 n,q,分别代表树的节点数和询问次数，此后 n -  1 行，每行三个整数 u v w，表示 u v 之间有边，权值为 w, 数据保证树联通，没有重边，此后 q 行，每行 u k, 分别表示询问的节点和限定</p>
+<p><strong>输出格式：</strong></p>
+<p>每个询问输出一个整数，代表到 u 节点距离为 k 的节点数量</p>
+<p><strong>输入样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">3 2</span><br><span class="line">1 2 2</span><br><span class="line">1 3 3</span><br><span class="line">1 0</span><br><span class="line">2 2</span><br></pre></td></tr></table></figure>
+
+<p><strong>输出样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>n q 范围 1 - 10^5,  u &lt;&#x3D; n, k 范围 0 - 2^60</p>
+</blockquote>
+<p>答案：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s</span><br></pre></td></tr></table></figure>
+
+<p>这个想对简单只需要把各自AB两种面包最小值算出来即可。略</p>
+</li>
+</ol>
 
     </div>
 
@@ -307,8 +419,8 @@
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2024/09/05/linux%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="next" title="linux 系统数据结构">
-                  linux 系统数据结构 <i class="fa fa-angle-right"></i>
+                <a href="/2024/09/05/%E5%BE%85%E5%A4%84%E7%90%86/LibAFL%E5%85%A5%E9%97%A8/" rel="next" title="LibAFL入门">
+                  LibAFL入门 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>
