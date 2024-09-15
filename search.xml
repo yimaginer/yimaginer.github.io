@@ -918,9 +918,9 @@
 <li>首先在网站配置 <code>_config.yml</code> 中，设置<code>post_asset_folder: true</code>，则会在 <code>hexo n</code> 的时候同时在同路径下生成同名文件夹。</li>
 <li>意味着写作过程中可以将图片放在该文件夹中，但问题是，typora 中对图片路径的引用格式和 hexo 要求的不一致，于是需要在写完文章，编译之前把所有引用路径处理成 hexo 格式。</li>
 </ul>
-<p>下面是一张新闻图片：<br><img src="/2023/09/15/hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155128595.png" alt="image-20240915155128595"></p>
+<p>下面是一张新闻图片：<br><img src="/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155128595.png" alt="image-20240915155128595"></p>
 <p>上面的图片直接在typora 中浏览是正常的，可以正常进行路径解析，但是用 hexo 部署后是这个样子：</p>
-<p><img src="/2023/09/15/hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155502923.png" alt="image-20240915155502923"></p>
+<p><img src="/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155502923.png" alt="image-20240915155502923"></p>
 <p>加了所谓的路径转换插件后编译出来，index.html 源码是这样的：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;下面是一张新闻图片：&lt;br&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155128595.png&quot; alt=&quot;image-20240915155128595&quot;&gt;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;上面的图片直接在typora 中浏览是正常的，可以正常进行路径解析，但是用 hexo 部署后是这个样子：&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155502923.png&quot; alt=&quot;image-20240915155502923&quot;&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
 
@@ -2835,5 +2835,39 @@
 <p>但你可以把这里的大部分教训同样容易地应用在 C++ 中吗？在 C 中吗？是的，绝对可以。即使你是那种即使没有这种语言压力也不会犯这些错误的人（你比我强多了），还有很多其他的好处。</p>
 <p>我实际上没有机会谈论 Rust 的所有好处或谈论我使用 Rust 的一般经验，因为我只有 30 分钟，而这一点可能已经超过了 30 分钟。</p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>hexo+typora图片路径设置</title>
+    <url>/2023/09/15/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/</url>
+    <content><![CDATA[<h4 id="目前的问题："><a href="#目前的问题：" class="headerlink" title="目前的问题："></a>目前的问题：</h4><ol>
+<li>用 hexo n 命令新增博文全部在 _post 文件夹下，博文多了之后很乱，需要按主题分文件夹。</li>
+<li>之前的云对象存储到期以后想把图片直接放在 github 里面</li>
+</ol>
+<p>第一个问题在研究了 hexo 的官方文档之后，可以在新建文章时候用 -p 命令指定文件夹，且 -p 默认相对位置就是 _post 文件夹。</p>
+<p>第二个问题：</p>
+<ul>
+<li>首先在网站配置 <code>_config.yml</code> 中，设置<code>post_asset_folder: true</code>，则会在 <code>hexo n</code> 的时候同时在同路径下生成同名文件夹。</li>
+<li>意味着写作过程中可以将图片放在该文件夹中，但问题是，typora 中对图片路径的引用格式和 hexo 要求的不一致，于是需要在写完文章，编译之前把所有引用路径处理成 hexo 格式。</li>
+</ul>
+<p>下面是一张新闻图片：<br><img src="/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155128595.png" alt="image-20240915155128595"></p>
+<p>上面的图片直接在typora 中浏览是正常的，可以正常进行路径解析，但是用 hexo 部署后是这个样子：</p>
+<p><img src="/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155502923.png" alt="image-20240915155502923"></p>
+<p>加了所谓的路径转换插件后编译出来，index.html 源码是这样的：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;下面是一张新闻图片：&lt;br&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155128595.png&quot; alt=&quot;image-20240915155128595&quot;&gt;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;上面的图片直接在typora 中浏览是正常的，可以正常进行路径解析，但是用 hexo 部署后是这个样子：&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155502923.png&quot; alt=&quot;image-20240915155502923&quot;&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<p>但是这仍然是不能访问的，现在去掉编译插件试试。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;下面是一张新闻图片：&lt;br&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155128595.png&quot; alt=&quot;image-20240915155128595&quot;&gt;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;上面的图片直接在typora 中浏览是正常的，可以正常进行路径解析，但是用 hexo 部署后是这个样子：&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155502923.png&quot; alt=&quot;image-20240915155502923&quot;&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<p>一模一样，说明插件根本没起作用，</p>
+<p>插件用上之后：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;下面是一张新闻图片：&lt;br&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155128595.png&quot; alt=&quot;image-20240915155128595&quot;&gt;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;上面的图片直接在typora 中浏览是正常的，可以正常进行路径解析，但是用 hexo 部署后是这个样子：&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155502923.png&quot; alt=&quot;image-20240915155502923&quot;&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<p>看到王预选学长博客是所有文章放在post 文件夹，图片放在asserts下面的pic 中，然后图片链接用camo转换，本地markdown还是<a href=""></a> 形式，我的github似乎没有将markdown推上去？</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;下面是一张新闻图片：&lt;br&gt;&lt;img src=&quot;/2023/09/15/hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155128595.png&quot; alt=&quot;image-20240915155128595&quot;&gt;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;上面的图片直接在typora 中浏览是正常的，可以正常进行路径解析，但是用 hexo 部署后是这个样子：&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;img src=&quot;/2023/09/15/hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155502923.png&quot; alt=&quot;image-20240915155502923&quot;&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>博客搭建</tag>
+      </tags>
   </entry>
 </search>
