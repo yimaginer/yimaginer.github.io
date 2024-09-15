@@ -876,7 +876,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-15 23:14:27" itemprop="dateModified" datetime="2024-09-15T23:14:27+08:00">2024-09-15</time>
+      <time title="修改时间：2024-09-15 23:19:37" itemprop="dateModified" datetime="2024-09-15T23:19:37+08:00">2024-09-15</time>
     </span>
 
   
@@ -899,7 +899,7 @@
 <li>首先在网站配置 <code>_config.yml</code> 中，设置<code>post_asset_folder: true</code>，则会在 <code>hexo n</code> 的时候同时在同路径下生成同名文件夹。</li>
 <li>意味着写作过程中可以将图片放在该文件夹中，但问题是，typora 中对图片路径的引用格式和 hexo 要求的不一致，于是需要在写完文章，编译之前把所有引用路径处理成 hexo 格式。</li>
 </ul>
-<p>下面是一张新闻图片：<br><img src="/2023/09/15/hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155128595.png" alt="image-20240915155128595"></p>
+<p>下面是一张新闻图片：<br><img src="/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155128595.png" alt="image-20240915155128595"></p>
 <p>上面的图片直接在typora 中浏览是正常的，可以正常进行路径解析，但是用 hexo 部署后是这个样子：</p>
 <p><img src="/2023/09/15/hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155502923.png" alt="image-20240915155502923"></p>
 <p>加了所谓的路径转换插件后编译出来，index.html 源码是这样的：</p>
@@ -913,6 +913,8 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;下面是一张新闻图片：&lt;br&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155128595.png&quot; alt=&quot;image-20240915155128595&quot;&gt;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;上面的图片直接在typora 中浏览是正常的，可以正常进行路径解析，但是用 hexo 部署后是这个样子：&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155502923.png&quot; alt=&quot;image-20240915155502923&quot;&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
 
 <p>看到王预选学长博客是所有文章放在post 文件夹，图片放在asserts下面的pic 中，然后图片链接用camo转换，本地markdown还是<a href=""></a> 形式，我的github似乎没有将markdown推上去？</p>
+<p>现在靠用 marked 插件确实可以在网页上显示了，但是却要求本地文件写为 <a href="ex.jpg"></a> 意味着本地预览不了</p>
+<p>什么狗屁插件</p>
 
       
     </div>
