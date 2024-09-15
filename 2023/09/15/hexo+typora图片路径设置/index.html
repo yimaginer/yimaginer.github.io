@@ -27,14 +27,14 @@
 <meta property="og:site_name" content="Focus2flow">
 <meta property="og:description" content="目前的问题： 用 hexo n 命令新增博文全部在 _post 文件夹下，博文多了之后很乱，需要按主题分文件夹。 之前的云对象存储到期以后想把图片直接放在 github 里面  第一个问题在研究了 hexo 的官方文档之后，可以在新建文章时候用 -p 命令指定文件夹，且 -p 默认相对位置就是 _post 文件夹。 第二个问题：  首先在网站配置 _config.yml 中，设置post_asse">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://yimaginer.github.io/2023/09/15/hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155128595.png">
-<meta property="og:image" content="https://yimaginer.github.io/2023/09/15/hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155502923.png">
+<meta property="og:image" content="https://yimaginer.github.io/.io//image-20240915155128595.png">
+<meta property="og:image" content="https://yimaginer.github.io/.io//image-20240915155502923.png">
 <meta property="article:published_time" content="2023-09-15T07:26:19.000Z">
 <meta property="article:modified_time" content="2024-09-15T15:19:37.427Z">
 <meta property="article:author" content="sky">
 <meta property="article:tag" content="博客搭建">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://yimaginer.github.io/2023/09/15/hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155128595.png">
+<meta name="twitter:image" content="https://yimaginer.github.io/.io//image-20240915155128595.png">
 
 
 <link rel="canonical" href="https://yimaginer.github.io/2023/09/15/hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/">
@@ -253,9 +253,9 @@
 <li>首先在网站配置 <code>_config.yml</code> 中，设置<code>post_asset_folder: true</code>，则会在 <code>hexo n</code> 的时候同时在同路径下生成同名文件夹。</li>
 <li>意味着写作过程中可以将图片放在该文件夹中，但问题是，typora 中对图片路径的引用格式和 hexo 要求的不一致，于是需要在写完文章，编译之前把所有引用路径处理成 hexo 格式。</li>
 </ul>
-<p>下面是一张新闻图片：<br><img src="./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155128595.png" alt="image-20240915155128595"></p>
+<p>下面是一张新闻图片：<br><img src="/.io//image-20240915155128595.png" alt="image-20240915155128595"></p>
 <p>上面的图片直接在typora 中浏览是正常的，可以正常进行路径解析，但是用 hexo 部署后是这个样子：</p>
-<p><img src="image-20240915155502923.png" alt="image-20240915155502923"></p>
+<p><img src="/.io//image-20240915155502923.png" alt="image-20240915155502923"></p>
 <p>加了所谓的路径转换插件后编译出来，index.html 源码是这样的：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;下面是一张新闻图片：&lt;br&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155128595.png&quot; alt=&quot;image-20240915155128595&quot;&gt;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;上面的图片直接在typora 中浏览是正常的，可以正常进行路径解析，但是用 hexo 部署后是这个样子：&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155502923.png&quot; alt=&quot;image-20240915155502923&quot;&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
 
@@ -266,7 +266,7 @@
 <p>插件用上之后：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;下面是一张新闻图片：&lt;br&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155128595.png&quot; alt=&quot;image-20240915155128595&quot;&gt;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;上面的图片直接在typora 中浏览是正常的，可以正常进行路径解析，但是用 hexo 部署后是这个样子：&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155502923.png&quot; alt=&quot;image-20240915155502923&quot;&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
 
-<p>看到王预选学长博客是所有文章放在post 文件夹，图片放在asserts下面的pic 中，然后图片链接用camo转换，本地markdown还是<a href=""></a> 形式，我的github似乎没有将markdown推上去？</p>
+<p>看到王预选学长博客是所有文章放在post 文件夹，图片放在asserts下面的pic 中，然后图片链接用camo转换，本地markdown还是<a href></a> 形式，我的github似乎没有将markdown推上去？</p>
 <p>现在靠用 marked 插件确实可以在网页上显示了，但是却要求本地文件写为 <a href="ex.jpg"></a> 意味着本地预览不了</p>
 <p>什么狗屁插件</p>
 
