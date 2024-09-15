@@ -780,7 +780,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-15 16:33:04" itemprop="dateModified" datetime="2024-09-15T16:33:04+08:00">2024-09-15</time>
+      <time title="修改时间：2024-09-15 16:36:41" itemprop="dateModified" datetime="2024-09-15T16:36:41+08:00">2024-09-15</time>
     </span>
 
   
@@ -810,6 +810,9 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;下面是一张新闻图片：&lt;br&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155128595.png&quot; alt=&quot;image-20240915155128595&quot;&gt;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;上面的图片直接在typora 中浏览是正常的，可以正常进行路径解析，但是用 hexo 部署后是这个样子：&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155502923.png&quot; alt=&quot;image-20240915155502923&quot;&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
 
 <p>但是这仍然是不能访问的，现在去掉编译插件试试。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;下面是一张新闻图片：&lt;br&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155128595.png&quot; alt=&quot;image-20240915155128595&quot;&gt;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;上面的图片直接在typora 中浏览是正常的，可以正常进行路径解析，但是用 hexo 部署后是这个样子：&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155502923.png&quot; alt=&quot;image-20240915155502923&quot;&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<p>一模一样，说明插件根本没起作用</p>
 
       
     </div>
