@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yimaginer.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="原文地址：LibAFL Introductory workshop — Atredis Partners 来自一家很酷的公司：Careers — Atredis Partners">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LibAFL入门">
+<meta property="og:url" content="https://yimaginer.github.io/2024/09/05/%E5%BE%85%E5%A4%84%E7%90%86/LibAFL%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="Focus2flow">
+<meta property="og:description" content="原文地址：LibAFL Introductory workshop — Atredis Partners 来自一家很酷的公司：Careers — Atredis Partners">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/10dad911-d653-4a70-90ec-89539b44eb71/Basic+Fuzzer.png">
+<meta property="og:image" content="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/d5fddf24-77fd-44c6-b697-ad5eb48b2d5c/Feedback+Fuzzer.png">
+<meta property="og:image" content="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/1fcdad34-fd8e-4752-a0ed-8b4843f2237c/Gen+Fuzzer.png">
+<meta property="og:image" content="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/4ac10c4e-35bf-497d-bf6e-b7ea747ca6f6/GenMut+Fuzzer.png">
+<meta property="og:image" content="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/1566943528908-J56DPCZRQ9SVG4TFPP27/WhiskeyBirdTextOverlayWhite.png?format=1500w">
+<meta property="og:image" content="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/1701794251926-ZA8KEPB15YFCJ0QRW122/johannes-weber-wcspluM_Iqw-unsplash.jpg?format=1000w">
+<meta property="og:image" content="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/10dad911-d653-4a70-90ec-89539b44eb71/Basic+Fuzzer.png">
+<meta property="og:image" content="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/d5fddf24-77fd-44c6-b697-ad5eb48b2d5c/Feedback+Fuzzer.png">
+<meta property="og:image" content="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/1fcdad34-fd8e-4752-a0ed-8b4843f2237c/Gen+Fuzzer.png">
+<meta property="og:image" content="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/4ac10c4e-35bf-497d-bf6e-b7ea747ca6f6/GenMut+Fuzzer.png">
+<meta property="article:published_time" content="2024-09-05T12:26:36.000Z">
+<meta property="article:modified_time" content="2024-09-05T12:52:52.377Z">
+<meta property="article:author" content="sky">
+<meta property="article:tag" content="LibAFL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/10dad911-d653-4a70-90ec-89539b44eb71/Basic+Fuzzer.png">
+
+
+<link rel="canonical" href="https://yimaginer.github.io/2024/09/05/%E5%BE%85%E5%A4%84%E7%90%86/LibAFL%E5%85%A5%E9%97%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yimaginer.github.io/2024/09/05/%E5%BE%85%E5%A4%84%E7%90%86/LibAFL%E5%85%A5%E9%97%A8/","path":"2024/09/05/待处理/LibAFL入门/","title":"LibAFL入门"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>LibAFL入门 | Focus2flow</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Focus2flow</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">less is more</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9-LibAFL"><span class="nav-text">为什么选择 LibAFL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%BE%E5%8A%9E%E7%A0%94%E8%AE%A8%E4%BC%9A"><span class="nav-text">为什么举办研讨会</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E9%A2%84%E5%91%8A"><span class="nav-text">课程预告</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E5%99%A8"><span class="nav-text">模糊测试器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-text">目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E5%99%A8%E7%9A%84%E7%BB%84%E6%88%90%E9%83%A8%E5%88%86"><span class="nav-text">模糊测试器的组成部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Exec-%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E5%99%A8"><span class="nav-text">Exec 模糊测试器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%A6%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8F%8D%E9%A6%88%E7%9A%84-Exec-%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E5%99%A8"><span class="nav-text">带自定义反馈的 Exec 模糊测试器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%A6%86%E7%9B%96%E7%8E%87%E5%8F%8D%E9%A6%88"><span class="nav-text">代码覆盖率反馈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8F%98%E5%BC%82"><span class="nav-text">自定义变异</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%E9%97%AE%E9%A2%98"><span class="nav-text">示例问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E5%BF%AB%E5%9C%B0%E8%BF%9B%E8%A1%8C%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95"><span class="nav-text">更快地进行模糊测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%81%E4%B9%85%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E5%99%A8"><span class="nav-text">持久模糊测试器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E5%86%85%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E5%99%A8"><span class="nav-text">进程内模糊测试器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%BF%E7%9C%9F"><span class="nav-text">仿真</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90"><span class="nav-text">生成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%E9%97%AE%E9%A2%98-2"><span class="nav-text">示例问题 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-text">结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E6%8E%A8%E5%B9%BF"><span class="nav-text">课程推广</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sky</p>
+  <div class="site-description" itemprop="description">技术，人生，思考，自我</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yimaginer.github.io/2024/09/05/%E5%BE%85%E5%A4%84%E7%90%86/LibAFL%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Focus2flow">
+      <meta itemprop="description" content="技术，人生，思考，自我">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="LibAFL入门 | Focus2flow">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LibAFL入门
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-09-05 20:26:36 / 修改时间：20:52:52" itemprop="dateCreated datePublished" datetime="2024-09-05T20:26:36+08:00">2024-09-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">模糊测试</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" itemprop="url" rel="index"><span itemprop="name">漏洞挖掘</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/%E7%BF%BB%E8%AF%91%E6%96%87%E7%AB%A0/" itemprop="url" rel="index"><span itemprop="name">翻译文章</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>原文地址：<a target="_blank" rel="noopener" href="https://www.atredis.com/blog/2023/12/4/a-libafl-introductory-workshop">LibAFL Introductory workshop — Atredis Partners</a></p>
+<p>来自一家很酷的公司：<a target="_blank" rel="noopener" href="https://www.atredis.com/careers">Careers — Atredis Partners</a></p>
+<hr>
+<span id="more"></span>
+
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><h2 id="为什么选择-LibAFL"><a href="#为什么选择-LibAFL" class="headerlink" title="为什么选择 LibAFL"></a>为什么选择 LibAFL</h2><p>Fuzzing（模糊测试）非常棒！在正确的设置下，快速地向目标投掷随机输入可以产生不合理的效果。当开始一个新的目标时，模糊测试的框架可以与你的逆向工程&#x2F;审计工作一起迭代，你可以安心地睡觉，知道你的核心在夜间值班。在寻找漏洞时，我们的时间通常是有限的；任何花在工具上的努力都需要是值得的。LibAFL 是一个很棒的库，可以让我们快速地将模糊测试器适应我们的特定目标。并不是每个目标都适合“解析文件的命令行程序”类别，因此 LibAFL 让我们为特定情况制作模糊测试器。这种适应性为更广泛的目标打开了模糊测试的力量。</p>
+<h2 id="为什么举办研讨会"><a href="#为什么举办研讨会" class="headerlink" title="为什么举办研讨会"></a>为什么举办研讨会</h2><p>以下材料来自一个内部研讨会，用作对 LibAFL 的介绍。这篇文章是对研讨会的总结，并包括一个练习和示例的仓库，供你在家跟随。它期望你已经有一些 Rust 和模糊测试概念的理解。（如果你需要复习 Rust：Google 的全面 Rust 是很棒的。）</p>
+<p>已经有一些很好的资源可以学习 LibAFL。</p>
+<ul>
+<li>“LibAFL 书籍”是由一些 LibAFL 维护者创建的，是一个很好的资源。<a target="_blank" rel="noopener" href="https://aflplus.plus/libafl-book/">https://aflplus.plus/libafl-book/</a></li>
+<li>epi 有一系列很棒的文章，深入探讨了使用 LibAFL 创建一些示例模糊测试器的过程。<a target="_blank" rel="noopener" href="https://epi052.gitlab.io/notes-to-self/blog/2021-11-01-fuzzing-101-with-libafl/">https://epi052.gitlab.io/notes-to-self/blog/2021-11-01-fuzzing-101-with-libafl/</a></li>
+<li>LibAFL 仓库本身包含许多有用的示例，可以作为你自己模糊测试器的参考。<a target="_blank" rel="noopener" href="https://github.com/AFLplusplus/LibAFL/tree/main/fuzzers">https://github.com/AFLplusplus/LibAFL/tree/main/fuzzers</a></li>
+</ul>
+<p>这个研讨会旨在增加用 LibAFL 构建的示例模糊测试器的现有语料库，重点是将模糊测试器定制到我们的目标。你还会找到一些入门问题，以便你亲手体验 LibAFL。在整个研讨会中，我们尝试突出库的多功能性和力量，让你看看你可以在哪里将模糊测试器融入你的流程。</p>
+<h2 id="课程预告"><a href="#课程预告" class="headerlink" title="课程预告"></a>课程预告</h2><p>顺便说一句，如果你对这类事情（安全工具、漏洞、模糊测试）感兴趣，你可能会对我们的符号执行课程感兴趣。我们计划在 2024 年 2 月与 ringzer0 举行一次虚拟会议。本文末尾有更多信息。</p>
+<h2 id="模糊测试器"><a href="#模糊测试器" class="headerlink" title="模糊测试器"></a>模糊测试器</h2><h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p>在整个研讨会中，我们一直在测试一个在 Linux 上运行的简单目标。这个目标本身并不是很有趣，但作为我们模糊测试器的一个很好的示例目标。它逐行接收一些文本，并替换某些标识符（如 <code>&#123;&#123;XXd3sMRBIGGGz5b2&#125;&#125;</code>）为名称。为此，它包含一个具有非常大查找树的函数。在这个函数中，许多查找情况可能导致段错误。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="type">const</span> <span class="type">char</span>* <span class="title function_">uid_to_name</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* uid)</span> &#123;</span><br><span class="line">    <span class="comment">/*...*/</span> <span class="comment">// 大量的嵌套 switch 语句</span></span><br><span class="line">    <span class="keyword">switch</span> (nbuf[<span class="number">14</span>]) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;b&#x27;</span>:</span><br><span class="line">        <span class="comment">// 常规情况，没有段错误</span></span><br><span class="line">        addr = &amp;names[<span class="number">0x4b9</span>];</span><br><span class="line">        LOG(<span class="string">&quot;UID matches known name at %p&quot;</span>, addr);</span><br><span class="line">        <span class="keyword">return</span> *addr;</span><br><span class="line">    <span class="comment">/*...*/</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;7&#x27;</span>:</span><br><span class="line">        <span class="comment">// 一个坏情况</span></span><br><span class="line">        addr = ((<span class="type">const</span> <span class="type">char</span>**)<span class="number">0x68c2</span>);</span><br><span class="line">        <span class="comment">// 这里 SEGFAULT</span></span><br><span class="line">        LOG(<span class="string">&quot;UID matches known name at %p&quot;</span>, addr);</span><br><span class="line">        <span class="keyword">return</span> *addr;</span><br><span class="line">    <span class="comment">/*...*/</span></span><br></pre></td></tr></table></figure>
+
+<p>这为我们提供了一个目标，它有许多不同的代码路径，并且有许多可达到的“漏洞”可以发现。随着我们的进展，我们将适应我们的模糊测试器到这个目标，展示一些常见的方法，我们可以使用 LibAFL 将模糊测试器塑造成一个目标。</p>
+<p>你可以在这里找到我们的目标，并且仓库包括一些稍后示例中有用的变体。<a target="_blank" rel="noopener" href="https://github.com/atredis-jordan/libafl-workshop-blog/blob/main/fuzz_target/target.c">.&#x2F;fuzz_target&#x2F;target.c</a></p>
+<h2 id="模糊测试器的组成部分"><a href="#模糊测试器的组成部分" class="headerlink" title="模糊测试器的组成部分"></a>模糊测试器的组成部分</h2><p>在我们深入示例之前，让我们快速了解一下现代模糊测试器的内部结构。LibAFL 将模糊测试器分解为可以互换或更改的部分。LibAFL 充分利用了 <a target="_blank" rel="noopener" href="https://google.github.io/comprehensive-rust/methods-and-traits/traits.html">Rust 的特性系统</a>来做到这一点。下面我们有一个非常简单的模糊测试器的图表。</p>
+<p><img src="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/10dad911-d653-4a70-90ec-89539b44eb71/Basic+Fuzzer.png" alt="img"></p>
+<p>这个模糊测试器的脚本可能像下面这样简单。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> ! [ -f ./core.* ]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">head</span> -c 900 /dev/urandom &gt; ./testfile</span><br><span class="line">    <span class="built_in">cat</span> ./testfile | ./target</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<p>上面的简单模糊测试器遵循三个核心步骤。</p>
+<ol>
+<li>生成一个随机输入</li>
+<li>使用新输入运行目标</li>
+<li>如果创建的输入导致“胜利”（在这种情况下，胜利是产生核心文件的崩溃），则保留该输入</li>
+</ol>
+<p>如果你错过了上述任何部分，你将不会有一个非常好的模糊测试器。我们都听说过研究人员将随机输入管道到他们的目标，得到了一个令人兴奋的崩溃，但因为他们没有保存测试用例，所以再也无法重现该漏洞的悲惨故事。</p>
+<p>即使有了上述部分，那个简单的模糊测试器也会在发现漏洞方面挣扎。它甚至没有进展的概念！下面我们有一个更现代的模糊测试器的图表。</p>
+<p><img src="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/d5fddf24-77fd-44c6-b697-ad5eb48b2d5c/Feedback+Fuzzer.png" alt="img"></p>
+<p>这个模糊测试器基于一组现有的输入，这些输入被随机变异以创建新的测试用例。“变异”只是一组可以快速应用于输入的简单修改，以生成新的有趣的输入。重要的是，这个模糊测试器还使用执行目标的观察结果来知道输入是否“有趣”。与仅关心崩溃的模糊测试器不同，具有反馈的模糊测试器可以将变异的测试用例重新路由到要变异的输入集中。这允许模糊测试器通过迭代输入，跟踪目标中有趣的功能来取得进展。</p>
+<p>LibAFL 为这些“部分”中的每一个提供了工具。</p>
+<ul>
+<li>实现 <code>Executor</code> 特性的将使用给定的测试用例运行目标。<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.rs/libafl/latest/libafl/executors/trait.Executor.html">https://docs.rs/libafl/latest/libafl/executors/trait.Executor.html</a></li>
+</ul>
+</li>
+<li><code>Corpus</code> 特性是用于保存一组测试用例的项目，通常用于输入或解决方案。<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.rs/libafl/latest/libafl/corpus/trait.Corpus.html">https://docs.rs/libafl/latest/libafl/corpus/trait.Corpus.html</a></li>
+</ul>
+</li>
+<li>实现 <code>Scheduler</code> 特性的东西负责从语料库中选择输入以制作下一个测试用例。<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.rs/libafl/latest/libafl/schedulers/trait.Scheduler.html">https://docs.rs/libafl/latest/libafl/schedulers/trait.Scheduler.html</a></li>
+</ul>
+</li>
+<li>实现 <code>Mutator</code> 特性的提供在运行前更改输入的修改。<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.rs/libafl/latest/libafl/mutators/trait.Mutator.html">https://docs.rs/libafl/latest/libafl/mutators/trait.Mutator.html</a></li>
+</ul>
+</li>
+<li><code>Feedback</code> 和 <code>Observer</code> 特性提供了有用的工具，用于决定输入是否有用。<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.rs/libafl/latest/libafl/feedbacks/trait.Feedback.html">https://docs.rs/libafl/latest/libafl/feedbacks/trait.Feedback.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.rs/libafl/latest/libafl/observers/trait.Observer.html">https://docs.rs/libafl/latest/libafl/observers/trait.Observer.html</a></li>
+</ul>
+</li>
+</ul>
+<p>我们还将看到其他重要的特性。一定要查看特性文档中的“实现者”部分，看看库提供的有用实现。</p>
+<h2 id="Exec-模糊测试器"><a href="#Exec-模糊测试器" class="headerlink" title="Exec 模糊测试器"></a>Exec 模糊测试器</h2><p>这就带我们来到了我们的第一个示例！让我们通过使用 LibAFL 的一个基本模糊测试器来逐步了解。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/atredis-jordan/libafl-workshop-blog/blob/main/exec_fuzzer/src/main.rs">.&#x2F;exec_fuzzer&#x2F;src&#x2F;main.rs</a></p>
+<p>源代码有详细的注释，你应该仔细阅读。这里我们只突出一些关键部分。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span><br><span class="line">        <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">executor</span> = CommandExecutor::<span class="title function_ invoke__">builder</span>()</span><br><span class="line">            .<span class="title function_ invoke__">program</span>(<span class="string">&quot;../fuzz_target/target&quot;</span>)</span><br><span class="line">            .<span class="title function_ invoke__">build</span>(tuple_list!())</span><br><span class="line">            .<span class="title function_ invoke__">unwrap</span>();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">state</span> = StdState::<span class="title function_ invoke__">new</span>(</span><br><span class="line">            StdRand::<span class="title function_ invoke__">with_seed</span>(<span class="title function_ invoke__">current_nanos</span>()),</span><br><span class="line">            InMemoryCorpus::&lt;BytesInput&gt;::<span class="title function_ invoke__">new</span>(),</span><br><span class="line">            OnDiskCorpus::<span class="title function_ invoke__">new</span>(PathBuf::<span class="title function_ invoke__">from</span>(<span class="string">&quot;./solutions&quot;</span>)).<span class="title function_ invoke__">unwrap</span>(),</span><br><span class="line">            &amp;<span class="keyword">mut</span> feedback,</span><br><span class="line">            &amp;<span class="keyword">mut</span> objective,</span><br><span class="line">        ).<span class="title function_ invoke__">unwrap</span>();</span><br></pre></td></tr></table></figure>
+
+<p>我们的模糊测试器使用一个“状态”对象，该对象跟踪输入测试用例的集合、任何解决方案测试用例以及其他元数据。注意我们选择将输入保存在内存中，但将解决方案测试用例保存到磁盘上。</p>
+<p>我们使用 <code>CommandExecutor</code> 来执行我们的目标程序，它将运行目标进程并传入测试用例。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span><br><span class="line">        <span class="keyword">let</span> <span class="variable">mutator</span> = StdScheduledMutator::<span class="title function_ invoke__">with_max_stack_pow</span>(</span><br><span class="line">            <span class="title function_ invoke__">havoc_mutations</span>(),</span><br><span class="line">            <span class="number">9</span>,                 <span class="comment">// 最大变异迭代次数</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">stages</span> = tuple_list!(StdMutationalStage::<span class="title function_ invoke__">new</span>(mutator));</span><br></pre></td></tr></table></figure>
+
+<p>我们为输入构建了一个非常简单的管道。这个管道只有一个阶段，它将为每个测试用例随机选择一组变异。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span><br><span class="line">        <span class="keyword">let</span> <span class="variable">scheduler</span> = RandScheduler::<span class="title function_ invoke__">new</span>();</span><br><span class="line">        <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">fuzzer</span> = StdFuzzer::<span class="title function_ invoke__">new</span>(scheduler, feedback, objective);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 加载我们状态中的初始语料库</span></span><br><span class="line">        <span class="comment">// 由于我们在这个模糊测试器中缺乏反馈，我们必须强制执行</span></span><br><span class="line">        state.<span class="title function_ invoke__">load_initial_inputs_forced</span>(&amp;<span class="keyword">mut</span> fuzzer, &amp;<span class="keyword">mut</span> executor, &amp;<span class="keyword">mut</span> mgr, &amp;[PathBuf::<span class="title function_ invoke__">from</span>(<span class="string">&quot;../fuzz_target/corpus/&quot;</span>)]).<span class="title function_ invoke__">unwrap</span>();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 模糊测试</span></span><br><span class="line">        fuzzer.<span class="title function_ invoke__">fuzz_loop</span>(&amp;<span class="keyword">mut</span> stages, &amp;<span class="keyword">mut</span> executor, &amp;<span class="keyword">mut</span> state, &amp;<span class="keyword">mut</span> mgr).<span class="title function_ invoke__">expect</span>(<span class="string">&quot;Error in fuzz loop&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>通过一个调度器和一些反馈（这里我们使用 <code>ConstFeedback::False</code> 来没有任何反馈，除了目标反馈，这是一个 <code>CrashFeedback</code>），我们可以加载我们的初始条目并开始模糊测试。我们使用创建的阶段、选择的执行器、状态和一个事件管理器来开始模糊测试。我们的事件管理器将让我们知道当我们开始获得“胜利”时。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[jordan exec_fuzzer]$ ./target/release/exec_fuzzer/</span><br><span class="line">[Testcase #0] run time: 0h-0m-0s, clients: 1, corpus: 1, objectives: 0, executions: 1, exec/sec: 0.000</span><br><span class="line">[Testcase #0] run time: 0h-0m-0s, clients: 1, corpus: 2, objectives: 0, executions: 2, exec/sec: 0.000</span><br><span class="line">[Testcase #0] run time: 0h-0m-0s, clients: 1, corpus: 3, objectives: 0, executions: 3, exec/sec: 0.000</span><br><span class="line">[Objective #0] run time: 0h-0m-1s, clients: 1, corpus: 3, objectives: 1, executions: 3, exec/sec: 2.932</span><br><span class="line">[Stats #0] run time: 0h-0m-15s, clients: 1, corpus: 3, objectives: 1, executions: 38863, exec/sec: 2.590k</span><br><span class="line">[Objective #0] run time: 0h-0m-20s, clients: 1, corpus: 3, objectives: 2, executions: 38863, exec/sec: 1.885k</span><br></pre></td></tr></table></figure>
+
+<p>我们脆弱的目标很快就开始给我们崩溃，即使没有反馈。从一组有用的输入开始有助于我们的变异能够找到崩溃的输入。</p>
+<p>这个简单的执行模糊测试器为我们提供了一个良好的基础，我们可以在此基础上添加更多功能。</p>
+<h2 id="带自定义反馈的-Exec-模糊测试器"><a href="#带自定义反馈的-Exec-模糊测试器" class="headerlink" title="带自定义反馈的 Exec 模糊测试器"></a>带自定义反馈的 Exec 模糊测试器</h2><p>没有反馈，我们就不能有效地迭代有趣的输入。目前我们的随机变异必须一次性生成一个崩溃的案例。如果我们能向模糊测试器添加反馈，那么我们就可以识别出做了一些有趣事情的测试用例。我们将这些有趣的测试用例循环回我们的测试用例集中，进行进一步的变异。</p>
+<p>我们可以从许多不同的来源获取这些信息。对于这个示例，让我们使用 <code>fuzz_target/target_dbg</code> 二进制文件，这是我们目标的调试输出版本。通过查看这个调试输出，我们可以开始识别有趣的案例。如果一个测试用例让我们得到了我们之前没有见过的调试输出，那么我们可以认为它是有趣的，值得进一步迭代。</p>
+<p>LibAFL 库中没有这种反馈的现有实现，所以我们必须自己制作！如果你想自己尝试，我们在仓库中提供了一个模板文件。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/atredis-jordan/libafl-workshop-blog/tree/main/exec_fuzzer_stderr_template">.&#x2F;exec_fuzzer_stderr_template&#x2F;</a></p>
+<p>LibAFL 仓库提供了一个 <code>StdErrObserver</code> 结构，我们可以将其与我们的 <code>CommandExecutor</code> 一起使用。这个观察者将允许我们的自定义反馈结构接收我们运行的 <code>stderr</code> 输出。我们所要做的就是创建一个实现 <code>Feedback</code> 特性的 <code>is_interesting</code> 方法的结构，我们就应该可以开始了。在该方法中，我们提供了状态、变异输入、观察者。我们只需要从 StdErrObserver 获取调试输出，并确定我们是否到达了新的位置。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">impl</span>&lt;S&gt; Feedback&lt;S&gt; <span class="keyword">for</span> <span class="title class_">NewOutputFeedback</span></span><br><span class="line"><span class="keyword">where</span></span><br><span class="line">    S: UsesInput + HasClientPerfMonitor,</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">is_interesting</span>&lt;EM, OT&gt;(</span><br><span class="line">        &amp;<span class="keyword">mut</span> <span class="keyword">self</span>,</span><br><span class="line">        _state: &amp;<span class="keyword">mut</span> S,</span><br><span class="line">        _manager: &amp;<span class="keyword">mut</span> EM,</span><br><span class="line">        _input: &amp;S::Input,</span><br><span class="line">        observers: &amp;OT,</span><br><span class="line">        _exit_kind: &amp;ExitKind</span><br><span class="line">    ) <span class="punctuation">-&gt;</span> <span class="type">Result</span>&lt;<span class="type">bool</span>, Error&gt;</span><br><span class="line">    <span class="keyword">where</span></span><br><span class="line">        EM: EventFirer&lt;State = S&gt;,</span><br><span class="line">        OT: ObserversTuple&lt;S&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 返回 Ok(false) 对于不有趣的输入</span></span><br><span class="line">        <span class="comment">// 返回 Ok(true) 对于有趣的输入</span></span><br><span class="line">        <span class="title function_ invoke__">Ok</span>(<span class="literal">false</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我鼓励你自己尝试实现这个反馈。你可能想要找到一些启发式方法来忽略无帮助的调试消息。我们希望避免报告太多的输入作为有用的，这样我们就不会过度填充我们的输入语料库。输入语料库是我们用于生成新测试用例的输入集。如果语料库中有太多实际上并没有帮助我们挖掘胜利的输入，我们将浪费大量时间。理想情况下，我们希望这些输入尽可能小且运行速度快，同时在我们的目标中执行独特的路径。</p>
+<p>在我们的解决方案中，我们简单地保持一组已看到的哈希。如果我们看到它导致了一个独特的哈希，我们就会报告输入是有趣的。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/atredis-jordan/libafl-workshop-blog/blob/main/exec_fuzzer_stderr/src/main.rs">.&#x2F;exec_fuzzer_stderr&#x2F;src&#x2F;main.rs</a></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span><br><span class="line">        <span class="keyword">fn</span> <span class="title function_">is_interesting</span>&lt;EM, OT&gt;(</span><br><span class="line">            &amp;<span class="keyword">mut</span> <span class="keyword">self</span>,</span><br><span class="line">            _state: &amp;<span class="keyword">mut</span> S,</span><br><span class="line">            _manager: &amp;<span class="keyword">mut</span> EM,</span><br><span class="line">            _input: &amp;S::Input,</span><br><span class="line">            observers: &amp;OT,</span><br><span class="line">            _exit_kind: &amp;ExitKind</span><br><span class="line">        ) <span class="punctuation">-&gt;</span> <span class="type">Result</span>&lt;<span class="type">bool</span>, Error&gt;</span><br><span class="line">           <span class="keyword">where</span> EM: EventFirer&lt;State = S&gt;,</span><br><span class="line">                 OT: ObserversTuple&lt;S&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">let</span> <span class="variable">observer</span> = observers.match_name::&lt;StdErrObserver&gt;(&amp;<span class="keyword">self</span>.observer_name)</span><br><span class="line">                .<span class="title function_ invoke__">expect</span>(<span class="string">&quot;A NewOutputFeedback needs a StdErrObserver&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">hasher</span> = DefaultHasher::<span class="title function_ invoke__">new</span>();</span><br><span class="line">            hasher.<span class="title function_ invoke__">write</span>(&amp;observer.stderr.<span class="title function_ invoke__">clone</span>().<span class="title function_ invoke__">unwrap</span>());</span><br><span class="line">            <span class="keyword">let</span> <span class="variable">hash</span> = hasher.<span class="title function_ invoke__">finish</span>();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">self</span>.hash_set.<span class="title function_ invoke__">contains</span>(&amp;hash) &#123;</span><br><span class="line">                <span class="title function_ invoke__">Ok</span>(<span class="literal">false</span>)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">self</span>.hash_set.<span class="title function_ invoke__">insert</span>(hash);</span><br><span class="line">                <span class="title function_ invoke__">Ok</span>(<span class="literal">true</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这最终非常快地找到了“有趣”的输入，并迅速增加了我们的输入语料库。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">[Testcase #0] run time: 0h-0m-1s, clients: 1, corpus: 308, objectives: 0, executions: 4388, exec/sec: 2.520k</span><br><span class="line">[Testcase #0] run time: 0h-0m-1s, clients: 1, corpus: 309, objectives: 0, executions: 4423, exec/sec: 2.520k</span><br><span class="line">[Objective #0] run time: 0h-0m-1s, clients: 1, corpus: 309, objectives: 1, executions: 4423, exec/sec: 2.497k</span><br><span class="line">[Testcase #0] run time: 0h-0m-1s, clients: 1, corpus: 310, objectives: 1, executions: 4532, exec/sec: 2.520k</span><br><span class="line">[Testcase #0] run time: 0h-0m-1s, clients: 1, corpus: 311, objectives: 1, executions: 4629, exec/sec: 2.521k</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="代码覆盖率反馈"><a href="#代码覆盖率反馈" class="headerlink" title="代码覆盖率反馈"></a>代码覆盖率反馈</h2><p>依赖程序的正常副作用（如调试输出、系统交互等）并不是深入探索目标的可靠方法。使用这种反馈，我们可能会错过许多有趣的特性。许多现代模糊测试器的首选反馈是“代码覆盖率”。通过观察哪些代码块正在被执行，我们可以了解哪些输入暴露了有趣的逻辑。</p>
+<p>然而，收集这些信息并不总是直接的。如果你可以访问源代码，你可能可以使用编译器来为代码添加这些信息。如果没有，你可能必须通过二进制修改、仿真或其他来源动态地为你的目标添加工具。</p>
+<p>AFL++ 提供了一个版本的 clang，用于编译器级别的工具，提供代码覆盖率反馈。LibAFL 可以观察这种工具生成的信息，我们可以使用它作为反馈。我们有一个使用 <code>afl-clang-fast</code> 构建的目标。有了这个构建（ <code>target_instrumented</code>），我们可以使用 LibAFL 的 <code>ForkserverExecutor</code> 与我们的工具目标进行通信。<code>HitcountsMapObserver</code> 可以使用共享内存来接收每次运行的覆盖率信息。</p>
+<p>你可以在这里看到我们模糊测试器的代码。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/atredis-jordan/libafl-workshop-blog/blob/main/aflcc_fuzzer/src/main.rs">.&#x2F;aflcc_fuzzer&#x2F;src&#x2F;main.rs</a></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span><br><span class="line">        <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">shmem_provider</span> = UnixShMemProvider::<span class="title function_ invoke__">new</span>().<span class="title function_ invoke__">unwrap</span>();</span><br><span class="line">        <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">shmem</span> = shmem_provider.<span class="title function_ invoke__">new_shmem</span>(MAP_SIZE).<span class="title function_ invoke__">unwrap</span>();</span><br><span class="line">        <span class="comment">// 将 id 写入环境变量以供 forkserver 使用</span></span><br><span class="line">        shmem.<span class="title function_ invoke__">write_to_env</span>(<span class="string">&quot;__AFL_SHM_ID&quot;</span>).<span class="title function_ invoke__">unwrap</span>();</span><br><span class="line">        <span class="keyword">let</span> <span class="variable">shmembuf</span> = shmem.<span class="title function_ invoke__">as_mut_slice</span>();</span><br><span class="line">        <span class="comment">// 基于该缓冲区构建观察者，与目标共享</span></span><br><span class="line">        <span class="keyword">let</span> <span class="variable">edges_observer</span> = <span class="keyword">unsafe</span> &#123;HitcountsMapObserver::<span class="title function_ invoke__">new</span>(StdMapObserver::<span class="title function_ invoke__">new</span>(<span class="string">&quot;shared_mem&quot;</span>, shmembuf))&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 使用观察到的覆盖率来反馈基于获得最大覆盖率</span></span><br><span class="line">        <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">feedback</span> = MaxMapFeedback::<span class="title function_ invoke__">tracking</span>(&amp;edges_observer, <span class="literal">true</span>, <span class="literal">false</span>);</span><br><span class="line">    <span class="comment">// 这次我们可以使用 fork 服务器执行器，它使用 instrumented in fork server</span></span><br><span class="line">    <span class="comment">// 它通过分叉部分实例化的过程而不是每次从头开始，从而获得更多的每秒执行次数</span></span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">executor</span> = ForkserverExecutor::<span class="title function_ invoke__">builder</span>()</span><br><span class="line">        .<span class="title function_ invoke__">program</span>(<span class="string">&quot;../fuzz_target/target_instrumented&quot;</span>)</span><br><span class="line">        .<span class="title function_ invoke__">shmem_provider</span>(&amp;<span class="keyword">mut</span> shmem_provider)</span><br><span class="line">        .<span class="title function_ invoke__">coverage_map_size</span>(MAP_SIZE)</span><br><span class="line">        .<span class="title function_ invoke__">build</span>(tuple_list!(edges_observer))</span><br><span class="line">        .<span class="title function_ invoke__">unwrap</span>();</span><br></pre></td></tr></table></figure>
+
+<p>编译的 fork 服务器还应该减少我们需要实例化运行的时间，通过分叉部分实例化的过程而不是从头开始。这应该抵消我们工具的一些成本。</p>
+<p>执行时，我们的模糊测试器迅速找到了新的过程路径，建立了我们有趣的案例语料库，并指导我们的模糊测试器。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[jordan aflcc_fuzzer]$ ./target/release/aflcc_fuzzer</span><br><span class="line"></span><br><span class="line">[Stats #0] run time: 0h-0m-0s, clients: 1, corpus: 0, objectives: 0, executions: 0, exec/sec: 0.000</span><br><span class="line">[Testcase #0] run time: 0h-0m-0s, clients: 1, corpus: 1, objectives: 0, executions: 1, exec/sec: 0.000</span><br><span class="line">[Stats #0] run time: 0h-0m-0s, clients: 1, corpus: 1, objectives: 0, executions: 1, exec/sec: 0.000</span><br><span class="line">[Testcase #0] run time: 0h-0m-0s, clients: 1, corpus: 2, objectives: 0, executions: 2, exec/sec: 0.000</span><br><span class="line">[Stats #0] run time: 0h-0m-0s, clients: 1, corpus: 2, objectives: 0, executions: 2, exec/sec: 0.000</span><br><span class="line">...</span><br><span class="line">[Testcase #0] run time: 0h-0m-10s, clients: 1, corpus: 100, objectives: 0, executions: 19152, exec/sec: 1.823k</span><br><span class="line">[Objective #0] run time: 0h-0m-10s, clients: 1, corpus: 100, objectives: 1, executions: 19152, exec/sec: 1.762k</span><br><span class="line">[Stats #0] run time: 0h-0m-11s, clients: 1, corpus: 100, objectives: 1, executions: 19152, exec/sec: 1.723k</span><br><span class="line">[Testcase #0] run time: 0h-0m-11s, clients: 1, corpus: 101, objectives: 1, executions: 20250, exec/sec: 1.821k</span><br></pre></td></tr></table></figure>
+
+<h2 id="自定义变异"><a href="#自定义变异" class="headerlink" title="自定义变异"></a>自定义变异</h2><p>到目前为止，我们一直在使用 <code>havoc_mutations</code>，你可以看到这里是一组对许多目标都非常好的变异。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/AFLplusplus/LibAFL/blob/bd12e060ca263ea650ece0a51a355ac714e7ce75/libafl/src/mutators/scheduled.rs#L296">https://github.com/AFLplusplus/LibAFL/blob/bd12e060ca263ea650ece0a51a355ac714e7ce75/libafl/src/mutators/scheduled.rs#L296</a></p>
+<p>这些变异中的许多对我们的目标来说是浪费的。为了到达易受攻击的 <code>uid_to_name</code> 函数，输入首先必须通过 <code>valid_uid</code> 检查。在这个检查中，范围之外的字符 <code>A-Za-z0-9\-_</code> 被拒绝。许多 <code>havoc_mutations</code>，例如 <code>BytesRandInsertMutator</code>，将引入不在该范围内的字符。这导致许多测试用例被浪费。</p>
+<p>有了关于我们目标的这些知识，我们可以使用一个自定义变异器，它只会在所需的范围内插入新的字节。实现 <code>Mutator</code> 特性很简单，我们只需要提供一个 <code>mutate</code> 函数。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span><br><span class="line">    <span class="keyword">impl</span>&lt;I, S&gt; Mutator&lt;I, S&gt; <span class="keyword">for</span> <span class="title class_">AlphaByteSwapMutator</span></span><br><span class="line">    <span class="keyword">where</span></span><br><span class="line">        I: HasBytesVec,</span><br><span class="line">        S: HasRand,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">fn</span> <span class="title function_">mutate</span>(</span><br><span class="line">            &amp;<span class="keyword">mut</span> <span class="keyword">self</span>,</span><br><span class="line">            state: &amp;<span class="keyword">mut</span> S,</span><br><span class="line">            input: &amp;<span class="keyword">mut</span> I,</span><br><span class="line">            _stage_idx: <span class="type">i32</span>,</span><br><span class="line">        ) <span class="punctuation">-&gt;</span> <span class="type">Result</span>&lt;MutationResult, Error&gt; &#123;</span><br><span class="line"></span><br><span class="line">            <span class="comment">/*</span></span><br><span class="line"><span class="comment">                return Ok(MutationResult::Mutated) when you mutate the input</span></span><br><span class="line"><span class="comment">                or Ok(MutationResult::Skipped) when you don&#x27;t</span></span><br><span class="line"><span class="comment">            */</span></span><br><span class="line"></span><br><span class="line">            <span class="title function_ invoke__">Ok</span>(MutationResult::Skipped)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果你想自己尝试这个，欢迎使用 <code>aflcc_custom_mut_template</code> 作为起点。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/atredis-jordan/libafl-workshop-blog/blob/main/aflcc_custom_mut_template/">.&#x2F;aflcc_custom_mut_template&#x2F;</a></p>
+<p>在我们的解决方案中，我们使用一组变异器，包括我们的新 <code>AlphaByteSwapMutator</code> 和一些现有的变异器。这个集合应该会产生更多的有效测试用例，使其到达 <code>uid_to_name</code> 函数。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span><br><span class="line">        <span class="comment">// 我们将指定我们的自定义变异器，以及另外两个有助于增长或缩小的变异器</span></span><br><span class="line">        <span class="keyword">let</span> <span class="variable">mutator</span> = StdScheduledMutator::<span class="title function_ invoke__">with_max_stack_pow</span>(</span><br><span class="line">            tuple_list!(</span><br><span class="line">                AlphaByteSwapMutator::<span class="title function_ invoke__">new</span>(),</span><br><span class="line">                BytesDeleteMutator::<span class="title function_ invoke__">new</span>(),</span><br><span class="line">                BytesInsertMutator::<span class="title function_ invoke__">new</span>(),</span><br><span class="line">            ),</span><br><span class="line">            <span class="number">9</span>,</span><br><span class="line">        );</span><br></pre></td></tr></table></figure>
+
+<p>然后在我们的变异器中，我们使用状态的随机源来选择位置，并从一组有效字符中选择一个新的字节。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span><br><span class="line">        <span class="keyword">fn</span> <span class="title function_">mutate</span>(</span><br><span class="line">            &amp;<span class="keyword">mut</span> <span class="keyword">self</span>,</span><br><span class="line">            state: &amp;<span class="keyword">mut</span> S,</span><br><span class="line">            input: &amp;<span class="keyword">mut</span> I,</span><br><span class="line">            _stage_idx: <span class="type">i32</span>,</span><br><span class="line">        ) <span class="punctuation">-&gt;</span> <span class="type">Result</span>&lt;MutationResult, Error&gt; &#123;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 这里我们应用我们的随机变异</span></span><br><span class="line">            <span class="comment">// 对于我们的目标，简单地交换一个字节应该是有效的</span></span><br><span class="line">            <span class="comment">// 只要我们的新字节是 0-9A-Za-z 或 &#x27;-&#x27; 或 &#x27;_&#x27;</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 跳过空输入</span></span><br><span class="line">            <span class="keyword">if</span> input.<span class="title function_ invoke__">bytes</span>().<span class="title function_ invoke__">is_empty</span>() &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="title function_ invoke__">Ok</span>(MutationResult::Skipped)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 选择一个随机字节</span></span><br><span class="line">            <span class="keyword">let</span> <span class="variable">byte</span>: &amp;<span class="keyword">mut</span> <span class="type">u8</span> = state.<span class="title function_ invoke__">rand_mut</span>().<span class="title function_ invoke__">choose</span>(input.<span class="title function_ invoke__">bytes_mut</span>());</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 不要替换标签字符 &#x27;&#123;&#123;&#125;&#125;&#x27;</span></span><br><span class="line">            <span class="keyword">if</span> *byte == <span class="string">b&#x27;&#123;&#x27;</span> || *byte == <span class="string">b&#x27;&#125;&#x27;</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="title function_ invoke__">Ok</span>(MutationResult::Skipped)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 现在我们可以将该字节替换为一个已知好的字节</span></span><br><span class="line">            *byte = *state.<span class="title function_ invoke__">rand_mut</span>().<span class="title function_ invoke__">choose</span>(&amp;<span class="keyword">self</span>.good_bytes);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 技术上我们应该说“跳过”如果我们用它自己替换一个字节，但这现在没问题</span></span><br><span class="line">            <span class="title function_ invoke__">Ok</span>(MutationResult::Mutated)</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>就是这样！自定义变异器与系统的其余部分无缝协作。能够像这样快速调整模糊测试器是适应目标的好方法。结合性能测量，这样的实验可以帮助我们快速迭代。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[Stats #0] run time: 0h-0m-1s, clients: 1, corpus: 76, objectives: 1, executions: 2339, exec/sec: 1.895k</span><br><span class="line">[Testcase #0] run time: 0h-0m-1s, clients: 1, corpus: 77, objectives: 1, executions: 2386, exec/sec: 1.933k</span><br><span class="line">[Stats #0] run time: 0h-0m-1s, clients: 1, corpus: 77, objectives: 1, executions: 2386, exec/sec: 1.928k</span><br><span class="line">[Testcase #0] run time: 0h-0m-1s, clients: 1, corpus: 78, objectives: 1, executions: 2392, exec/sec: 1.933k</span><br></pre></td></tr></table></figure>
+
+<h2 id="示例问题"><a href="#示例问题" class="headerlink" title="示例问题"></a>示例问题</h2><p>到这一点，我们有一个单独的目标，你可能想要尝试！它是一个包含一个小迷宫的程序，并给你一个机会创建一个模糊测试器，使用一些自定义反馈或变异来更好地遍历迷宫并发现崩溃。尝试我们在这里介绍的一些概念，并看看你的模糊测试器有多快可以解决迷宫。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/atredis-jordan/libafl-workshop-blog/tree/main/maze_target/">.&#x2F;maze_target&#x2F;</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">[jordan maze_target]$ ./maze -p</span><br><span class="line"></span><br><span class="line">██████████████</span><br><span class="line">█.██......█ ██</span><br><span class="line">█....██ █.☺  █</span><br><span class="line">██████  █ ██ █</span><br><span class="line">██   ██████  █</span><br><span class="line">█  █  █     ██</span><br><span class="line">█ ███   ██████</span><br><span class="line">█  ███ ██   ██</span><br><span class="line">██   ███  █  █</span><br><span class="line">████ ██  ███ █</span><br><span class="line">█    █  ██ █ █</span><br><span class="line">█ ████ ███ █ █</span><br><span class="line">█          █  </span><br><span class="line">████████████</span><br><span class="line"></span><br><span class="line">Found:</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  #</span><span class="language-bash"><span class="comment">###########</span></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">         <span class="comment">#</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="comment"># ### #### #</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="comment"># ##  #...@#</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="comment">###  ##.####</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> <span class="comment">#  ###...##</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#   ## ###..#</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#####...###.#</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#.....#..#..#</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">..######...##</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">.##.#  <span class="comment">######</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">....# <span class="comment">##....#</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># #......##.#</span></span></span><br><span class="line">[Testcase #0] run time: 0h-0m-2s, clients: 1, corpus: 49, objectives: 0, executions: 5745, exec/sec: 2.585k</span><br><span class="line">Found:</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  #</span><span class="language-bash"><span class="comment">###########</span></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">         <span class="comment">#</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="comment"># ### ####@#</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="comment"># ##  #....#</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="comment">###  ##.####</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> <span class="comment">#  ###...##</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#   ## ###..#</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#####...###.#</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#.....#..#..#</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">..######...##</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">.##.#  <span class="comment">######</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">....# <span class="comment">##....#</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># #......##.#</span></span></span><br><span class="line">[Testcase #0] run time: 0h-0m-3s, clients: 1, corpus: 50, objectives: 0, executions: 8892, exec/sec: 2.587k</span><br></pre></td></tr></table></figure>
+
+<h2 id="更快地进行模糊测试"><a href="#更快地进行模糊测试" class="headerlink" title="更快地进行模糊测试"></a>更快地进行模糊测试</h2><h2 id="持久模糊测试器"><a href="#持久模糊测试器" class="headerlink" title="持久模糊测试器"></a>持久模糊测试器</h2><p>在前面的示例中，我们使用了 <code>ForkserverExecutor</code>，它与 <code>afl-clang-fast</code> 插入到我们目标中的 fork 服务器一起工作。虽然 fork 服务器通过减少每个目标进程的启动时间给了我们很大的速度提升，但我们仍然需要为每个测试用例创建一个新进程。如果我们可以在一个进程中运行多个测试用例，我们可以大大加快我们的模糊测试。在一个目标进程中运行多个测试用例通常被称为“持久模式”模糊测试。</p>
+<p>正如 <a target="_blank" rel="noopener" href="https://github.com/AFLplusplus/AFLplusplus/blob/61e27c6b54f7641a168b6acc6ecffb1754c10918/docs/fuzzing_in_depth.md?plain=1#L371">AFL++ 文档</a>中所说：</p>
+<blockquote>
+<p>基本上，如果你不以持久模式对目标进行模糊测试，那么你就是在业余地进行模糊测试，而不是专业地进行模糊测试。</p>
+</blockquote>
+<p>一些目标与持久模式不兼容。每次运行都会改变大量全局状态的任何内容都可能遇到麻烦，因为我们希望每个测试用例尽可能独立运行。即使对于适合持久模式的目标，我们通常也需要为目标代码创建一个框架。这个框架只是我们编写的一些代码，用于调用目标进行模糊测试。<a target="_blank" rel="noopener" href="https://github.com/AFLplusplus/AFLplusplus/blob/stable/instrumentation/README.persistent_mode.md">AFL++ 文档中关于 LLVM 的持久模式</a>是编写这些类型框架的一个很好的参考。</p>
+<p>当我们创建了这样的框架时，插入的 fork 服务器将检测到持久的能力，甚至可以使用共享内存来提供测试用例。LibAFL 的 <code>ForkserverExecutor</code> 可以让我们利用这些持久框架。</p>
+<p>使用持久框架的模糊测试器与我们之前的模糊测试器没有太大变化。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/atredis-jordan/libafl-workshop-blog/blob/main/persistent_fuzzer/src/main.rs">.&#x2F;persistent_fuzzer&#x2F;src&#x2F;main.rs</a></p>
+<p>主要变化在于告诉我们的 <code>ForkServerExecutor</code> 它 <code>is_persistent(true)</code>。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span><br><span class="line">        <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">executor</span> = ForkserverExecutor::<span class="title function_ invoke__">builder</span>()</span><br><span class="line">            .<span class="title function_ invoke__">program</span>(<span class="string">&quot;../fuzz_target/target_persistent&quot;</span>)</span><br><span class="line">            .<span class="title function_ invoke__">is_persistent</span>(<span class="literal">true</span>)</span><br><span class="line">            .<span class="title function_ invoke__">shmem_provider</span>(&amp;<span class="keyword">mut</span> shmem_provider)</span><br><span class="line">            .<span class="title function_ invoke__">coverage_map_size</span>(MAP_SIZE)</span><br><span class="line">            .<span class="title function_ invoke__">build</span>(tuple_list!(edges_observer))</span><br><span class="line">            .<span class="title function_ invoke__">unwrap</span>();</span><br></pre></td></tr></table></figure>
+
+<p><code>ForkserverExecutor</code> 负责使这一切发生。我们的大部分工作都投入到实际创建一个有效的框架中！如果你想尝试自己制作，我们已经为你准备了一些模板，让你开始。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/atredis-jordan/libafl-workshop-blog/blob/main/fuzz_target/target_persistent_template.c">.&#x2F;fuzz_target&#x2F;target_persistent_template.c</a></p>
+<p>在我们的框架中，我们要注意每次运行后重置状态，以便我们尽可能接近原始状态。任何修改的全局变量、堆分配或运行的副作用，可能会改变未来运行的行为，需要被撤销。未能清除程序状态可能导致误报或不稳定。如果我们希望这个模糊测试器的成功测试用例也能使原始目标崩溃，那么我们需要尽可能地模拟原始目标的行为。</p>
+<p>有时，模拟原始目标并不值得，而是使用我们的框架来针对更深层次的表面。例如，在我们的目标中，我们可以直接针对 <code>uid_to_name</code> 函数，然后在以后将解决方案转换为原始目标的解决方案。我们还会希望在我们的框架中调用 <code>valid_uid</code>，以确保我们不会报告永远不会对我们的原始目标起作用的误报。</p>
+<p>你可以在这里检查我们的持久框架；我们选择为每行反复调用 <code>process_line</code> 并注意清理我们自己。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/atredis-jordan/libafl-workshop-blog/blob/main/fuzz_target/target_persistent.c">.&#x2F;fuzz_target&#x2F;target_persistent.c</a></p>
+<p>在那里之前，我们看到了大约每秒 2k 次执行的模糊测试器，使用代码覆盖率反馈，现在我们看到大约每秒 5k 或 6k，仍然只有一个客户端。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[Stats #0] run time: 0h-0m-16s, clients: 1, corpus: 171, objectives: 4, executions: 95677, exec/sec: 5.826k</span><br><span class="line">[Testcase #0] run time: 0h-0m-16s, clients: 1, corpus: 172, objectives: 4, executions: 96236, exec/sec: 5.860k</span><br><span class="line">[Stats #0] run time: 0h-0m-16s, clients: 1, corpus: 172, objectives: 4, executions: 96236, exec/sec: 5.821k</span><br><span class="line">[Testcase #0] run time: 0h-0m-16s, clients: 1, corpus: 173, objectives: 4, executions: 96933, exec/sec: 5.863k</span><br><span class="line">[Stats #0] run time: 0h-0m-16s, clients: 1, corpus: 173, objectives: 4, executions: 96933, exec/sec: 5.798k</span><br><span class="line">[Testcase #0] run time: 0h-0m-16s, clients: 1, corpus: 174, objectives: 4, executions: 98077, exec/sec: 5.866k</span><br><span class="line">[Stats #0] run time: 0h-0m-16s, clients: 1, corpus: 174, objectives: 4, executions: 98077, exec/sec: 5.855k</span><br><span class="line">[Testcase #0] run time: 0h-0m-16s, clients: 1, corpus: 175, objectives: 4, executions: 98283, exec/sec: 5.867k</span><br><span class="line">[Stats #0] run time: 0h-0m-16s, clients: 1, corpus: 175, objectives: 4, executions: 98283, exec/sec: 5.853k</span><br><span class="line">[Testcase #0] run time: 0h-0m-16s, clients: 1, corpus: 176, objectives: 4, executions: 98488, exec/sec: 5.866k</span><br></pre></td></tr></table></figure>
+
+<h2 id="进程内模糊测试器"><a href="#进程内模糊测试器" class="headerlink" title="进程内模糊测试器"></a>进程内模糊测试器</h2><p>使用 AFL++ 的编译器和 fork 服务器并不是实现一个进程中多个测试用例的唯一方法。LibAFL 是一个极其灵活的库，支持各种场景。<code>InProcessExecutor</code> 允许我们在与我们的模糊测试逻辑相同的进程中直接运行测试用例。这意味着如果我们能以某种方式与我们的目标链接，我们就可以在同一进程中进行模糊测试。</p>
+<p>LibAFL 的多功能性意味着我们可以将我们的整个模糊测试器构建为库，我们可以将其链接到我们的目标中，甚至可以动态地预加载到我们的目标中。LibAFL 甚至支持 <code>nostd</code>（不依赖于操作系统或标准库的编译），因此我们可以将我们的整个模糊测试器视为一个 blob 注入到我们目标的环境。</p>
+<p>在我们的示例中，我们将我们的模糊测试器与我们的目标构建为静态库，并使用 Rust 的 FFI 直接调用 C 代码。</p>
+<p>通过提供一个 <code>build.rs</code> 文件来构建我们的模糊测试器并使其与我们的目标链接，Rust 编译将使用该文件。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/atredis-jordan/libafl-workshop-blog/blob/main/inproc_fuzzer/build.rs">.&#x2F;inproc_fuzzer&#x2F;build.rs</a></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">        <span class="keyword">let</span> <span class="variable">target_dir</span> = <span class="string">&quot;../fuzz_target&quot;</span>.<span class="title function_ invoke__">to_string</span>();</span><br><span class="line">        <span class="keyword">let</span> <span class="variable">target_lib</span> = <span class="string">&quot;target_libfuzzer&quot;</span>.<span class="title function_ invoke__">to_string</span>();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 强制我们链接文件 &#x27;libtarget_libfuzzer.a&#x27;</span></span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;cargo:rustc-link-search=native=&#123;&#125;&quot;</span>, &amp;target_dir);</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;cargo:rustc-link-lib=static:+whole-archive=&#123;&#125;&quot;</span>, &amp;target_lib);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;cargo:rerun-if-changed=build.rs&quot;</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>LibAFL 还提供了工具来包装 clang 编译器，如果你希望创建一个编译器，它将自动将你的模糊测试器注入到目标中。你可以在 LibAFL 示例中看到这一点。</p>
+<p>我们还需要一个框架来处理这个目标，这样我们就可以将测试用例作为缓冲区传递，而不是让目标从 <code>stdin</code> 读取行。我们将使用 <code>libfuzzer</code> 使用的公共接口，这让我们创建一个名为 <code>LLVMFuzzerTestOneInput</code> 的函数。LibAFL 甚至有一些助手函数可以为我们执行 FFI 调用。</p>
+<p>我们的框架可以与我们为持久模式模糊测试创建的框架非常相似。我们还要注意与持久模式模糊测试中相同的全局状态或内存泄漏，这些可能会使我们的模糊测试不稳定。同样，如果你想要自己制作框架，我们有一个模板供你参考。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/atredis-jordan/libafl-workshop-blog/blob/main/fuzz_target/target_libfuzzer_template.c">.&#x2F;fuzz_target&#x2F;target_libfuzzer_template.c</a></p>
+<p>在目标中定义了 <code>LLVMFuzzerTestOneInput</code> 并制作了静态库后，我们的模糊测试器可以直接调用框架进行每个测试用例。我们定义了一个 <code>harness</code> 函数，我们的执行器将使用测试用例数据调用该函数。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span><br><span class="line">        <span class="comment">// 我们的执行器将只是一个包装器，围绕一个框架</span></span><br><span class="line">        <span class="comment">// 调用 libfuzzer 风格的框架</span></span><br><span class="line">        <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">harness</span> = |input: &amp;BytesInput| &#123;</span><br><span class="line">            <span class="keyword">let</span> <span class="variable">target</span> = input.<span class="title function_ invoke__">target_bytes</span>();</span><br><span class="line">            <span class="keyword">let</span> <span class="variable">buf</span> = target.<span class="title function_ invoke__">as_slice</span>();</span><br><span class="line">            <span class="comment">// 这只是一些不错的调用 libfuzzer C 函数的调用</span></span><br><span class="line">            <span class="comment">// 但我们不需要使用 libfuzzer 框架来进行进程内模糊测试</span></span><br><span class="line">            <span class="comment">// 我们可以调用任何链接的函数，只要它是一个框架</span></span><br><span class="line">            <span class="title function_ invoke__">libfuzzer_test_one_input</span>(buf);</span><br><span class="line">            <span class="keyword">return</span> ExitKind::<span class="literal">Ok</span>;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">executor</span> = InProcessExecutor::<span class="title function_ invoke__">new</span>(</span><br><span class="line">            &amp;<span class="keyword">mut</span> harness,</span><br><span class="line">            tuple_list!(edges_observer),</span><br><span class="line">            &amp;<span class="keyword">mut</span> fuzzer,</span><br><span class="line">            &amp;<span class="keyword">mut</span> state,</span><br><span class="line">            &amp;<span class="keyword">mut</span> restarting_mgr,</span><br><span class="line">        ).<span class="title function_ invoke__">unwrap</span>();</span><br></pre></td></tr></table></figure>
+
+<p>这种与 libfuzzer 框架的轻松互操作性很好，我们再次看到比我们之前的模糊测试器有巨大的速度提升。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[jordan inproc_fuzzer]$ ./target/release/inproc_fuzzer</span><br><span class="line"></span><br><span class="line">启动中</span><br><span class="line">[Stats       #1]  (GLOBAL) run time: 0h-0m-16s, clients: 2, corpus: 0, objectives: 0, executions: 0, exec/sec: 0.000</span><br><span class="line">                  (CLIENT) corpus: 0, objectives: 0, executions: 0, exec/sec: 0.000, edges: 0/37494 (0%)</span><br><span class="line">...</span><br><span class="line">[Testcase    #1]  (GLOBAL) run time: 0h-0m-19s, clients: 2, corpus: 102, objectives: 5, executions: 106146, exec/sec: 30.79k</span><br><span class="line">                  (CLIENT) corpus: 102, objectives: 5, executions: 106146, exec/sec: 30.79k, edges: 136/37494 (0%)</span><br><span class="line">[Stats       #1]  (GLOBAL) run time: 0h-0m-19s, clients: 2, corpus: 102, objectives: 5, executions: 106146, exec/sec: 30.75k</span><br><span class="line">                  (CLIENT) corpus: 102, objectives: 5, executions: 106146, exec/sec: 30.75k, edges: 137/37494 (0%)</span><br><span class="line">[Testcase    #1]  (GLOBAL) run time: 0h-0m-19s, clients: 2, corpus: 103, objectives: 5, executions: 106626, exec/sec: 30.88k</span><br><span class="line">                  (CLIENT) corpus: 103, objectives: 5, executions: 106626, exec/sec: 30.88k, edges: 137/37494 (0%)</span><br><span class="line">[Objective   #1]  (GLOBAL) run time: 0h-0m-20s, clients: 2, corpus: 103, objectives: 6, executions: 106626, exec/sec: 28.32k</span><br></pre></td></tr></table></figure>
+
+<p>在这个模糊测试器中，我们还在利用 LibAFL 提供的一个非常重要的工具：低级消息传递（LLMP）。这提供了多个客户端之间的快速通信，并让我们有效地将模糊测试扩展到多个核心甚至多台机器。<code>setup_restarting_mgr_std</code> 辅助函数创建了一个事件管理器，该管理器将管理客户端，并在它们遇到崩溃时重新启动它们。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span><br><span class="line">        <span class="keyword">let</span> <span class="variable">monitor</span> = MultiMonitor::<span class="title function_ invoke__">new</span>(|s| <span class="built_in">println!</span>(<span class="string">&quot; &#123;s&#125;&quot;</span>));</span><br><span class="line"></span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;启动中&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 我们使用一个重新启动管理器，每次崩溃时都会重新启动</span></span><br><span class="line">        <span class="comment">// 我们的进程</span></span><br><span class="line">        <span class="comment">// 这将设置一个主机管理器，我们将不得不启动其他进程</span></span><br><span class="line">        <span class="keyword">let</span> (state, <span class="keyword">mut</span> restarting_mgr) = <span class="title function_ invoke__">setup_restarting_mgr_std</span>(monitor, <span class="number">1337</span>, EventConfig::<span class="title function_ invoke__">from_name</span>(<span class="string">&quot;default&quot;</span>))</span><br><span class="line">            .<span class="title function_ invoke__">expect</span>(<span class="string">&quot;无法设置重启器！&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 只有客户端将从上面的调用中返回</span></span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;我们是客户端！&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这种速度提升很重要，可以使你找到重要的漏洞或找不到。另外，在冬天让你的房间变暖一些感觉很好。</p>
+<h2 id="仿真"><a href="#仿真" class="headerlink" title="仿真"></a>仿真</h2><p>当然，并不是所有的目标都很容易与链接或使用编译器进行工具化。在这些情况下，LibAFL 提供了一些有趣的工具，如 <code>libafl_frida</code> 或 <code>libafl_nyx</code>。在下一个示例中，我们将使用 LibAFL 的修改版 QEMU 为我们没有内置工具化的二进制文件提供代码覆盖率反馈。修改版的 QEMU 将向我们的模糊测试器公开代码覆盖率信息以进行反馈。</p>
+<p>设置将类似于我们的进程内模糊测试器，但现在我们的框架将负责在目标中运行仿真器。默认情况下，仿真器状态不会为你重置，你将希望重置每次运行之间更改的任何全局状态。</p>
+<p>如果你想自己尝试，请参阅<a target="_blank" rel="noopener" href="https://docs.rs/libafl_qemu/0.10.1/libafl_qemu/emu/struct.Emulator.html">仿真器文档</a>，并随时从我们的模板开始。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/atredis-jordan/libafl-workshop-blog/tree/main/qemu_fuzzer_template">.&#x2F;qemu_fuzzer_template&#x2F;</a></p>
+<p>在我们的解决方案中，我们首先执行一些初始化，直到一个断点，然后保存堆栈和返回地址。我们将不得不每次运行重置堆栈，并在返回地址上放置一个断点，以便我们可以在调用后停止。我们还在目标中映射一个区域，可以放置我们的输入。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span><br><span class="line">        emu.<span class="title function_ invoke__">set_breakpoint</span>(mainptr);</span><br><span class="line">        <span class="keyword">unsafe</span> &#123; emu.<span class="title function_ invoke__">run</span>() &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> <span class="variable">pc</span>: GuestReg = emu.<span class="title function_ invoke__">read_reg</span>(Regs::Pc).<span class="title function_ invoke__">unwrap</span>();</span><br><span class="line">        emu.<span class="title function_ invoke__">remove_breakpoint</span>(mainptr);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 保存 ret 地址，以便我们可以使用它并停止</span></span><br><span class="line">        <span class="keyword">let</span> <span class="variable">retaddr</span>: GuestAddr = emu.<span class="title function_ invoke__">read_return_address</span>().<span class="title function_ invoke__">unwrap</span>();</span><br><span class="line">        emu.<span class="title function_ invoke__">set_breakpoint</span>(retaddr);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> <span class="variable">savedsp</span>: GuestAddr = emu.<span class="title function_ invoke__">read_reg</span>(Regs::Sp).<span class="title function_ invoke__">unwrap</span>();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 现在让我们在目标中映射一个区域，我们将用于输入。</span></span><br><span class="line">        <span class="keyword">let</span> <span class="variable">inputaddr</span> = emu.<span class="title function_ invoke__">map_private</span>(<span class="number">0</span>, <span class="number">0x1000</span>, MmapPerms::ReadWrite).<span class="title function_ invoke__">unwrap</span>();</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;Input page @ &#123;inputaddr:#x&#125;&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>现在在框架本身中，我们将输入并将其写入目标，然后开始在目标函数中执行。这次我们直接执行 <code>uid_to_name</code> 函数，并使用一个变异器，该变异器不会添加任何 <code>valid_uid</code> 会停止的无效字符。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span><br><span class="line">        <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">harness</span> = |input: &amp;BytesInput| &#123;</span><br><span class="line">            <span class="keyword">let</span> <span class="variable">target</span> = input.<span class="title function_ invoke__">target_bytes</span>();</span><br><span class="line">            <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">buf</span> = target.<span class="title function_ invoke__">as_slice</span>();</span><br><span class="line">            <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">len</span> = buf.<span class="title function_ invoke__">len</span>();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 限制我们的输入大小</span></span><br><span class="line">            <span class="keyword">if</span> len &gt; <span class="number">1024</span> &#123;</span><br><span class="line">                buf = &amp;buf[<span class="number">0</span>..<span class="number">1024</span>];</span><br><span class="line">                len = <span class="number">1024</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 将我们的测试用例写入内存，以 null 终止</span></span><br><span class="line">            <span class="keyword">unsafe</span> &#123;</span><br><span class="line">                emu.<span class="title function_ invoke__">write_mem</span>(inputaddr, buf);</span><br><span class="line">                emu.<span class="title function_ invoke__">write_mem</span>(inputaddr + (len <span class="keyword">as</span> <span class="type">u64</span>), <span class="string">b&quot;\0\0\0\0&quot;</span>);</span><br><span class="line">            &#125;;</span><br><span class="line">            <span class="comment">// 根据需要重置寄存器</span></span><br><span class="line">            emu.<span class="title function_ invoke__">write_reg</span>(Regs::Pc, parseptr).<span class="title function_ invoke__">unwrap</span>();</span><br><span class="line">            emu.<span class="title function_ invoke__">write_reg</span>(Regs::Sp, savedsp).<span class="title function_ invoke__">unwrap</span>();</span><br><span class="line">            emu.<span class="title function_ invoke__">write_return_address</span>(retaddr).<span class="title function_ invoke__">unwrap</span>();</span><br><span class="line">            emu.<span class="title function_ invoke__">write_reg</span>(Regs::Rdi, inputaddr).<span class="title function_ invoke__">unwrap</span>();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 运行直到我们的返回地址断点</span></span><br><span class="line">            <span class="comment">// 或崩溃</span></span><br><span class="line">            <span class="keyword">unsafe</span> &#123; emu.<span class="title function_ invoke__">run</span>() &#125;;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 如果我们没有崩溃，我们很好</span></span><br><span class="line">            ExitKind::<span class="literal">Ok</span></span><br><span class="line">        &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这种仿真可以非常快，特别是如果我们可以在每次运行之间不必重置大量状态。通过在这里针对更深层的函数，我们可能会很快达到崩溃。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">[Stats #0] run time: 0h-0m-1s, clients: 1, corpus: 54, objectives: 0, executions: 33349, exec/sec: 31.56k</span><br><span class="line">[Testcase #0] run time: 0h-0m-1s, clients: 1, corpus: 55, objectives: 0, executions: 34717, exec/sec: 32.85k</span><br><span class="line">[Stats #0] run time: 0h-0m-1s, clients: 1, corpus: 55, objectives: 0, executions: 34717, exec/sec: 31.59k</span><br><span class="line">[Testcase #0] run time: 0h-0m-1s, clients: 1, corpus: 56, objectives: 0, executions: 36124, exec/sec: 32.87k</span><br><span class="line">[2023-11-25T20:24:02Z ERROR libafl::executors::inprocess::unix_signal_handler] Crashed with SIGSEGV</span><br><span class="line">[2023-11-25T20:24:02Z ERROR libafl::executors::inprocess::unix_signal_handler] Child crashed!</span><br><span class="line">[Objective #0] run time: 0h-0m-1s, clients: 1, corpus: 56, objectives: 1, executions: 36124, exec/sec: 28.73k</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>LibAFL 还提供了一些有用的助手，如 <code>QemuAsanHelper</code> 和 <code>QemuSnapshotHelper</code>。甚至还有支持全系统仿真，而不是用户模式仿真。能够有效地使用仿真器进行模糊测试可以打开一个全新的目标世界。</p>
+<h2 id="生成"><a href="#生成" class="headerlink" title="生成"></a>生成</h2><p>我们从一些初始输入开始，然后简单地变异它们的方法对于某些目标来说可能非常有效，但对于更复杂的输入则不那么有效。如果我们从一个像这样的 javascript 输入开始：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (a &lt; b) &#123;</span><br><span class="line">    <span class="title function_">somefunc</span>(a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们现有的变异可能会产生以下结果：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>\<span class="title function_">x00</span> (a &lt;\u003c b) &#123;</span><br><span class="line">    <span class="title function_">somefu</span>(a;;;; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这可能会在解析器中发现一些漏洞，但不太可能在任何 javascript 引擎中发现更深层次的漏洞。如果我们想要锻炼引擎本身，我们将希望主要产生有效的 javascript。这是生成的一个很好的用例！通过定义一个语法，描述有效的 javascript 看起来像什么，我们可以生成大量的测试用例来对抗引擎。</p>
+<p><img src="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/1fcdad34-fd8e-4752-a0ed-8b4843f2237c/Gen+Fuzzer.png" alt="img"></p>
+<p>正如你在上面的图表中看到的，仅靠生成我们就不再使用变异+反馈循环。有许多成功的模糊测试器仅靠生成就获得了胜利（<a target="_blank" rel="noopener" href="https://github.com/googleprojectzero/domato">domato</a>、<a target="_blank" rel="noopener" href="https://boofuzz.readthedocs.io/en/stable/">boofuzz</a>、<a target="_blank" rel="noopener" href="https://www.atredis.com/blog/2022/03/29/veni-midi-vici-conquering-cve-2022-22657-and-cve-2022-22664">一堆奇怪的 midi 文件</a>），但我们希望在我们的模糊测试中有一些形式的反馈和进展。</p>
+<p>为了在我们的生成中利用反馈，我们可以创建一个生成数据的中间表示（IR）。然后我们可以将有趣的案例反馈到我们的输入中，以便进一步变异。</p>
+<p>所以我们之前的 javascript 可以像这样表达为令牌：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(if</span><br><span class="line">    (cond_lt (var a), (var b)),</span><br><span class="line">    (code_block</span><br><span class="line">        (func_call some_func,</span><br><span class="line">            (arg_list (var a))</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>我们对这种标记版本的变异可以做的事情包括用其他有效的令牌替换令牌或向树添加更多节点，创建一个稍微不同的输入。然后我们可以像以前一样使用这些 IR 输入和变异，结合代码覆盖率反馈。</p>
+<p><img src="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/4ac10c4e-35bf-497d-bf6e-b7ea747ca6f6/GenMut+Fuzzer.png" alt="img"></p>
+<p>现在对 IR 的变异可能会产生像这样的东西：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">(if</span><br><span class="line">    (cond_lt (const 0), (var b)),</span><br><span class="line">    (code_block</span><br><span class="line">        (func_call some_func</span><br><span class="line">            (arg_list</span><br><span class="line">                (func_call some_func,</span><br><span class="line">                    (arg_list ((var a), (var a)))</span><br><span class="line">                )</span><br><span class="line">            )</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>这将呈现为有效的 javascript，并且如果它产生有趣的反馈，可以进一步变异。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="number">0</span> &lt; b) &#123;</span><br><span class="line">    <span class="title function_">somefunc</span>(<span class="title function_">somefunc</span>(a,a));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>LibAFL 提供了一些很棒的工具，帮助你拥有一个带有反馈的生成模糊测试器。LibAFL 中包含了一个 <a target="_blank" rel="noopener" href="https://github.com/nautilus-fuzz/nautilus">Nautilus 模糊测试器</a>的版本。为了使用它与我们的例子，我们首先定义一个语法，描述我们目标的有效输入是什么样的。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/atredis-jordan/libafl-workshop-blog/blob/main/aflcc_custom_gen/grammar.json">.&#x2F;aflcc_custom_gen&#x2F;grammar.json</a></p>
+<p>有了 LibAFL，我们可以将这个语法加载到一个 <code>NautilusContext</code> 中，我们可以使用它进行生成。我们使用 <code>InProcessExecutor</code>，在我们的框架中，我们接受一个 <code>NautilusInput</code>，我们将其呈现为字节并传递给我们的 <code>LLVMFuzzerTestOneInput</code>。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/atredis-jordan/libafl-workshop-blog/blob/main/aflcc_custom_gen/src/main.rs">.&#x2F;aflcc_custom_gen&#x2F;src&#x2F;main.rs</a></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span><br><span class="line">    <span class="comment">// 我们的执行器将只是一个包装器，围绕一个框架闭包</span></span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">harness</span> = |input: &amp;NautilusInput| &#123;</span><br><span class="line">        <span class="comment">// 我们需要将我们的输入从 nautilus 树</span></span><br><span class="line">        <span class="comment">// 转换为实际的字节</span></span><br><span class="line">        input.<span class="title function_ invoke__">unparse</span>(&amp;genctx, &amp;<span class="keyword">mut</span> bytes);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> <span class="variable">s</span> = std::<span class="type">str</span>::<span class="title function_ invoke__">from_utf8</span>(&amp;bytes).<span class="title function_ invoke__">unwrap</span>();</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;Trying:\n&#123;:?&#125;&quot;</span>, s);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> <span class="variable">buf</span> = bytes.<span class="title function_ invoke__">as_mut_slice</span>();</span><br><span class="line"></span><br><span class="line">        <span class="title function_ invoke__">libfuzzer_test_one_input</span>(&amp;buf);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ExitKind::<span class="literal">Ok</span>;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 我们不能使用普通的字节变异，所以我们使用在我们生成器树上工作的变异</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">mutator</span> = StdScheduledMutator::<span class="title function_ invoke__">with_max_stack_pow</span>(</span><br><span class="line">        tuple_list!(</span><br><span class="line">            NautilusRandomMutator::<span class="title function_ invoke__">new</span>(&amp;genctx),</span><br><span class="line">            NautilusRandomMutator::<span class="title function_ invoke__">new</span>(&amp;genctx),</span><br><span class="line">            NautilusRandomMutator::<span class="title function_ invoke__">new</span>(&amp;genctx),</span><br><span class="line">            NautilusRecursionMutator::<span class="title function_ invoke__">new</span>(&amp;genctx),</span><br><span class="line">            NautilusSpliceMutator::<span class="title function_ invoke__">new</span>(&amp;genctx),</span><br><span class="line">            NautilusSpliceMutator::<span class="title function_ invoke__">new</span>(&amp;genctx),</span><br><span class="line">        ),</span><br><span class="line">        <span class="number">3</span>,</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+
+<p>我们还需要生成一些初始 IR 输入并指定要使用的变异。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span><br><span class="line">    <span class="keyword">if</span> state.<span class="title function_ invoke__">must_load_initial_inputs</span>() &#123;</span><br><span class="line">        <span class="comment">// 与从初始语料库加载不同，我们将生成 9 个 NautilusInputs 的初始语料库</span></span><br><span class="line">        <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">generator</span> = NautilusGenerator::<span class="title function_ invoke__">new</span>(&amp;genctx);</span><br><span class="line">        state.<span class="title function_ invoke__">generate_initial_inputs_forced</span>(&amp;<span class="keyword">mut</span> fuzzer, &amp;<span class="keyword">mut</span> executor, &amp;<span class="keyword">mut</span> generator, &amp;<span class="keyword">mut</span> restarting_mgr, <span class="number">9</span>).<span class="title function_ invoke__">unwrap</span>();</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;Created initial inputs&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 我们的执行器将只是一个包装器，围绕一个框架闭包</span></span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">harness</span> = |input: &amp;NautilusInput| &#123;</span><br><span class="line">        <span class="comment">// 我们需要将我们的输入从 nautilus 树</span></span><br><span class="line">        <span class="comment">// 转换为实际的字节</span></span><br><span class="line">        input.<span class="title function_ invoke__">unparse</span>(&amp;genctx, &amp;<span class="keyword">mut</span> bytes);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> <span class="variable">s</span> = std::<span class="type">str</span>::<span class="title function_ invoke__">from_utf8</span>(&amp;bytes).<span class="title function_ invoke__">unwrap</span>();</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;Trying:\n&#123;:?&#125;&quot;</span>, s);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> <span class="variable">buf</span> = bytes.<span class="title function_ invoke__">as_mut_slice</span>();</span><br><span class="line"></span><br><span class="line">        <span class="title function_ invoke__">libfuzzer_test_one_input</span>(&amp;buf);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ExitKind::<span class="literal">Ok</span>;</span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>有了这一切，我们可以运行并获得生成、代码覆盖率和进程内执行的结合优势。为了进一步改进这一点，我们可以随着对我们目标的更好理解而改进我们的语法。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">                  (CLIENT) corpus: 145, objectives: 2, executions: 40968, exec/sec: 1.800k, edges: 167/37494 (0%)</span><br><span class="line">[Testcase    #1]  (GLOBAL) run time: 0h-0m-26s, clients: 2, corpus: 146, objectives: 2, executions: 41229, exec/sec: 1.811k</span><br><span class="line">                  (CLIENT) corpus: 146, objectives: 2, executions: 41229, exec/sec: 1.811k, edges: 167/37494 (0%)</span><br><span class="line">[Objective   #1]  (GLOBAL) run time: 0h-0m-26s, clients: 2, corpus: 146, objectives: 3, executions: 41229, exec/sec: 1.780k</span><br><span class="line">                  (CLIENT) corpus: 146, objectives: 3, executions: 41229, exec/sec: 1.780k, edges: 167/37494 (0%)</span><br><span class="line">[Stats       #1]  (GLOBAL) run time: 0h-0m-27s, clients: 2, corpus: 146, objectives: 3, executions: 41229, exec/sec: 1.755k</span><br></pre></td></tr></table></figure>
+
+<p>注意，我们保存的解决方案只是序列化的 <code>NautilusInputs</code>，并且在原始目标上使用时将不起作用。我们创建了一个单独的项目，将这些解决方案呈现为字节。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/atredis-jordan/libafl-workshop-blog/blob/main/gen_solution_render/src/main.rs">.&#x2F;gen_solution_render&#x2F;src&#x2F;main.rs</a></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">input</span>: NautilusInput = NautilusInput::<span class="title function_ invoke__">from_file</span>(path).<span class="title function_ invoke__">unwrap</span>();</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">b</span> = <span class="built_in">vec!</span>[];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">tree_depth</span> = <span class="number">0x45</span>;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">genctx</span> = NautilusContext::<span class="title function_ invoke__">from_file</span>(tree_depth, grammarpath);</span><br><span class="line"></span><br><span class="line">    input.<span class="title function_ invoke__">unparse</span>(&amp;genctx, &amp;<span class="keyword">mut</span> b);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">s</span> = std::<span class="type">str</span>::<span class="title function_ invoke__">from_utf8</span>(&amp;b).<span class="title function_ invoke__">unwrap</span>();</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, s);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[jordan gen_solution_render]$ ./target/release/gen_solution_render ../aflcc_custom_gen/solutions/id:0</span><br><span class="line"></span><br><span class="line">bar&#123;&#123;PLvkLizOcGccywcS&#125;&#125;foo</span><br><span class="line"></span><br><span class="line">&#123;&#123;EGgkWs-PxeqpwBZK&#125;&#125;foo</span><br><span class="line"></span><br><span class="line">bar&#123;&#123;hlNeoKiwMTNfqO_h&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[jordan gen_solution_render]$ ./target/release/gen_solution_render ../aflcc_custom_gen/solutions/id:0 | ../fuzz_target/target</span><br><span class="line"></span><br><span class="line">Segmentation fault (core dumped)</span><br></pre></td></tr></table></figure>
+
+<h2 id="示例问题-2"><a href="#示例问题-2" class="headerlink" title="示例问题 2"></a>示例问题 2</h2><p>这给我们带来了第二个带回家的问题！我们有一个聊天客户端，它容易受到许多问题的影响。通过好好利用生成和&#x2F;或仿真，可以使对二进制文件的模糊测试变得更容易。在你发现一些嘈杂的漏洞时，你可能希望在你的模糊测试器中避免这些路径，或者在你的目标中修补这些漏洞。漏洞经常会掩盖其他漏洞。你可以在这里找到目标。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/atredis-jordan/libafl-workshop-blog/tree/main/chat_target">.&#x2F;chat_target&#x2F;</a></p>
+<p>以及一个可以模糊测试聊天客户端的示例解决方案。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/atredis-jordan/libafl-workshop-blog/blob/main/chat_solution/src/main.rs">.&#x2F;chat_solution&#x2F;src&#x2F;main.rs</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-- Ping from    16937944: DDAAAATt&#x27;AAAAPt&#x27;%222%%%%%%%9999&#x27;pRR9&amp;&amp;%%%%%%2Tt&#123;&#x27;&#x27;pRt&#x27;%99999999&#x27;pRR9&amp;&amp;&amp;%%%%%%999AATt&#x27;%&amp;&#x27;pRt&#x27;%TTTTTTTTTTTTTT9999999&#x27;a%&#x27;AAATTt&#x27;% --</span><br><span class="line">-- Error sending message: Bad file descriptor --</span><br><span class="line">[Stats #0] run time: 0h-0m-5s, clients: 1, corpus: 531, objectives: 13, executions: 26752, exec/sec: 0.000</span><br><span class="line">[Testcase #0] run time: 0h-0m-5s, clients: 1, corpus: 532, objectives: 13, executions: 26760, exec/sec: 0.000</span><br><span class="line">-- Ping from    16937944: DDAAAATT&#x27;%&#x27;aRt&#x27;%9999&#x27;pRRT&#x27;%&#x27;LLLLLLLLLLLa%&#x27;nnnnnmnnnT&#x27;AA&#x27;&#x27;&#x27;</span><br><span class="line">A&#x27;&#x27;p%&#x27;&#x27;A9999&#x27;pRRT&#x27;pRR -- </span><br><span class="line">[2023-11-25T21:29:19Z ERROR libafl::executors::inprocess::unix_signal_handler] Crashed with SIGSEGV</span><br><span class="line">[2023-11-25T21:29:19Z ERROR libafl::executors::inprocess::unix_signal_handler] Child crashed!</span><br></pre></td></tr></table></figure>
+
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>这个研讨会的目标是展示 LibAFL 的多功能性，并鼓励它的使用。希望这些示例能激发你一些关于如何将自定义模糊测试器整合到你的一些目标中的想法。如果你有任何问题或发现我们示例中的任何问题，请让我们知道。或者，如果你有一个有趣的目标，并希望我们为你找到漏洞，请与我们联系。</p>
+<h2 id="课程推广"><a href="#课程推广" class="headerlink" title="课程推广"></a>课程推广</h2><p>再次感谢你的阅读！如果你喜欢这类内容，你可能会对我们的课程“Practical Symbolic Execution for VR and RE”感兴趣，你将学习如何为以下内容创建你自己的符号执行框架：逆向工程、去混淆、漏洞检测、漏洞开发等。下一次公开课程将在 2024 年 2 月作为 ringzer0 的 BOOTSTRAP24 的一部分。我们也可以根据要求提供私人课程。</p>
+<p>更多信息在这里。<br><a target="_blank" rel="noopener" href="https://ringzer0.training/trainings/practical-symbolic-execution.html">https://ringzer0.training/trainings/practical-symbolic-execution.html</a></p>
+<p><img src="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/1566943528908-J56DPCZRQ9SVG4TFPP27/WhiskeyBirdTextOverlayWhite.png?format=1500w" alt="img"><img src="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/1701794251926-ZA8KEPB15YFCJ0QRW122/johannes-weber-wcspluM_Iqw-unsplash.jpg?format=1000w" alt="img"><img src="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/10dad911-d653-4a70-90ec-89539b44eb71/Basic+Fuzzer.png" alt="img"><img src="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/d5fddf24-77fd-44c6-b697-ad5eb48b2d5c/Feedback+Fuzzer.png" alt="img"><img src="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/1fcdad34-fd8e-4752-a0ed-8b4843f2237c/Gen+Fuzzer.png" alt="img"><img src="https://images.squarespace-cdn.com/content/v1/576323cfd482e984e113fe9c/4ac10c4e-35bf-497d-bf6e-b7ea747ca6f6/GenMut+Fuzzer.png" alt="img"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/LibAFL/" rel="tag"># LibAFL</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/05/%E7%A7%8B%E6%8B%9B%E7%AC%94%E8%AF%95%E7%9C%9F%E9%A2%98%E8%AE%B0%E5%BD%95/" rel="prev" title="秋招笔试真题记录">
+                  <i class="fa fa-angle-left"></i> 秋招笔试真题记录
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/05/linux%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="next" title="linux 系统数据结构">
+                  linux 系统数据结构 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sky</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

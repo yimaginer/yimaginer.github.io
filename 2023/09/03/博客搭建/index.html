@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yimaginer.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Github + hexo 搭建个人博客">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows  环境下利用 Github page 搭建博客环境">
+<meta property="og:url" content="https://yimaginer.github.io/2023/09/03/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/index.html">
+<meta property="og:site_name" content="Focus2flow">
+<meta property="og:description" content="Github + hexo 搭建个人博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picgo-buk.oss-cn-chengdu.aliyuncs.com/img/image-20230903131724407.png">
+<meta property="og:image" content="https://picgo-buk.oss-cn-chengdu.aliyuncs.com/img/image-20230903134218399.png">
+<meta property="og:image" content="https://picgo-buk.oss-cn-chengdu.aliyuncs.com/img/image-20230903142806727.png">
+<meta property="og:image" content="https://picgo-buk.oss-cn-chengdu.aliyuncs.com/img/image-20230903142952837.png">
+<meta property="og:image" content="https://picgo-buk.oss-cn-chengdu.aliyuncs.com/img/image-20230903144752739.png">
+<meta property="og:image" content="https://picgo-buk.oss-cn-chengdu.aliyuncs.com/img/image-20230902175759500.png">
+<meta property="og:image" content="https://picgo-buk.oss-cn-chengdu.aliyuncs.com/img/image-20230902180712442.png">
+<meta property="og:image" content="https://picgo-buk.oss-cn-chengdu.aliyuncs.com/img/image-20230902181617668.png">
+<meta property="article:published_time" content="2023-09-03T06:43:10.507Z">
+<meta property="article:modified_time" content="2023-09-06T17:11:20.450Z">
+<meta property="article:author" content="sky">
+<meta property="article:tag" content="环境搭建">
+<meta property="article:tag" content="hexo">
+<meta property="article:tag" content="next">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picgo-buk.oss-cn-chengdu.aliyuncs.com/img/image-20230903131724407.png">
+
+
+<link rel="canonical" href="https://yimaginer.github.io/2023/09/03/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yimaginer.github.io/2023/09/03/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/","path":"2023/09/03/博客搭建/","title":"Windows  环境下利用 Github page 搭建博客环境"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Windows  环境下利用 Github page 搭建博客环境 | Focus2flow</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Focus2flow</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">less is more</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="nav-text">本地环境准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-git"><span class="nav-text">安装 git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-nodejs"><span class="nav-text">安装 nodejs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-hexo"><span class="nav-text">安装 hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-hexo-developer-git"><span class="nav-text">安装 hexo-developer-git</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Github-%E4%BB%93%E5%BA%93%E8%AE%BE%E7%BD%AE"><span class="nav-text">Github 仓库设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E4%BB%93%E5%BA%93"><span class="nav-text">新建仓库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git-%E4%B8%8E-Github-%E4%BA%A4%E4%BA%92%E8%AE%BE%E7%BD%AE"><span class="nav-text">Git 与 Github 交互设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Git-%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%94%9F%E6%88%90-ssh-%E5%85%AC%E9%92%A5"><span class="nav-text">Git 客户端生成 ssh 公钥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Github-%E6%B7%BB%E5%8A%A0-Git-%E4%BA%A7%E7%94%9F%E7%9A%84%E5%85%AC%E9%92%A5"><span class="nav-text">Github 添加 Git 产生的公钥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-ssh-T-git-github-com-%E5%91%BD%E4%BB%A4%E6%B5%8B%E8%AF%95%E6%98%AF%E5%90%A6%E6%88%90%E5%8A%9F"><span class="nav-text">使用 ssh -T git@github.com 命令测试是否成功</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE-Git-%E7%94%A8%E6%88%B7%E5%90%8D%E5%92%8C%E9%82%AE%E7%AE%B1"><span class="nav-text">设置 Git 用户名和邮箱</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2"><span class="nav-text">搭建博客</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E%E5%8D%9A%E6%96%87"><span class="nav-text">新增博文</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sky</p>
+  <div class="site-description" itemprop="description">技术，人生，思考，自我</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yimaginer.github.io/2023/09/03/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Focus2flow">
+      <meta itemprop="description" content="技术，人生，思考，自我">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Windows  环境下利用 Github page 搭建博客环境 | Focus2flow">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Windows  环境下利用 Github page 搭建博客环境
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-03 14:43:10" itemprop="dateCreated datePublished" datetime="2023-09-03T14:43:10+08:00">2023-09-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-07 01:11:20" itemprop="dateModified" datetime="2023-09-07T01:11:20+08:00">2023-09-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" itemprop="url" rel="index"><span itemprop="name">环境搭建</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Github + hexo 搭建个人博客</p>
+<span id="more"></span>
+
+<ol>
+<li><h2 id="本地环境准备"><a href="#本地环境准备" class="headerlink" title="本地环境准备"></a>本地环境准备</h2><ol>
+<li><h3 id="安装-git"><a href="#安装-git" class="headerlink" title="安装 git"></a>安装 git</h3><blockquote>
+<p>目的是为了利用 git 和 Github 仓库进行交互</p>
+</blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://git-scm.com/download/win">下载官方 git</a>，选择合适版本，</li>
+<li>将 git 可执行文件路径添加到全局环境变量。</li>
+<li>在 PowerShell 中执行 <code>git version</code>,检查是否安装并设置成功。</li>
+</ul>
+</li>
+<li><h3 id="安装-nodejs"><a href="#安装-nodejs" class="headerlink" title="安装 nodejs"></a>安装 nodejs</h3><blockquote>
+<p>目的是使用其包管理软件 npm 安装 hexo ，也可能与 hexo s 命令有关</p>
+</blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://nodejs.org/en/download">下载官方 nodejs</a>，选择合适版本</li>
+<li>将 node 可执行文件路径添加到全局环境变量。</li>
+<li>在 PowerShell 中执行 <code>node -v</code>,检查是否安装并设置成功</li>
+</ul>
+</li>
+<li><h3 id="安装-hexo"><a href="#安装-hexo" class="headerlink" title="安装 hexo"></a>安装 hexo</h3><blockquote>
+<p>hexo 是一款优秀的博客管理软件？这样定位不知道是否合适</p>
+</blockquote>
+<ul>
+<li>在 git-bash 中使用命令 <code>npm install hexo -g</code> 安装</li>
+<li>在 git-bash 中使用命令 <code>hexo -v</code> 验证安装</li>
+</ul>
+</li>
+<li><h3 id="安装-hexo-developer-git"><a href="#安装-hexo-developer-git" class="headerlink" title="安装 hexo-developer-git"></a>安装 hexo-developer-git</h3><blockquote>
+<p>这个是 <code>hexo d</code> 命令中将本地编译好的博客部署到 github 仓库时，hexo 和 git 交互的软件</p>
+</blockquote>
+<ul>
+<li>在 git-bash 中使用命令 <code>npm install --save hexo-deployer-git</code> 安装</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><h2 id="Github-仓库设置"><a href="#Github-仓库设置" class="headerlink" title="Github 仓库设置"></a>Github 仓库设置</h2><ol>
+<li><h3 id="新建仓库"><a href="#新建仓库" class="headerlink" title="新建仓库"></a>新建仓库</h3><blockquote>
+<p>默认情况下 github 允许每一个用户建立一个博客仓库</p>
+</blockquote>
+<p><img src="https://picgo-buk.oss-cn-chengdu.aliyuncs.com/img/image-20230903131724407.png" alt="image-20230903131724407"></p>
+<p>这里似乎并不能看出这个仓库是专用于搭建博客用的，有待将来研究 Github Pages 的说明。</p>
+</li>
+</ol>
+</li>
+<li><h2 id="Git-与-Github-交互设置"><a href="#Git-与-Github-交互设置" class="headerlink" title="Git 与 Github 交互设置"></a>Git 与 Github 交互设置</h2><ol>
+<li><h3 id="Git-客户端生成-ssh-公钥"><a href="#Git-客户端生成-ssh-公钥" class="headerlink" title="Git 客户端生成 ssh 公钥"></a>Git 客户端生成 ssh 公钥</h3><ol>
+<li><p>在 git-bash 中使用 <code>ssh-keygen -t rsa -C &quot;example@email.com&quot;</code>生成密钥对</p>
+</li>
+<li><p><code>cd ~/.ssh</code> 进入到 ssh 本地秘钥文件夹</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">ls</span></span></span><br><span class="line">README.md  config  id_rsa  id_rsa.pub  known_hosts  known_hosts.old</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将其中的公钥 <code>id_rsa.pub</code> 的内容复制出来</p>
+</li>
+</ol>
+</li>
+<li><h3 id="Github-添加-Git-产生的公钥"><a href="#Github-添加-Git-产生的公钥" class="headerlink" title="Github 添加 Git 产生的公钥"></a>Github 添加 Git 产生的公钥</h3><p><img src="https://picgo-buk.oss-cn-chengdu.aliyuncs.com/img/image-20230903134218399.png" alt="image-20230903134218399"></p>
+</li>
+<li><h3 id="使用-ssh-T-git-github-com-命令测试是否成功"><a href="#使用-ssh-T-git-github-com-命令测试是否成功" class="headerlink" title="使用 ssh -T git@github.com 命令测试是否成功"></a>使用 <code>ssh -T git@github.com</code> 命令测试是否成功</h3></li>
+<li><h3 id="设置-Git-用户名和邮箱"><a href="#设置-Git-用户名和邮箱" class="headerlink" title="设置 Git 用户名和邮箱"></a>设置 Git 用户名和邮箱</h3><ul>
+<li>设置用户名：<code>git config --global user.name &quot;ColorMao&quot;</code></li>
+<li>设置邮箱：<code>git config --global user.email &quot;zhangyumao@petalmail.com&quot;</code></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><h2 id="搭建博客"><a href="#搭建博客" class="headerlink" title="搭建博客"></a>搭建博客</h2><ol>
+<li><p>在本机合适的位置建立一个存放本地博客文件的文件夹，如我的：<code>E:\Blogs\Focus2flow</code>，git-bash 进入该空文件夹</p>
+</li>
+<li><p>使用 hexo 本地部署博客</p>
+<ol>
+<li><code>hexo init</code> 初始化博客文件</li>
+<li><code>hexo generate</code> 编译生成可部署的 html 文件</li>
+<li><code>hexo server</code> 本地部博客用于预览</li>
+</ol>
+</li>
+<li><p>博客部署到仓库</p>
+<ol>
+<li><p>在博客文件夹根目录找到 hexo 配置文件 <code>_config.yml</code></p>
+</li>
+<li><p>更改其中的配置选项为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: git@github.com:captain0X01/captain0X01.github.io.git</span><br><span class="line">  branch: main</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>hexo deploy</code> 部署到 GIthub仓库</p>
+<p><img src="https://picgo-buk.oss-cn-chengdu.aliyuncs.com/img/image-20230903142806727.png" alt="image-20230903142806727"></p>
+<p>可以观察到文件确实推上去了，那么远程访问一下博客。</p>
+</li>
+<li><p>访问博客<a href="https://yimaginer.github.io/">https://yimaginer.github.io/</a></p>
+<p><img src="https://picgo-buk.oss-cn-chengdu.aliyuncs.com/img/image-20230903142952837.png" alt="image-20230903142952837"></p>
+<p>访问成功，至此我们在 Github 上搭建了一个幼儿园级的个人博客</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><h2 id="新增博文"><a href="#新增博文" class="headerlink" title="新增博文"></a>新增博文</h2><ol>
+<li><p>将写好的 markdown 文档放进 site-dir&#x2F;source&#x2F;_posts 文件夹中</p>
+</li>
+<li><p><code>hexo generate</code> 重新生成</p>
+</li>
+<li><p><code>hexo deploy</code> 部署，如图</p>
+<p><img src="https://picgo-buk.oss-cn-chengdu.aliyuncs.com/img/image-20230903144752739.png" alt="image-20230903144752739"></p>
+</li>
+<li><p>这样一个幼儿园博客，就实际使用来看还有下面的差距，如图编号</p>
+<ol>
+<li>博文是全篇展开放在主页，不科学</li>
+<li>这个引用文字的格式转换成了这样，是这个默认主题的原因</li>
+<li>新上传的文章没有标题，不行</li>
+<li>博客的名称还是默认的，要改</li>
+<li>顺便这配色不怎么好看</li>
+</ol>
+</li>
+<li><p>接下里通过换一个主题，并进行设置，打造一个可以实际使用的博客。</p>
+</li>
+</ol>
+</li>
+</ol>
+<p><strong>参考博客</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/550709268">利用Github DIY自己的个人博客</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Alight/p/4354294.html">这是一个有用的思考</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.github.com/zh/pages/quickstart">Github pages 官方文档</a></li>
+</ul>
+<p><strong>补充内容：hexo 命令的具象化解释</strong></p>
+<p>执行完<code>hexo init</code></p>
+<p><img src="https://picgo-buk.oss-cn-chengdu.aliyuncs.com/img/image-20230902175759500.png" alt="image-20230902175759500"></p>
+<p><code>hexo generate</code></p>
+<p><img src="https://picgo-buk.oss-cn-chengdu.aliyuncs.com/img/image-20230902180712442.png" alt="image-20230902180712442"></p>
+<p><code>hexo clean</code>是把生成的东西清掉了</p>
+<p><code>hexo d</code></p>
+<p><img src="https://picgo-buk.oss-cn-chengdu.aliyuncs.com/img/image-20230902181617668.png" alt="image-20230902181617668"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" rel="tag"># 环境搭建</a>
+              <a href="/tags/hexo/" rel="tag"># hexo</a>
+              <a href="/tags/next/" rel="tag"># next</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/09/03/next%E4%B8%BB%E9%A2%98%E5%9F%BA%E6%9C%AC%E8%AE%BE%E7%BD%AE/" rel="next" title="next 主题基本设置">
+                  next 主题基本设置 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sky</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
