@@ -297,24 +297,6 @@
       </tags>
   </entry>
   <entry>
-    <title>docker环境</title>
-    <url>/2023/09/07/docker%E7%8E%AF%E5%A2%83/</url>
-    <content><![CDATA[<p>docker环境</p>
-<span id="more"></span>
-
-<ol>
-<li>在linux环境安装docker：<a href="https://docs.docker.com/desktop/install/linux-install/">https://docs.docker.com/desktop/install/linux-install/</a></li>
-<li>docker权限问题：<a href="https://blog.csdn.net/AS_TS/article/details/131184815">https://blog.csdn.net/AS_TS/article/details/131184815</a></li>
-</ol>
-<h2 id="exercise1"><a href="#exercise1" class="headerlink" title="exercise1"></a>exercise1</h2><p>在docker环境中作一份代码的fuzzing</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">本机下载问题代码</span></span><br><span class="line">git clone https://github.com/alex-maleno/Fuzzing-Module.git</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">运行 AFL++ 的 docker 容器</span></span><br><span class="line">docker run --rm -it -v /home/tiger/fuzz/Fuzzing-Module://home/Fuzzing-Module 6612ffca640e</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">cmake 编译示例代码</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">生成seeds</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">开始fuzzing</span></span><br><span class="line">/AFLplusplus/afl-fuzz -i /home/Fuzzing-Module/exercise1/seeds -o out -m none -d -- /home/Fuzzing-Module/exercise1/build/simple_crash</span><br><span class="line"></span><br><span class="line">docker run --rm -it -v &quot;/home/tiger&quot;:&quot;/home/tiger&quot; 6612ffca640e</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>docker</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>STL详细梳理</title>
     <url>/2024/09/05/STL%E8%AF%A6%E7%BB%86%E6%A2%B3%E7%90%86/</url>
     <content><![CDATA[<h1 id="STL-container"><a href="#STL-container" class="headerlink" title="STL-container"></a>STL-container</h1><span id="more"></span>
@@ -906,79 +888,91 @@
       </tags>
   </entry>
   <entry>
-    <title>linux 系统数据结构</title>
-    <url>/2024/09/05/linux%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</url>
-    <content><![CDATA[<p>linux 系统中常见的数据结构</p>
+    <title>apue 学习记录</title>
+    <url>/2024/06/19/apue%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<p>apue 学习记录</p>
 <span id="more"></span>
 
-<h1 id="struct-itimerval"><a href="#struct-itimerval" class="headerlink" title="struct itimerval"></a>struct itimerval</h1><p><code>struct itimerval</code>是一个用于设置定时器的结构体。它包含了两个成员变量，分别是<code>it_interval</code>和<code>it_value</code>。</p>
-<p><code>it_interval</code>用于设置定时器的间隔时间，即每隔多少时间触发一次定时器。<code>it_value</code>用于设置定时器的初始值，即第一次触发定时器的时间。</p>
-<p>这个结构体可以在C语言中使用，用于设置定时器以及处理定时器信号。例如，可以使用<code>setitimer()</code>函数来设置定时器并启动定时器信号。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> &#123;</span></span><br><span class="line">	<span class="type">time_t</span>      tv_sec;     <span class="comment">/* seconds */</span></span><br><span class="line">	<span class="type">suseconds_t</span> tv_usec;    <span class="comment">/* microseconds */</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">and gives the number of seconds and microseconds since the <span class="title function_">Epoch</span> <span class="params">(see time(<span class="number">2</span>))</span>.</span><br><span class="line"></span><br><span class="line">The tz argument is a <span class="keyword">struct</span> timezone:</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> timezone &#123;</span><br><span class="line">	<span class="type">int</span> tz_minuteswest;     <span class="comment">/* minutes west of Greenwich */</span></span><br><span class="line">	<span class="type">int</span> tz_dsttime;         <span class="comment">/* type of DST correction */</span></span><br><span class="line">&#125;;</span><br><span class="line">Describes times in seconds and nanoseconds.</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">timespec</span> &#123;</span></span><br><span class="line">	<span class="type">time_t</span>  tv_sec;  <span class="comment">/* Seconds */</span></span><br><span class="line">	<span class="type">long</span>    tv_nsec; <span class="comment">/* Nanoseconds */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h1 id="文件系统-stat"><a href="#文件系统-stat" class="headerlink" title="文件系统 stat"></a>文件系统 stat</h1><ul>
-<li>在<code>E:\Ubuntushare\linux-6.0\arch\x86\include\uapi\asm\stat.h</code><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">stat</span> &#123;</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_dev;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_ino;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> st_mode;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> st_nlink;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> st_uid;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> st_gid;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_rdev;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_size;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_blksize;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_blocks;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_atime;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_atime_nsec;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_mtime;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_mtime_nsec;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_ctime;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_ctime_nsec;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  __unused4;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  __unused5;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<p> S_ISREG(m)  is it a regular file?</p>
-<pre><code>       S_ISDIR(m)  directory?
-
-       S_ISCHR(m)  character device?
-
-       S_ISBLK(m)  block device?
-
-       S_ISFIFO(m) FIFO (named pipe)?
-
-       S_ISLNK(m)  symbolic link?  (Not in POSIX.1-1996.)
-
-       S_ISSOCK(m) socket?  (Not in POSIX.1-1996.)
-</code></pre>
-<p>成员变量的含义：</p>
 <ul>
-<li>st_dev：文件所在设备的设备号</li>
-<li>st_ino：文件的i-node号</li>
-<li>st_mode：文件的类型和访问权限</li>
-<li>st_nlink：文件的硬链接数</li>
-<li>st_uid：文件的所有者的用户ID</li>
-<li>st_gid：文件的所有者的组ID</li>
-<li>st_rdev：如果文件是设备文件，则该成员保存了设备的设备号</li>
-<li>st_size：文件的大小（以字节为单位）</li>
-<li>st_blksize：文件系统I&#x2F;O操作的最佳块大小</li>
-<li>st_blocks：文件所占用的磁盘块数</li>
-<li>st_atime：文件的最后访问时间</li>
-<li>st_atime_nsec：文件的最后访问时间的纳秒部分</li>
-<li>st_mtime：文件的最后修改时间</li>
-<li>st_mtime_nsec：文件的最后修改时间的纳秒部分</li>
-<li>st_ctime：文件的最后状态改变时间</li>
-<li>st_ctime_nsec：文件的最后状态改变时间的纳秒部分</li>
-<li>__unused4和__unused5：未使用的保留字段</li>
+<li><p>环境搭建：<a href="https://zhuanlan.zhihu.com/p/580675705">https://zhuanlan.zhihu.com/p/580675705</a></p>
+</li>
+<li><p>文件描述符和inode关系：<a href="https://blog.csdn.net/ambitiousssssss/article/details/124001467%EF%BC%8Chttps://blog.csdn.net/weixin_43864567/article/details/124063198">https://blog.csdn.net/ambitiousssssss/article/details/124001467，https://blog.csdn.net/weixin_43864567/article/details/124063198</a></p>
+</li>
+<li><p><a href="https://www.cnblogs.com/kcloveworld/p/17989014">文件描述符、文件描述符表、文件表项、inode名词释义</a><br><a href="https://blog.csdn.net/kyang_823/article/details/79496362">https://blog.csdn.net/kyang_823/article/details/79496362</a></p>
+</li>
+<li><p>&#x2F;proc文件系统：<a href="https://blog.51cto.com/u_15127514/4196632">https://blog.51cto.com/u_15127514/4196632</a></p>
+</li>
+<li><p>虚拟文件系统VFS原理：<a href="https://blog.51cto.com/mingongge/2945174">https://blog.51cto.com/mingongge/2945174</a></p>
+</li>
+<li><p>重要头文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">这个头文件包含了POSIX标准中定义的一些常用函数和类型，比如fork()、exec()系列函数，以及pid_t类型等。</span><br><span class="line"></span><br><span class="line">#include &lt;sys/syscall.h&gt;</span><br><span class="line">这个头文件包含了系统调用的编号，比如SYS_gettid和SYS_tgkill等。</span><br><span class="line"></span><br><span class="line">#include &lt;sys/types.h&gt;</span><br><span class="line">这个头文件定义了一些基本的数据类型，比如pid_t、size_t等。</span><br><span class="line"></span><br><span class="line">#include &lt;signal.h&gt;</span><br><span class="line">这个头文件包含了信号相关的函数和类型，比如SIGHUP信号常量。</span><br></pre></td></tr></table></figure></li>
 </ul>
-<p>这个结构体是用于在C语言中对文件的状态进行描述和操作的一个重要数据结构。在C语言中，可以使用stat()函数来获取一个文件的状态，然后通过访问结构体的成员变量来获取文件的各种属性。</p>
-<ul>
-<li><p>本地化数据格式</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">lconv</span> &#123;</span></span><br><span class="line">	<span class="comment">/* Numeric (nonmonetary) information */</span></span><br><span class="line"></span><br><span class="line">	<span class="type">char</span> *decimal_point;     <span class="comment">/* Radix character */</span></span><br><span class="line">	<span class="type">char</span> *thousands_sep;     <span class="comment">/* Separator for digit groups to left</span></span><br><span class="line"><span class="comment">								of radix character */</span></span><br><span class="line">	<span class="type">char</span> *grouping;     <span class="comment">/* Each element is the number of digits in</span></span><br><span class="line"><span class="comment">							a group; elements with higher indices</span></span><br><span class="line"><span class="comment">							are further left.  An element with value</span></span><br><span class="line"><span class="comment">							CHAR_MAX means that no further grouping</span></span><br><span class="line"><span class="comment">							is done.  An element with value 0 means</span></span><br><span class="line"><span class="comment">							that the previous element is used for</span></span><br><span class="line"><span class="comment">							all groups further left. */</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Remaining fields are for monetary information */</span></span><br><span class="line"></span><br><span class="line">	<span class="type">char</span> *int_curr_symbol;   <span class="comment">/* First three chars are a currency</span></span><br><span class="line"><span class="comment">								symbol from ISO 4217.  Fourth char</span></span><br><span class="line"><span class="comment">								is the separator.  Fifth char</span></span><br><span class="line"><span class="comment">								is &#x27;\0&#x27;. */</span></span><br><span class="line">	<span class="type">char</span> *currency_symbol;   <span class="comment">/* Local currency symbol */</span></span><br><span class="line">	<span class="type">char</span> *mon_decimal_point; <span class="comment">/* Radix character */</span></span><br><span class="line">	<span class="type">char</span> *mon_thousands_sep; <span class="comment">/* Like thousands_sep above */</span></span><br><span class="line">	<span class="type">char</span> *mon_grouping;      <span class="comment">/* Like grouping above */</span></span><br><span class="line">	<span class="type">char</span> *positive_sign;     <span class="comment">/* Sign for positive values */</span></span><br><span class="line">	<span class="type">char</span> *negative_sign;     <span class="comment">/* Sign for negative values */</span></span><br><span class="line">	<span class="type">char</span>  int_frac_digits;   <span class="comment">/* International fractional digits */</span></span><br><span class="line">	<span class="type">char</span>  frac_digits;       <span class="comment">/* Local fractional digits */</span></span><br><span class="line">	<span class="type">char</span>  p_cs_precedes;     <span class="comment">/* 1 if currency_symbol precedes a</span></span><br><span class="line"><span class="comment">								positive value, 0 if succeeds */</span></span><br><span class="line">	<span class="type">char</span>  p_sep_by_space;    <span class="comment">/* 1 if a space separates</span></span><br><span class="line"><span class="comment">								currency_symbol from a positive</span></span><br><span class="line"><span class="comment">								value */</span></span><br><span class="line">	<span class="type">char</span>  n_cs_precedes;     <span class="comment">/* 1 if currency_symbol precedes a</span></span><br><span class="line"><span class="comment">								negative value, 0 if succeeds */</span></span><br><span class="line">	<span class="type">char</span>  n_sep_by_space;    <span class="comment">/* 1 if a space separates</span></span><br><span class="line"><span class="comment">								currency_symbol from a negative</span></span><br><span class="line"><span class="comment">								value */</span></span><br><span class="line">	<span class="comment">/* Positive and negative sign positions:</span></span><br><span class="line"><span class="comment">		0 Parentheses surround the quantity and currency_symbol.</span></span><br><span class="line"><span class="comment">		1 The sign string precedes the quantity and currency_symbol.</span></span><br><span class="line"><span class="comment">		2 The sign string succeeds the quantity and currency_symbol.</span></span><br><span class="line"><span class="comment">		3 The sign string immediately precedes the currency_symbol.</span></span><br><span class="line"><span class="comment">		4 The sign string immediately succeeds the currency_symbol. */</span></span><br><span class="line">	<span class="type">char</span>  p_sign_posn;</span><br><span class="line">	<span class="type">char</span>  n_sign_posn;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>密码</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">passwd</span> &#123;</span></span><br><span class="line">	<span class="type">char</span>   *pw_name;       <span class="comment">/* username */</span></span><br><span class="line">	<span class="type">char</span>   *pw_passwd;     <span class="comment">/* user password */</span></span><br><span class="line">	<span class="type">uid_t</span>   pw_uid;        <span class="comment">/* user ID */</span></span><br><span class="line">	<span class="type">gid_t</span>   pw_gid;        <span class="comment">/* group ID */</span></span><br><span class="line">	<span class="type">char</span>   *pw_gecos;      <span class="comment">/* user information */</span></span><br><span class="line">	<span class="type">char</span>   *pw_dir;        <span class="comment">/* home directory */</span></span><br><span class="line">	<span class="type">char</span>   *pw_shell;      <span class="comment">/* shell program */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>共享内存</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">shmid_ds</span> &#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">ipc_perm</span> <span class="title">shm_perm</span>;</span>    <span class="comment">/* Ownership and permissions */</span></span><br><span class="line">	<span class="type">size_t</span>          shm_segsz;   <span class="comment">/* Size of segment (bytes) */</span></span><br><span class="line">	<span class="type">time_t</span>          shm_atime;   <span class="comment">/* Last attach time */</span></span><br><span class="line">	<span class="type">time_t</span>          shm_dtime;   <span class="comment">/* Last detach time */</span></span><br><span class="line">	<span class="type">time_t</span>          shm_ctime;   <span class="comment">/* Creation time/time of last</span></span><br><span class="line"><span class="comment">									modification via shmctl() */</span></span><br><span class="line">	<span class="type">pid_t</span>           shm_cpid;    <span class="comment">/* PID of creator */</span></span><br><span class="line">	<span class="type">pid_t</span>           shm_lpid;    <span class="comment">/* PID of last shmat(2)/shmdt(2) */</span> <span class="comment">//不关注最后一次detach的进程ID</span></span><br><span class="line">	<span class="type">shmatt_t</span>        shm_nattch;  <span class="comment">/* No. of current attaches */</span></span><br><span class="line">	...</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//其中的 ipc_perm 结构体</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ipc_perm</span> &#123;</span></span><br><span class="line">	<span class="type">key_t</span>          __key;    <span class="comment">/* Key supplied to shmget(2) */</span></span><br><span class="line">	<span class="type">uid_t</span>          uid;      <span class="comment">/* Effective UID of owner */</span></span><br><span class="line">	<span class="type">gid_t</span>          gid;      <span class="comment">/* Effective GID of owner */</span></span><br><span class="line">	<span class="type">uid_t</span>          cuid;     <span class="comment">/* Effective UID of creator */</span></span><br><span class="line">	<span class="type">gid_t</span>          cgid;     <span class="comment">/* Effective GID of creator */</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> mode;     <span class="comment">/* Permissions + SHM_DEST and</span></span><br><span class="line"><span class="comment">								SHM_LOCKED flags */</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> __seq;    <span class="comment">/* Sequence number */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>资源限制</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">rlimit</span> &#123;</span></span><br><span class="line">	<span class="type">rlim_t</span> rlim_cur;  <span class="comment">/* Soft limit */</span></span><br><span class="line">	<span class="type">rlim_t</span> rlim_max;  <span class="comment">/* Hard limit (ceiling for rlim_cur) */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
-</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./tools/perf/include/bpf/unistd.h</span><br><span class="line">./tools/arch/arm64/include/uapi/asm/unistd.h</span><br><span class="line">./tools/arch/arc/include/uapi/asm/unistd.h</span><br><span class="line">./tools/arch/riscv/include/uapi/asm/unistd.h</span><br><span class="line">./tools/arch/x86/include/uapi/asm/unistd.h</span><br><span class="line">./tools/arch/hexagon/include/uapi/asm/unistd.h</span><br><span class="line">./tools/include/nolibc/unistd.h</span><br><span class="line">./tools/include/uapi/asm-generic/unistd.h</span><br><span class="line">./arch/alpha/include/asm/unistd.h</span><br><span class="line">./arch/alpha/include/uapi/asm/unistd.h</span><br><span class="line">./arch/ia64/include/asm/unistd.h</span><br><span class="line">./arch/ia64/include/uapi/asm/unistd.h</span><br><span class="line">./arch/arm64/include/asm/unistd.h</span><br><span class="line">./arch/arm64/include/uapi/asm/unistd.h</span><br><span class="line">./arch/sparc/include/asm/unistd.h</span><br><span class="line">./arch/sparc/include/uapi/asm/unistd.h</span><br><span class="line">./arch/xtensa/include/asm/unistd.h</span><br><span class="line">./arch/xtensa/include/uapi/asm/unistd.h</span><br><span class="line">./arch/parisc/include/asm/unistd.h</span><br><span class="line">./arch/parisc/include/uapi/asm/unistd.h</span><br><span class="line">./arch/microblaze/include/asm/unistd.h</span><br><span class="line">./arch/microblaze/include/uapi/asm/unistd.h</span><br><span class="line">./arch/arc/include/uapi/asm/unistd.h</span><br><span class="line">./arch/riscv/include/asm/unistd.h</span><br><span class="line">./arch/riscv/include/uapi/asm/unistd.h</span><br><span class="line">./arch/s390/include/asm/unistd.h</span><br><span class="line">./arch/s390/include/uapi/asm/unistd.h</span><br><span class="line">./arch/nios2/include/uapi/asm/unistd.h</span><br><span class="line">./arch/x86/include/asm/unistd.h</span><br><span class="line">./arch/x86/include/uapi/asm/unistd.h</span><br><span class="line">./arch/hexagon/include/uapi/asm/unistd.h</span><br><span class="line">./arch/powerpc/include/asm/unistd.h</span><br><span class="line">./arch/powerpc/include/uapi/asm/unistd.h</span><br><span class="line">./arch/loongarch/include/asm/unistd.h</span><br><span class="line">./arch/loongarch/include/uapi/asm/unistd.h</span><br><span class="line">./arch/sh/include/asm/unistd.h</span><br><span class="line">./arch/sh/include/uapi/asm/unistd.h</span><br><span class="line">./arch/m68k/include/asm/unistd.h</span><br><span class="line">./arch/m68k/include/uapi/asm/unistd.h</span><br><span class="line">./arch/csky/include/asm/unistd.h</span><br><span class="line">./arch/csky/include/uapi/asm/unistd.h</span><br><span class="line">./arch/arm/include/asm/unistd.h</span><br><span class="line">./arch/arm/include/uapi/asm/unistd.h</span><br><span class="line">./arch/openrisc/include/uapi/asm/unistd.h</span><br><span class="line">./arch/mips/include/asm/unistd.h</span><br><span class="line">./arch/mips/include/uapi/asm/unistd.h</span><br><span class="line">./include/uapi/asm-generic/unistd.h</span><br><span class="line">./include/uapi/linux/unistd.h</span><br><span class="line">arch/mips/include/asm/unistd.h 通常包含了特定于MIPS架构的系统调用号码定义，这些定义是基于MIPS架构的特点定制的。</span><br><span class="line">arch/mips/include/uapi/asm/unistd.h 则包含了用户空间API的系统调用号码定义，这些定义是为了让用户空间程序能够安全地调用内核提供的服务。</span><br><span class="line">简单来说，uapi目录下的头文件通常用于定义用户空间可以使用的接口，而非特定于某个架构的内部细节。这样做的好处是，用户空间程序不必关心底层的硬件架构，只需通过统一的接口与内核通信。而asm目录下的头文件则包含了特定于某一架构的实现细节，这些细节对于用户空间程序是透明的，但对于内核开发者来说非常重要，因为它们涉及到如何在特定的硬件上实现系统调用.</span><br></pre></td></tr></table></figure>
+
+<p>学习 apue 的目的是什么？<br>1.明白 linux 系统级知识，为读 AFL 源码做准备。<br>2.进而熟悉 linux 内核源码，可以对内核进行调试，修改。<br>目前好的 apue 学习素材：<br>1.b站李慧琴的课，相关笔记<a href="https://kisugitakumi.net/2022/11/20/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/#6-4-2-%E4%BD%BF%E7%94%A8">https://kisugitakumi.net/2022/11/20/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/#6-4-2-%E4%BD%BF%E7%94%A8</a><br>2.apue 书本<br>目前对 apue 的理解以及所能预料到的掌握后的能力：<br>1.熟悉了 linux 平台 进程 文件 信号机制 的原理，接口<br>2.能够在此基础之上进行应用程序开发</p>
+<p>对于使用 afl 本身来说，了解平台机制就可以了，想要研究 afl 更重要的就是要对 afl 的原理进行更深入的研究。<br>以上都为计算机的术的话，计算机学习的道应该是什么？</p>
+<p>6月20号：<br>1.昨天开始读 AFL 源码，主要是看 makefile ,问题是 makefile 语法还是不太熟悉，又转去看手册。makefile 里有 shell 命令，于是看 bash 手册<br>2.makefile bash 两个手册可以粗略看一下，花费一个半小时，然后开始看 AFL 源码</p>
+<p>type command  查看命令类型</p>
 ]]></content>
       <categories>
-        <category>操作系统</category>
+        <category>工程开发</category>
         <category>linux</category>
       </categories>
       <tags>
-        <tag>linux</tag>
+        <tag>linux 系统编程</tag>
       </tags>
   </entry>
   <entry>
-    <title>mytest</title>
-    <url>/2024/09/15/mytest/</url>
-    <content><![CDATA[<img src="/2024/09/15/mytest/image-20240915155128595.png" class title="This is an example image">]]></content>
+    <title>docker环境</title>
+    <url>/2023/09/07/docker%E7%8E%AF%E5%A2%83/</url>
+    <content><![CDATA[<p>docker环境</p>
+<span id="more"></span>
+
+<ol>
+<li>在linux环境安装docker：<a href="https://docs.docker.com/desktop/install/linux-install/">https://docs.docker.com/desktop/install/linux-install/</a></li>
+<li>docker权限问题：<a href="https://blog.csdn.net/AS_TS/article/details/131184815">https://blog.csdn.net/AS_TS/article/details/131184815</a></li>
+</ol>
+<h2 id="exercise1"><a href="#exercise1" class="headerlink" title="exercise1"></a>exercise1</h2><p>在docker环境中作一份代码的fuzzing</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">本机下载问题代码</span></span><br><span class="line">git clone https://github.com/alex-maleno/Fuzzing-Module.git</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">运行 AFL++ 的 docker 容器</span></span><br><span class="line">docker run --rm -it -v /home/tiger/fuzz/Fuzzing-Module://home/Fuzzing-Module 6612ffca640e</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">cmake 编译示例代码</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">生成seeds</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">开始fuzzing</span></span><br><span class="line">/AFLplusplus/afl-fuzz -i /home/Fuzzing-Module/exercise1/seeds -o out -m none -d -- /home/Fuzzing-Module/exercise1/build/simple_crash</span><br><span class="line"></span><br><span class="line">docker run --rm -it -v &quot;/home/tiger&quot;:&quot;/home/tiger&quot; 6612ffca640e</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo+typora图片路径设置</title>
+    <url>/2023/09/15/hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/</url>
+    <content><![CDATA[<h4 id="目前的问题："><a href="#目前的问题：" class="headerlink" title="目前的问题："></a>目前的问题：</h4><ol>
+<li>用 hexo n 命令新增博文全部在 _post 文件夹下，博文多了之后很乱，需要按主题分文件夹。</li>
+<li>之前的云对象存储到期以后想把图片直接放在 github 里面</li>
+</ol>
+<p>第一个问题在研究了 hexo 的官方文档之后，可以在新建文章时候用 -p 命令指定文件夹，且 -p 默认相对位置就是 _post 文件夹。</p>
+<p>第二个问题：</p>
+<ul>
+<li>首先在网站配置 <code>_config.yml</code> 中，设置<code>post_asset_folder: true</code>，则会在 <code>hexo n</code> 的时候同时在同路径下生成同名文件夹。</li>
+<li>意味着写作过程中可以将图片放在该文件夹中，但问题是，typora 中对图片路径的引用格式和 hexo 要求的不一致，于是需要在写完文章，编译之前把所有引用路径处理成 hexo 格式。</li>
+</ul>
+<p>下面是一张新闻图片：<br><img src="/2023/09/15/hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155128595.png" alt="image-20240915155128595"></p>
+<p>上面的图片直接在typora 中浏览是正常的，可以正常进行路径解析，但是用 hexo 部署后是这个样子：</p>
+<p><img src="/2023/09/15/hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155502923.png" alt="image-20240915155502923"></p>
+<p>加了所谓的路径转换插件后编译出来，index.html 源码是这样的：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;下面是一张新闻图片：&lt;br&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155128595.png&quot; alt=&quot;image-20240915155128595&quot;&gt;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;上面的图片直接在typora 中浏览是正常的，可以正常进行路径解析，但是用 hexo 部署后是这个样子：&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155502923.png&quot; alt=&quot;image-20240915155502923&quot;&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<p>但是这仍然是不能访问的，现在去掉编译插件试试。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;下面是一张新闻图片：&lt;br&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155128595.png&quot; alt=&quot;image-20240915155128595&quot;&gt;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;上面的图片直接在typora 中浏览是正常的，可以正常进行路径解析，但是用 hexo 部署后是这个样子：&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155502923.png&quot; alt=&quot;image-20240915155502923&quot;&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<p>一模一样，说明插件根本没起作用，</p>
+<p>插件用上之后：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;下面是一张新闻图片：&lt;br&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155128595.png&quot; alt=&quot;image-20240915155128595&quot;&gt;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;上面的图片直接在typora 中浏览是正常的，可以正常进行路径解析，但是用 hexo 部署后是这个样子：&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155502923.png&quot; alt=&quot;image-20240915155502923&quot;&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<p>看到王预选学长博客是所有文章放在post 文件夹，图片放在asserts下面的pic 中，然后图片链接用camo转换，本地markdown还是<a href></a> 形式，我的github似乎没有将markdown推上去？</p>
+<p>现在靠用 marked 插件确实可以在网页上显示了，但是却要求本地文件写为 <a href="ex.jpg"></a> 意味着本地预览不了</p>
+<p>什么狗屁插件</p>
+]]></content>
+      <tags>
+        <tag>博客搭建</tag>
+      </tags>
   </entry>
   <entry>
     <title>next 主题基本设置</title>
@@ -1062,6 +1056,164 @@
       <tags>
         <tag>环境搭建</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>linux 系统数据结构</title>
+    <url>/2024/09/05/linux%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<p>linux 系统中常见的数据结构</p>
+<span id="more"></span>
+
+<h1 id="struct-itimerval"><a href="#struct-itimerval" class="headerlink" title="struct itimerval"></a>struct itimerval</h1><p><code>struct itimerval</code>是一个用于设置定时器的结构体。它包含了两个成员变量，分别是<code>it_interval</code>和<code>it_value</code>。</p>
+<p><code>it_interval</code>用于设置定时器的间隔时间，即每隔多少时间触发一次定时器。<code>it_value</code>用于设置定时器的初始值，即第一次触发定时器的时间。</p>
+<p>这个结构体可以在C语言中使用，用于设置定时器以及处理定时器信号。例如，可以使用<code>setitimer()</code>函数来设置定时器并启动定时器信号。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> &#123;</span></span><br><span class="line">	<span class="type">time_t</span>      tv_sec;     <span class="comment">/* seconds */</span></span><br><span class="line">	<span class="type">suseconds_t</span> tv_usec;    <span class="comment">/* microseconds */</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">and gives the number of seconds and microseconds since the <span class="title function_">Epoch</span> <span class="params">(see time(<span class="number">2</span>))</span>.</span><br><span class="line"></span><br><span class="line">The tz argument is a <span class="keyword">struct</span> timezone:</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> timezone &#123;</span><br><span class="line">	<span class="type">int</span> tz_minuteswest;     <span class="comment">/* minutes west of Greenwich */</span></span><br><span class="line">	<span class="type">int</span> tz_dsttime;         <span class="comment">/* type of DST correction */</span></span><br><span class="line">&#125;;</span><br><span class="line">Describes times in seconds and nanoseconds.</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">timespec</span> &#123;</span></span><br><span class="line">	<span class="type">time_t</span>  tv_sec;  <span class="comment">/* Seconds */</span></span><br><span class="line">	<span class="type">long</span>    tv_nsec; <span class="comment">/* Nanoseconds */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h1 id="文件系统-stat"><a href="#文件系统-stat" class="headerlink" title="文件系统 stat"></a>文件系统 stat</h1><ul>
+<li>在<code>E:\Ubuntushare\linux-6.0\arch\x86\include\uapi\asm\stat.h</code><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">stat</span> &#123;</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_dev;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_ino;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> st_mode;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> st_nlink;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> st_uid;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> st_gid;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_rdev;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_size;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_blksize;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_blocks;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_atime;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_atime_nsec;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_mtime;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_mtime_nsec;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_ctime;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  st_ctime_nsec;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  __unused4;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span>  __unused5;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p> S_ISREG(m)  is it a regular file?</p>
+<pre><code>       S_ISDIR(m)  directory?
+
+       S_ISCHR(m)  character device?
+
+       S_ISBLK(m)  block device?
+
+       S_ISFIFO(m) FIFO (named pipe)?
+
+       S_ISLNK(m)  symbolic link?  (Not in POSIX.1-1996.)
+
+       S_ISSOCK(m) socket?  (Not in POSIX.1-1996.)
+</code></pre>
+<p>成员变量的含义：</p>
+<ul>
+<li>st_dev：文件所在设备的设备号</li>
+<li>st_ino：文件的i-node号</li>
+<li>st_mode：文件的类型和访问权限</li>
+<li>st_nlink：文件的硬链接数</li>
+<li>st_uid：文件的所有者的用户ID</li>
+<li>st_gid：文件的所有者的组ID</li>
+<li>st_rdev：如果文件是设备文件，则该成员保存了设备的设备号</li>
+<li>st_size：文件的大小（以字节为单位）</li>
+<li>st_blksize：文件系统I&#x2F;O操作的最佳块大小</li>
+<li>st_blocks：文件所占用的磁盘块数</li>
+<li>st_atime：文件的最后访问时间</li>
+<li>st_atime_nsec：文件的最后访问时间的纳秒部分</li>
+<li>st_mtime：文件的最后修改时间</li>
+<li>st_mtime_nsec：文件的最后修改时间的纳秒部分</li>
+<li>st_ctime：文件的最后状态改变时间</li>
+<li>st_ctime_nsec：文件的最后状态改变时间的纳秒部分</li>
+<li>__unused4和__unused5：未使用的保留字段</li>
+</ul>
+<p>这个结构体是用于在C语言中对文件的状态进行描述和操作的一个重要数据结构。在C语言中，可以使用stat()函数来获取一个文件的状态，然后通过访问结构体的成员变量来获取文件的各种属性。</p>
+<ul>
+<li><p>本地化数据格式</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">lconv</span> &#123;</span></span><br><span class="line">	<span class="comment">/* Numeric (nonmonetary) information */</span></span><br><span class="line"></span><br><span class="line">	<span class="type">char</span> *decimal_point;     <span class="comment">/* Radix character */</span></span><br><span class="line">	<span class="type">char</span> *thousands_sep;     <span class="comment">/* Separator for digit groups to left</span></span><br><span class="line"><span class="comment">								of radix character */</span></span><br><span class="line">	<span class="type">char</span> *grouping;     <span class="comment">/* Each element is the number of digits in</span></span><br><span class="line"><span class="comment">							a group; elements with higher indices</span></span><br><span class="line"><span class="comment">							are further left.  An element with value</span></span><br><span class="line"><span class="comment">							CHAR_MAX means that no further grouping</span></span><br><span class="line"><span class="comment">							is done.  An element with value 0 means</span></span><br><span class="line"><span class="comment">							that the previous element is used for</span></span><br><span class="line"><span class="comment">							all groups further left. */</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Remaining fields are for monetary information */</span></span><br><span class="line"></span><br><span class="line">	<span class="type">char</span> *int_curr_symbol;   <span class="comment">/* First three chars are a currency</span></span><br><span class="line"><span class="comment">								symbol from ISO 4217.  Fourth char</span></span><br><span class="line"><span class="comment">								is the separator.  Fifth char</span></span><br><span class="line"><span class="comment">								is &#x27;\0&#x27;. */</span></span><br><span class="line">	<span class="type">char</span> *currency_symbol;   <span class="comment">/* Local currency symbol */</span></span><br><span class="line">	<span class="type">char</span> *mon_decimal_point; <span class="comment">/* Radix character */</span></span><br><span class="line">	<span class="type">char</span> *mon_thousands_sep; <span class="comment">/* Like thousands_sep above */</span></span><br><span class="line">	<span class="type">char</span> *mon_grouping;      <span class="comment">/* Like grouping above */</span></span><br><span class="line">	<span class="type">char</span> *positive_sign;     <span class="comment">/* Sign for positive values */</span></span><br><span class="line">	<span class="type">char</span> *negative_sign;     <span class="comment">/* Sign for negative values */</span></span><br><span class="line">	<span class="type">char</span>  int_frac_digits;   <span class="comment">/* International fractional digits */</span></span><br><span class="line">	<span class="type">char</span>  frac_digits;       <span class="comment">/* Local fractional digits */</span></span><br><span class="line">	<span class="type">char</span>  p_cs_precedes;     <span class="comment">/* 1 if currency_symbol precedes a</span></span><br><span class="line"><span class="comment">								positive value, 0 if succeeds */</span></span><br><span class="line">	<span class="type">char</span>  p_sep_by_space;    <span class="comment">/* 1 if a space separates</span></span><br><span class="line"><span class="comment">								currency_symbol from a positive</span></span><br><span class="line"><span class="comment">								value */</span></span><br><span class="line">	<span class="type">char</span>  n_cs_precedes;     <span class="comment">/* 1 if currency_symbol precedes a</span></span><br><span class="line"><span class="comment">								negative value, 0 if succeeds */</span></span><br><span class="line">	<span class="type">char</span>  n_sep_by_space;    <span class="comment">/* 1 if a space separates</span></span><br><span class="line"><span class="comment">								currency_symbol from a negative</span></span><br><span class="line"><span class="comment">								value */</span></span><br><span class="line">	<span class="comment">/* Positive and negative sign positions:</span></span><br><span class="line"><span class="comment">		0 Parentheses surround the quantity and currency_symbol.</span></span><br><span class="line"><span class="comment">		1 The sign string precedes the quantity and currency_symbol.</span></span><br><span class="line"><span class="comment">		2 The sign string succeeds the quantity and currency_symbol.</span></span><br><span class="line"><span class="comment">		3 The sign string immediately precedes the currency_symbol.</span></span><br><span class="line"><span class="comment">		4 The sign string immediately succeeds the currency_symbol. */</span></span><br><span class="line">	<span class="type">char</span>  p_sign_posn;</span><br><span class="line">	<span class="type">char</span>  n_sign_posn;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>密码</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">passwd</span> &#123;</span></span><br><span class="line">	<span class="type">char</span>   *pw_name;       <span class="comment">/* username */</span></span><br><span class="line">	<span class="type">char</span>   *pw_passwd;     <span class="comment">/* user password */</span></span><br><span class="line">	<span class="type">uid_t</span>   pw_uid;        <span class="comment">/* user ID */</span></span><br><span class="line">	<span class="type">gid_t</span>   pw_gid;        <span class="comment">/* group ID */</span></span><br><span class="line">	<span class="type">char</span>   *pw_gecos;      <span class="comment">/* user information */</span></span><br><span class="line">	<span class="type">char</span>   *pw_dir;        <span class="comment">/* home directory */</span></span><br><span class="line">	<span class="type">char</span>   *pw_shell;      <span class="comment">/* shell program */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>共享内存</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">shmid_ds</span> &#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">ipc_perm</span> <span class="title">shm_perm</span>;</span>    <span class="comment">/* Ownership and permissions */</span></span><br><span class="line">	<span class="type">size_t</span>          shm_segsz;   <span class="comment">/* Size of segment (bytes) */</span></span><br><span class="line">	<span class="type">time_t</span>          shm_atime;   <span class="comment">/* Last attach time */</span></span><br><span class="line">	<span class="type">time_t</span>          shm_dtime;   <span class="comment">/* Last detach time */</span></span><br><span class="line">	<span class="type">time_t</span>          shm_ctime;   <span class="comment">/* Creation time/time of last</span></span><br><span class="line"><span class="comment">									modification via shmctl() */</span></span><br><span class="line">	<span class="type">pid_t</span>           shm_cpid;    <span class="comment">/* PID of creator */</span></span><br><span class="line">	<span class="type">pid_t</span>           shm_lpid;    <span class="comment">/* PID of last shmat(2)/shmdt(2) */</span> <span class="comment">//不关注最后一次detach的进程ID</span></span><br><span class="line">	<span class="type">shmatt_t</span>        shm_nattch;  <span class="comment">/* No. of current attaches */</span></span><br><span class="line">	...</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//其中的 ipc_perm 结构体</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ipc_perm</span> &#123;</span></span><br><span class="line">	<span class="type">key_t</span>          __key;    <span class="comment">/* Key supplied to shmget(2) */</span></span><br><span class="line">	<span class="type">uid_t</span>          uid;      <span class="comment">/* Effective UID of owner */</span></span><br><span class="line">	<span class="type">gid_t</span>          gid;      <span class="comment">/* Effective GID of owner */</span></span><br><span class="line">	<span class="type">uid_t</span>          cuid;     <span class="comment">/* Effective UID of creator */</span></span><br><span class="line">	<span class="type">gid_t</span>          cgid;     <span class="comment">/* Effective GID of creator */</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> mode;     <span class="comment">/* Permissions + SHM_DEST and</span></span><br><span class="line"><span class="comment">								SHM_LOCKED flags */</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> __seq;    <span class="comment">/* Sequence number */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>资源限制</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">rlimit</span> &#123;</span></span><br><span class="line">	<span class="type">rlim_t</span> rlim_cur;  <span class="comment">/* Soft limit */</span></span><br><span class="line">	<span class="type">rlim_t</span> rlim_max;  <span class="comment">/* Hard limit (ceiling for rlim_cur) */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+      <categories>
+        <category>操作系统</category>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>动态规划</title>
+    <url>/2024/09/06/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</url>
+    <content><![CDATA[<h2 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h2><p>问题描述： n 个物体，每个物体重量价值分别为 w v , 在此基础上用承重为 W 的包去装物体，以使所装物体价值最大化。</p>
+<ul>
+<li>0-1 背包 ：每件物品最多用一次</li>
+<li>完全背包：每件物品有无限个</li>
+<li>多重背包：每个物品设置一个上限 s</li>
+<li>分组背包：物品之间分成组，组内物品互斥选择</li>
+<li>分析方法：  <ul>
+<li><strong>状态表示</strong>：什么集合的什么属性</li>
+<li><strong>状态计算</strong>：当前状态怎么由前置状态转移过来</li>
+</ul>
+</li>
+</ul>
+<h4 id="0-1-背包："><a href="#0-1-背包：" class="headerlink" title="0-1 背包："></a>0-1 背包：</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 朴素方法</span></span><br><span class="line"><span class="type">int</span> v[N];    <span class="comment">// 体积</span></span><br><span class="line"><span class="type">int</span> w[M];    <span class="comment">// 价值 </span></span><br><span class="line"><span class="type">int</span> f[N][M];  <span class="comment">// f[i][j], j体积下前i个物品的最大价值 </span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) </span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>; j &lt;= m; j++)</span><br><span class="line">        <span class="keyword">if</span>(j &lt; v[i])  </span><br><span class="line">            f[i][j] = f[i - <span class="number">1</span>][j];</span><br><span class="line">        <span class="keyword">else</span>    </span><br><span class="line">            f[i][j] = <span class="built_in">max</span>(f[i - <span class="number">1</span>][j], f[i - <span class="number">1</span>][j - v[i]] + w[i]);</span><br><span class="line"><span class="comment">// 一维</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) </span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> j = m; j &gt;= v[i]; j--)  </span><br><span class="line">    	f[j] = <span class="built_in">max</span>(f[j], f[j - v[i]] + w[i]);	<span class="comment">// 选和不选，从上层转移过来，所以逆序</span></span><br><span class="line"><span class="comment">// 边输入边处理</span></span><br><span class="line">cin &gt;&gt; v &gt;&gt; w;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> j = m; j &gt;= v; j--)</span><br><span class="line">    f[j] = <span class="built_in">max</span>(f[j], f[j - v] + w);</span><br></pre></td></tr></table></figure>
+
+<p>解：<a href="https://www.acwing.com/solution/content/1374/">https://www.acwing.com/solution/content/1374/</a></p>
+<p>分析方法：<a href="https://www.acwing.com/problem/content/discussion/content/2807/">https://www.acwing.com/problem/content/discussion/content/2807/</a></p>
+<h4 id="完全背包："><a href="#完全背包：" class="headerlink" title="完全背包："></a>完全背包：</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1. 朴素版本：o(nm*m)</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>; j &lt;= m; j++)</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> k = <span class="number">0</span>; k * v[i] &lt;= j; k++)</span><br><span class="line">            f[i][j] = <span class="built_in">max</span>(f[i][j], f[i<span class="number">-1</span>][j-k*v[i]] + k*w[i]);</span><br><span class="line">    <span class="comment">//  为何括号中第一个是 f[i][j] 而不是 f[i-1][j]</span></span><br><span class="line">    <span class="comment">//  由于 k=0 必执行，这次执行确定性把 f[i][j] 赋值为 f[i-1][j]</span></span><br><span class="line"><span class="comment">// 观察现象：</span></span><br><span class="line">    <span class="comment">//  f[i][j] = max(f[i-1][j],f[i-1][j-v]+w,f[i-1][j-2v]+2w,f[i-1][j-3v]+3w,)</span></span><br><span class="line">    <span class="comment">//  f[i][j-v] = max(       ,f[i-1][j-v],  f[i-1][j-2v]+w ,f[i-1][j-3v]+2v,)</span></span><br><span class="line">    <span class="comment">//  f[i][j] = max(f[i-1][j],f[i][j-v]+w)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 由此，改进版本 O(nm)</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>; j &lt;= m; j++)</span><br><span class="line">    &#123;</span><br><span class="line">        f[i][j] = f[i<span class="number">-1</span>][j];<span class="comment">//v[i] 之前，第 i 个物品放不进去，直接搬下来就行</span></span><br><span class="line">        <span class="keyword">if</span>(j&gt;=v[i]) f[i][j] = <span class="built_in">max</span>(f[i][j],f[i][j-v[i]]+w[i]);</span><br><span class="line">        <span class="comment">// 这次优化可以从上面的max计算的规律去想，也可以从f[i][j]依赖f[i][j-v[i]]去理解</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">// 至此，对比 0-1 背包和完全背包的转移方程</span></span><br><span class="line">    f[i][j] = <span class="built_in">max</span>(f[i<span class="number">-1</span>][j], f[i<span class="number">-1</span>][j-v[i]] + w[i])  <span class="comment">// 都是从上一行转移过来</span></span><br><span class="line">    f[i][j] = <span class="built_in">max</span>(f[i<span class="number">-1</span>][j], f[i][j-v[i]] + w[i])	<span class="comment">// 从上一行和同行的前置位过来，这里依赖同行的前置位，故不能倒序</span></span><br><span class="line">        </span><br><span class="line"><span class="comment">// 3. 改进成一维 O(nm)</span></span><br><span class="line">   <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = v[i]; j &lt;= m; j++)</span><br><span class="line">		f[j] = <span class="built_in">max</span>(f[j],f[j-v[i]]+w[i]);     <span class="comment">// f[j-v[i]] 和 f[j] 有绝对的 w[i] 差值</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="多重背包："><a href="#多重背包：" class="headerlink" title="多重背包："></a>多重背包：</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1. 朴素解法 O(nmm)</span></span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line"><span class="type">int</span> v[N], w[N], s[N];</span><br><span class="line"><span class="type">int</span> f[N][N];</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="comment">// 1 开始，将数据录入和物品编号实际对应，虽然浪费一个空间</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span> ; i &lt;= n; i++) cin &gt;&gt; v[i] &gt;&gt; w[i] &gt;&gt; s[i];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>; j &lt;= m; j++)</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> k = <span class="number">0</span>; k*v[i] &lt;= j &amp;&amp; k &lt;= s[i]; k++)</span><br><span class="line">                f[i][j] = <span class="built_in">max</span>(f[i][j], f[i<span class="number">-1</span>][j-k*v[i]] + k * w[i]); </span><br><span class="line"><span class="comment">// 2. 一维解法 O(nmm)</span></span><br><span class="line">f[i][j] = <span class="built_in">max</span>(f[i<span class="number">-1</span>][j],f[i<span class="number">-1</span>][j-v]+w,f[i<span class="number">-1</span>][j<span class="number">-2</span>v]<span class="number">+2</span>w,f[i<span class="number">-1</span>][j<span class="number">-3</span>v]<span class="number">+3</span>w,...,f[i<span class="number">-1</span>][j-sv]+sw)</span><br><span class="line">f[i][j-v]=<span class="built_in">max</span>(          f[i<span class="number">-1</span>][j-v],  f[i<span class="number">-1</span>][j<span class="number">-2</span>v]+w, f[i<span class="number">-1</span>][j<span class="number">-3</span>v]<span class="number">+2</span>w,...,f[i<span class="number">-1</span>][j-sv]+(s<span class="number">-1</span>)w,f[i<span class="number">-1</span>][j-(s<span class="number">+1</span>)v]+sw)</span><br><span class="line"><span class="comment">// 遗憾的是得知后面的最大值 f[i][j-v] ，并不能推知其子集f[i-1][j-v]+w,f[i-1][j-2v]+2w,f[i-1][j-3v]+3w,...,f[i-1][j-sv]+sw 的最大值，因此不能像完全背包一样依赖前置位。</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = m; j &gt;= <span class="number">0</span>; j--)</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> k = <span class="number">0</span>; k &lt;= s[i]; k++)</span><br><span class="line">            <span class="keyword">if</span>(k*v[i]&lt;=j) f[j]=<span class="built_in">max</span>(f[j],f[j-k*v[i]]+k*w[i]);</span><br><span class="line"><span class="comment">// 3. 二进制拆分优化</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">25000</span>, M = <span class="number">2010</span>;</span><br><span class="line"><span class="comment">//  25000来历：n,s取值都在2000之内，那么s个同类物品最多被分为log(s)组，也即最多11组，2000种物品算起来最多的组为2000*11</span></span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line"><span class="type">int</span> v[N], w[N]; <span class="comment">//逐一枚举最大是N*logS</span></span><br><span class="line"><span class="type">int</span> f[M]; <span class="comment">// 体积&lt;M</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="type">int</span> cnt = <span class="number">0</span>; </span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i &lt;= n;i ++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> a,b,s;</span><br><span class="line">        cin &gt;&gt; a &gt;&gt; b &gt;&gt; s;</span><br><span class="line">        <span class="type">int</span> k = <span class="number">1</span>; </span><br><span class="line">        <span class="keyword">while</span>(k&lt;=s) <span class="comment">// 按2的阶乘分组</span></span><br><span class="line">        &#123;</span><br><span class="line">            cnt ++ ; </span><br><span class="line">            v[cnt] = a * k ;</span><br><span class="line">            w[cnt] = b * k;</span><br><span class="line">            s -= k; </span><br><span class="line">            k *= <span class="number">2</span>; </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(s&gt;<span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            cnt ++ ;</span><br><span class="line">            v[cnt] = a*s; </span><br><span class="line">            w[cnt] = b*s;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    n = cnt ; </span><br><span class="line">    <span class="comment">//01背包一维优化</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i &lt;= n ;i ++)</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j = m ;j &gt;= v[i];j --)</span><br><span class="line">            f[j] = <span class="built_in">max</span>(f[j],f[j-v[i]] + w[i]);</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; f[m] &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="分组背包："><a href="#分组背包：" class="headerlink" title="分组背包："></a>分组背包：</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> N 110</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n,m;</span><br><span class="line"><span class="type">int</span> v[N][N],w[N][N];</span><br><span class="line"><span class="type">int</span> f[N],s[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cin &gt;&gt; s[i];</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>; j &lt; s[i]; j++)</span><br><span class="line">            cin &gt;&gt; v[i][j] &gt;&gt; w[i][j];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j = m; j &gt;= <span class="number">0</span>; j--)</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> k = <span class="number">0</span>; k &lt; s[i]; k++)</span><br><span class="line">                <span class="keyword">if</span>(v[i][k] &lt;= j)</span><br><span class="line">                    f[j] = <span class="built_in">max</span>(f[j], f[j - v[i][k]] + w[i][k]);</span><br><span class="line">      </span><br><span class="line">    cout &lt;&lt; f[m] &lt;&lt; endl;     </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 采用一维时：数据依赖上一行，则倒序；依赖同一行前置位则正序。</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="线性DP"><a href="#线性DP" class="headerlink" title="线性DP"></a>线性DP</h2><h4 id="数字三角形-acwing-898"><a href="#数字三角形-acwing-898" class="headerlink" title="数字三角形 acwing 898"></a>数字三角形 <a href="https://www.acwing.com/problem/content/description/900/">acwing 898</a></h4><ul>
+<li>思路：<ul>
+<li>状态表示（集合，属性）：到达任意坐标（i, j) 的路径和的最大值为 f[i][j]</li>
+<li>状态转移 ： 这个最大值要么从左边转移过来，要么从右边转移过来，故 f[i][j] &#x3D; max(f[i -  1][j - 1] , f[i -  1][j]) +  a[i][j]</li>
+</ul>
+</li>
+<li>其他注意事项：<ul>
+<li>要想让三角形边界选到三角形内的数据，就要把 f 数组中三角形边界设置为负无穷</li>
+<li>题目要求是到最底层，结果要在 f 数组的最后一行中找，极端情况下，所有元素都是最小值，累积出来的路径和会很小，因此，用于遍历最后一行的值也要设无穷小。</li>
+<li>左右的坐标相对位置要找对</li>
+</ul>
+</li>
+<li>其他解法：倒序遍历，相当于从底部走到顶部<a href="https://www.acwing.com/solution/content/128359/">https://www.acwing.com/solution/content/128359/</a></li>
+</ul>
+<h4 id="最长上升子序列-acwing-895"><a href="#最长上升子序列-acwing-895" class="headerlink" title="最长上升子序列 acwing 895"></a>最长上升子序列 <a href="https://www.acwing.com/activity/content/problem/content/1003/">acwing 895</a></h4><ul>
+<li>思路1<ul>
+<li>状态表示（集合，属性）：以 i 结尾的最长单调子序列长度为 f[i]</li>
+<li>状态转移：遍历前面 i - 1个 f 数组元素，遇到 w[i] &gt; w[j] 则，f[i] &#x3D; max(f[i], f[j] +  1), 没遇到则 f[i] &#x3D;  1</li>
+<li>时间复杂度：状态数(n) * 转移数(n)，O(n^2),</li>
+</ul>
+</li>
+<li>思路2<ul>
+<li>维护一个初始为空的递增序列 dp，遍历存储数组中的所有元素，找到其在递增序列中第一个大于等于其值的位置<ul>
+<li>如果找到末尾，就在dp 末尾增加当前元素</li>
+<li>如果是中间，就替换当前位置元素</li>
+</ul>
+</li>
+<li>复杂度分析：O(nlogn) ，状态数(n) * 转移数(logn)</li>
+<li>利用二分的解法： <a href="https://www.acwing.com/solution/content/4807/">https://www.acwing.com/solution/content/4807/</a></li>
+</ul>
+</li>
+</ul>
+<h4 id="最长公共子序列-acwing-897"><a href="#最长公共子序列-acwing-897" class="headerlink" title="最长公共子序列 acwing 897"></a>最长公共子序列 <a href="https://www.acwing.com/activity/content/problem/content/1005/">acwing 897</a></h4><ul>
+<li>思路<ul>
+<li>状态表示：f[i][j] A 的前 i 个字符， B 的前 j 个字符的公共子序列 的最长公共子序列</li>
+<li>状态转移：f[i][j] 可以由以下四个状态变换过来：<ul>
+<li>a[i],b[j] 均存在于 最长公共子序列中 (前提a[i]&#x3D;&#x3D;b[j])</li>
+<li>a[i] 在，b[j] 不在   （无前提），不完全等同于  f[i][j - 1] </li>
+<li>a[i],b[j] 均不在     （无前提）</li>
+<li>a[i]不在，b[j]在     （无前提）</li>
+</ul>
+</li>
+<li>更详细的分析：<a href="https://www.acwing.com/solution/content/48820/">https://www.acwing.com/solution/content/48820/</a></li>
+</ul>
+</li>
+</ul>
+<h4 id="编辑距离"><a href="#编辑距离" class="headerlink" title="编辑距离"></a>编辑距离</h4><ul>
+<li>思路<ul>
+<li>状态表示</li>
+<li>状态转移</li>
+</ul>
+</li>
+</ul>
+<h2 id="区间DP"><a href="#区间DP" class="headerlink" title="区间DP"></a>区间DP</h2><h4 id="石子合并"><a href="#石子合并" class="headerlink" title="石子合并"></a>石子合并</h4><h2 id="计数类DP"><a href="#计数类DP" class="headerlink" title="计数类DP"></a>计数类DP</h2>]]></content>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mytest</title>
+    <url>/2024/09/15/mytest/</url>
+    <content><![CDATA[<img src="/2024/09/15/mytest/image-20240915155128595.png" class title="This is an example image">]]></content>
   </entry>
   <entry>
     <title>Windows  环境下利用 Github page 搭建博客环境</title>
@@ -1212,63 +1364,170 @@
       </tags>
   </entry>
   <entry>
-    <title>apue 学习记录</title>
-    <url>/2024/06/19/apue%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<p>apue 学习记录</p>
+    <title>秋招笔试真题记录</title>
+    <url>/2024/09/05/%E7%A7%8B%E6%8B%9B%E7%AC%94%E8%AF%95%E7%9C%9F%E9%A2%98%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<p>记录秋招过程中的笔试算法题目</p>
 <span id="more"></span>
 
-<ul>
-<li><p>环境搭建：<a href="https://zhuanlan.zhihu.com/p/580675705">https://zhuanlan.zhihu.com/p/580675705</a></p>
-</li>
-<li><p>文件描述符和inode关系：<a href="https://blog.csdn.net/ambitiousssssss/article/details/124001467%EF%BC%8Chttps://blog.csdn.net/weixin_43864567/article/details/124063198">https://blog.csdn.net/ambitiousssssss/article/details/124001467，https://blog.csdn.net/weixin_43864567/article/details/124063198</a></p>
-</li>
-<li><p><a href="https://www.cnblogs.com/kcloveworld/p/17989014">文件描述符、文件描述符表、文件表项、inode名词释义</a><br><a href="https://blog.csdn.net/kyang_823/article/details/79496362">https://blog.csdn.net/kyang_823/article/details/79496362</a></p>
-</li>
-<li><p>&#x2F;proc文件系统：<a href="https://blog.51cto.com/u_15127514/4196632">https://blog.51cto.com/u_15127514/4196632</a></p>
-</li>
-<li><p>虚拟文件系统VFS原理：<a href="https://blog.51cto.com/mingongge/2945174">https://blog.51cto.com/mingongge/2945174</a></p>
-</li>
-<li><p>重要头文件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">这个头文件包含了POSIX标准中定义的一些常用函数和类型，比如fork()、exec()系列函数，以及pid_t类型等。</span><br><span class="line"></span><br><span class="line">#include &lt;sys/syscall.h&gt;</span><br><span class="line">这个头文件包含了系统调用的编号，比如SYS_gettid和SYS_tgkill等。</span><br><span class="line"></span><br><span class="line">#include &lt;sys/types.h&gt;</span><br><span class="line">这个头文件定义了一些基本的数据类型，比如pid_t、size_t等。</span><br><span class="line"></span><br><span class="line">#include &lt;signal.h&gt;</span><br><span class="line">这个头文件包含了信号相关的函数和类型，比如SIGHUP信号常量。</span><br></pre></td></tr></table></figure></li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./tools/perf/include/bpf/unistd.h</span><br><span class="line">./tools/arch/arm64/include/uapi/asm/unistd.h</span><br><span class="line">./tools/arch/arc/include/uapi/asm/unistd.h</span><br><span class="line">./tools/arch/riscv/include/uapi/asm/unistd.h</span><br><span class="line">./tools/arch/x86/include/uapi/asm/unistd.h</span><br><span class="line">./tools/arch/hexagon/include/uapi/asm/unistd.h</span><br><span class="line">./tools/include/nolibc/unistd.h</span><br><span class="line">./tools/include/uapi/asm-generic/unistd.h</span><br><span class="line">./arch/alpha/include/asm/unistd.h</span><br><span class="line">./arch/alpha/include/uapi/asm/unistd.h</span><br><span class="line">./arch/ia64/include/asm/unistd.h</span><br><span class="line">./arch/ia64/include/uapi/asm/unistd.h</span><br><span class="line">./arch/arm64/include/asm/unistd.h</span><br><span class="line">./arch/arm64/include/uapi/asm/unistd.h</span><br><span class="line">./arch/sparc/include/asm/unistd.h</span><br><span class="line">./arch/sparc/include/uapi/asm/unistd.h</span><br><span class="line">./arch/xtensa/include/asm/unistd.h</span><br><span class="line">./arch/xtensa/include/uapi/asm/unistd.h</span><br><span class="line">./arch/parisc/include/asm/unistd.h</span><br><span class="line">./arch/parisc/include/uapi/asm/unistd.h</span><br><span class="line">./arch/microblaze/include/asm/unistd.h</span><br><span class="line">./arch/microblaze/include/uapi/asm/unistd.h</span><br><span class="line">./arch/arc/include/uapi/asm/unistd.h</span><br><span class="line">./arch/riscv/include/asm/unistd.h</span><br><span class="line">./arch/riscv/include/uapi/asm/unistd.h</span><br><span class="line">./arch/s390/include/asm/unistd.h</span><br><span class="line">./arch/s390/include/uapi/asm/unistd.h</span><br><span class="line">./arch/nios2/include/uapi/asm/unistd.h</span><br><span class="line">./arch/x86/include/asm/unistd.h</span><br><span class="line">./arch/x86/include/uapi/asm/unistd.h</span><br><span class="line">./arch/hexagon/include/uapi/asm/unistd.h</span><br><span class="line">./arch/powerpc/include/asm/unistd.h</span><br><span class="line">./arch/powerpc/include/uapi/asm/unistd.h</span><br><span class="line">./arch/loongarch/include/asm/unistd.h</span><br><span class="line">./arch/loongarch/include/uapi/asm/unistd.h</span><br><span class="line">./arch/sh/include/asm/unistd.h</span><br><span class="line">./arch/sh/include/uapi/asm/unistd.h</span><br><span class="line">./arch/m68k/include/asm/unistd.h</span><br><span class="line">./arch/m68k/include/uapi/asm/unistd.h</span><br><span class="line">./arch/csky/include/asm/unistd.h</span><br><span class="line">./arch/csky/include/uapi/asm/unistd.h</span><br><span class="line">./arch/arm/include/asm/unistd.h</span><br><span class="line">./arch/arm/include/uapi/asm/unistd.h</span><br><span class="line">./arch/openrisc/include/uapi/asm/unistd.h</span><br><span class="line">./arch/mips/include/asm/unistd.h</span><br><span class="line">./arch/mips/include/uapi/asm/unistd.h</span><br><span class="line">./include/uapi/asm-generic/unistd.h</span><br><span class="line">./include/uapi/linux/unistd.h</span><br><span class="line">arch/mips/include/asm/unistd.h 通常包含了特定于MIPS架构的系统调用号码定义，这些定义是基于MIPS架构的特点定制的。</span><br><span class="line">arch/mips/include/uapi/asm/unistd.h 则包含了用户空间API的系统调用号码定义，这些定义是为了让用户空间程序能够安全地调用内核提供的服务。</span><br><span class="line">简单来说，uapi目录下的头文件通常用于定义用户空间可以使用的接口，而非特定于某个架构的内部细节。这样做的好处是，用户空间程序不必关心底层的硬件架构，只需通过统一的接口与内核通信。而asm目录下的头文件则包含了特定于某一架构的实现细节，这些细节对于用户空间程序是透明的，但对于内核开发者来说非常重要，因为它们涉及到如何在特定的硬件上实现系统调用.</span><br></pre></td></tr></table></figure>
+<h4 id="0905-小米"><a href="#0905-小米" class="headerlink" title="0905 小米"></a>0905 小米</h4><ol>
+<li><p>做面包</p>
+<p>小明每天早上需要AB两种面包各一个，同时已知小明有 n 个面包机，n 个面包机做 A B 两种面包的时间分别是 a<del>i</del> ，b<del>i</del> 。可以选择用同一台面包机先后制作 A 和 B，这样时间是累加的，也可以选择用不同的面包机并行制作 A B, 这样时间取两块面包制作时间的大者。</p>
+<p><strong>输入格式：</strong></p>
+<p>首行 n, 代表拥有面包机的数量。接下来有两行，每行 n 个数，第一行 n 个数代表 n 台面包机制作 A 面包的时间，第二行 n 个数代表 n 台面包机制作 B 面包的时间。</p>
+<p><strong>输出格式：</strong></p>
+<p>输出一个数，代表最短制作用时</p>
+<p><strong>输入样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3</span><br><span class="line">2 5 7</span><br><span class="line">2 6 8</span><br></pre></td></tr></table></figure>
 
-<p>学习 apue 的目的是什么？<br>1.明白 linux 系统级知识，为读 AFL 源码做准备。<br>2.进而熟悉 linux 内核源码，可以对内核进行调试，修改。<br>目前好的 apue 学习素材：<br>1.b站李慧琴的课，相关笔记<a href="https://kisugitakumi.net/2022/11/20/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/#6-4-2-%E4%BD%BF%E7%94%A8">https://kisugitakumi.net/2022/11/20/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/#6-4-2-%E4%BD%BF%E7%94%A8</a><br>2.apue 书本<br>目前对 apue 的理解以及所能预料到的掌握后的能力：<br>1.熟悉了 linux 平台 进程 文件 信号机制 的原理，接口<br>2.能够在此基础之上进行应用程序开发</p>
-<p>对于使用 afl 本身来说，了解平台机制就可以了，想要研究 afl 更重要的就是要对 afl 的原理进行更深入的研究。<br>以上都为计算机的术的话，计算机学习的道应该是什么？</p>
-<p>6月20号：<br>1.昨天开始读 AFL 源码，主要是看 makefile ,问题是 makefile 语法还是不太熟悉，又转去看手册。makefile 里有 shell 命令，于是看 bash 手册<br>2.makefile bash 两个手册可以粗略看一下，花费一个半小时，然后开始看 AFL 源码</p>
-<p>type command  查看命令类型</p>
-]]></content>
-      <categories>
-        <category>工程开发</category>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux 系统编程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2024/07/08/%E5%BE%85%E5%A4%84%E7%90%86/0708%E5%AD%97%E8%8A%82%E9%9D%A2%E8%AF%95%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<ol>
-<li>围绕简历自我介绍5min</li>
-<li>拷问<ul>
-<li>多路复用IO</li>
-<li>c++ const static 关键字特性</li>
-<li>智能指针</li>
-<li>虚函数机制</li>
-<li>面向对象三大特性</li>
+<p><strong>输出样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">4</span><br></pre></td></tr></table></figure>
+
+<p>答案：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">s</span><br></pre></td></tr></table></figure>
+
+<p>这个想对简单只需要把各自AB两种面包最小值算出来即可。略</p>
+</li>
+<li><p>序列操作</p>
+<p>给出一个数字序列，你可以有两种操作，一种是把某个元素加 1，第二种是直接删除某元素，最终期望达到的效果是所有元素之和是 x 的倍数</p>
+<p><strong>输入格式：</strong></p>
+<p>首行两个数字 n , x。n 代表数组长度， x 为上文描述的意义。</p>
+<p><strong>输出格式：</strong></p>
+<p>输出最少操作次数</p>
+<p><strong>输入样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3 5</span><br><span class="line">2 5 7</span><br></pre></td></tr></table></figure>
+
+<p><strong>输出样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 目前 还没有太成熟的解法，想法是直接根据数据总和，以及数据元素，推算用两种方式各自需要多少次</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> N 1010</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; a;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> n, x; cin &gt;&gt; n &gt;&gt; x;</span><br><span class="line">    <span class="type">int</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i ++) &#123;<span class="type">int</span> t; cin &gt;&gt; t; a.<span class="built_in">push_back</span>(t), sum += t;&#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i ++) cout &lt;&lt; a[i] &lt;&lt; <span class="string">&#x27; &#x27;</span>; cout &lt;&lt; endl;</span><br><span class="line">    <span class="built_in">sort</span>(a.<span class="built_in">begin</span>(),a.<span class="built_in">end</span>());</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i ++) cout &lt;&lt; a[i] &lt;&lt; <span class="string">&#x27; &#x27;</span>; cout &lt;&lt; endl;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(sum % x  == <span class="number">0</span>) </span><br><span class="line">        &#123; cout &lt;&lt; <span class="number">0</span> &lt;&lt; endl; <span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>( (sum + <span class="number">1</span>) % x == <span class="number">0</span>) </span><br><span class="line">        &#123; cout &lt;&lt; <span class="number">1</span> &lt;&lt; endl; <span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">auto</span> pos = <span class="built_in">lower_bound</span>(a.<span class="built_in">begin</span>(),a.<span class="built_in">end</span>(), sum % x);</span><br><span class="line">        <span class="keyword">if</span>(pos != a.<span class="built_in">end</span>() &amp;&amp; *pos == sum % x) </span><br><span class="line">            &#123; cout &lt;&lt; <span class="number">1</span> &lt;&lt; endl; <span class="keyword">return</span> <span class="number">0</span>; &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(*pos &gt; sum % x &amp;&amp; pos != a.<span class="built_in">begin</span>())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> s1 = </span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>这个题目有点像动态规划，但是似乎常规方法也可以，暂时没有很好的解法</li>
 </ul>
 </li>
-<li>智力题<ul>
-<li>100层楼，两个球</li>
-</ul>
+<li><p>总结：</p>
+<ol>
+<li>其实题目算是很基础了，但一是心态，而是技术，两方面都需要加强<ol>
+<li>心态应该更淡定一些</li>
+<li>技术就是要多练</li>
+</ol>
 </li>
-<li>算法<ul>
-<li>深拷贝随机链表</li>
-</ul>
+</ol>
+</li>
+</ol>
+<h4 id="0908-饿了吗"><a href="#0908-饿了吗" class="headerlink" title="0908 饿了吗"></a>0908 饿了吗</h4><ol>
+<li><p>排队时间</p>
+<p>给出一个表示任务执行时间的序列，判断是否可以通过交换其中两个任务的位置，使得总等待时间尽可能小，若存在输出两个位置，不存在就输出 -1</p>
+<p><strong>输入格式：</strong></p>
+<p>首行 n, 代表任务的数量。接下来是 n 个数字，表示各个任务的处理时间</p>
+<p><strong>输出格式：</strong></p>
+<p>若存在输出两个位置，不存在就输出 -1</p>
+<p><strong>输入样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">5</span><br><span class="line">12131</span><br></pre></td></tr></table></figure>
+
+<p><strong>输出样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2 5</span><br></pre></td></tr></table></figure>
+
+<p>答案：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">s</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>权益值最小化</p>
+<p>对整型数 a, b 来说，你可以有两种操作，分别变换为（a - b, b)  或 （a, b -a), 我们称 abs(a-b) 为 这队数字的权益值，给出一组这样的整数对，<strong>在使得他们的权益值之和最小前提下</strong>，问最小的操作次数。</p>
+<p><strong>输入格式：</strong></p>
+<p>首行 n, 代表整数对数量，接下来 n 行，每行是两个整型数， 代表一个数对</p>
+<p><strong>输出格式：</strong></p>
+<p>输出分两行，第一行是最小权益值之和，第二行是对应操作次数</p>
+<p><strong>输入样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3</span><br><span class="line">2 5 7</span><br><span class="line">2 6 8</span><br></pre></td></tr></table></figure>
+
+<p><strong>输出样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">4</span><br></pre></td></tr></table></figure>
+
+<p>答案：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">s</span><br></pre></td></tr></table></figure>
+
+<p>这个想对简单只需要把各自AB两种面包最小值算出来即可。略</p>
+</li>
+<li><p>都市圈</p>
+<p>n 个城市按批次规划高铁，每次规划会给出规划时间，联通城市数，对应的联通城市；被联通的城市称之为都市圈，然后询问在某个时间点上某个城市圈的人数总数？如果规划时间和询问时间一致，那么按照先执行规划再询问处理</p>
+<p><strong>输入格式：</strong></p>
+<p>首行 n, 代表拥有面包机的数量。接下来有两行，每行 n 个数，第一行 n 个数代表 n 台面包机制作 A 面包的时间，第二行 n 个数代表 n 台面包机制作 B 面包的时间。</p>
+<p><strong>输出格式：</strong></p>
+<p>输出一个数，代表最短制作用时</p>
+<p><strong>输入样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">5 3 4</span><br><span class="line">1 2 3 4 5</span><br><span class="line">1 2 1 3</span><br><span class="line">3 2 3 4</span><br><span class="line">5 2 2 5</span><br><span class="line">1 1</span><br><span class="line">5 5</span><br><span class="line">2 1</span><br><span class="line">4 3</span><br></pre></td></tr></table></figure>
+
+<p><strong>输出样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">4</span><br></pre></td></tr></table></figure>
+
+<p>答案：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">s</span><br></pre></td></tr></table></figure>
+
+<p>这个想对简单只需要把各自AB两种面包最小值算出来即可。略</p>
+</li>
+</ol>
+<h4 id="0914-小红书"><a href="#0914-小红书" class="headerlink" title="0914 小红书"></a>0914 小红书</h4><ol>
+<li><p>相似笔记（15分）</p>
+<p>小红书笔记有点赞数，如果两篇笔记点赞数异或之后等于我们给定的 k 值，称两篇笔记相似。给你一个表示笔记点赞数的数组，判断这些笔记中有多少相似的。</p>
+<p><strong>输入格式：</strong></p>
+<p>首行 n, k。分别代表笔记数量，上文中的 k 值，接下来是 n 个数字，表示 n 篇笔记点赞数</p>
+<p><strong>输出格式：</strong></p>
+<p>相似笔记的对数</p>
+<p><strong>输入样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">4 5</span><br><span class="line">1 1 3 4</span><br></pre></td></tr></table></figure>
+
+<p><strong>输出样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>说明：1 ^ 4 &#x3D; 5, 所以相似数量为2，(1,4) 和 (1,4)</p>
+<p>n 的范围 1 - 10^5	k 及 点赞数范围 1 - 10^9</p>
+</blockquote>
+<p>答案：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">   </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>桌子最大摆放方式</p>
+<p>小红书有一个阅览室长宽高分别为 x y z, 这个阅览室是无重力的，因此里面的桌子可以随意漂浮，给你一个体积为 V 的桌子，桌子的边长可以是任意整数，只要保证体积是 v ,让桌子各边平行于阅览室各轴，并且各个角都位于整数坐标。问桌子可能的最大可摆放的位置数量</p>
+<p><strong>输入格式：</strong></p>
+<p>首行T, 代表接下来的数据组数。每组数构成为 x y z v，四个数的意义与上面一致</p>
+<p><strong>输出格式：</strong></p>
+<p>每组情况下桌子的最大摆放方式</p>
+<p><strong>输入样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2</span><br><span class="line">3 1 2 2</span><br><span class="line">1 2 3 7</span><br></pre></td></tr></table></figure>
+
+<p><strong>输出样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">4</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
+
+<p>答案：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">s</span><br></pre></td></tr></table></figure>
+
+<p>完全没有思路！</p>
+</li>
+<li><p>树上距离</p>
+<p>小红有一棵 n 个节点， n - 1条变构成的树，边的权重为 w<del>i</del>, 定义树的两个点(u,v)权值为，从 u 到 v 的简单路径上全部边的异或和，特别的当 u 和 v 是同一个点，权值为 0，小红会进行 q 次询问，询问有多少个点到 u 的路径和恰好为 k</p>
+<p><strong>输入格式：</strong></p>
+<p>首行 n,q,分别代表树的节点数和询问次数，此后 n -  1 行，每行三个整数 u v w，表示 u v 之间有边，权值为 w, 数据保证树联通，没有重边，此后 q 行，每行 u k, 分别表示询问的节点和限定</p>
+<p><strong>输出格式：</strong></p>
+<p>每个询问输出一个整数，代表到 u 节点距离为 k 的节点数量</p>
+<p><strong>输入样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3 2</span><br><span class="line">1 2 2</span><br><span class="line">1 3 3</span><br><span class="line">1 0</span><br><span class="line">2 2</span><br></pre></td></tr></table></figure>
+
+<p><strong>输出样例：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>n q 范围 1 - 10^5,  u &lt;&#x3D; n, k 范围 0 - 2^60</p>
+</blockquote>
+<p>答案：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">s</span><br></pre></td></tr></table></figure>
+
+<p>这个想对简单只需要把各自AB两种面包最小值算出来即可。略</p>
 </li>
 </ol>
 ]]></content>
+      <tags>
+        <tag>秋招</tag>
+      </tags>
   </entry>
   <entry>
     <title>房地产研究</title>
@@ -1666,289 +1925,6 @@
       </tags>
   </entry>
   <entry>
-    <title>动态规划</title>
-    <url>/2024/09/06/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</url>
-    <content><![CDATA[<h2 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h2><p>问题描述： n 个物体，每个物体重量价值分别为 w v , 在此基础上用承重为 W 的包去装物体，以使所装物体价值最大化。</p>
-<ul>
-<li>0-1 背包 ：每件物品最多用一次</li>
-<li>完全背包：每件物品有无限个</li>
-<li>多重背包：每个物品设置一个上限 s</li>
-<li>分组背包：物品之间分成组，组内物品互斥选择</li>
-<li>分析方法：  <ul>
-<li><strong>状态表示</strong>：什么集合的什么属性</li>
-<li><strong>状态计算</strong>：当前状态怎么由前置状态转移过来</li>
-</ul>
-</li>
-</ul>
-<h4 id="0-1-背包："><a href="#0-1-背包：" class="headerlink" title="0-1 背包："></a>0-1 背包：</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 朴素方法</span></span><br><span class="line"><span class="type">int</span> v[N];    <span class="comment">// 体积</span></span><br><span class="line"><span class="type">int</span> w[M];    <span class="comment">// 价值 </span></span><br><span class="line"><span class="type">int</span> f[N][M];  <span class="comment">// f[i][j], j体积下前i个物品的最大价值 </span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) </span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>; j &lt;= m; j++)</span><br><span class="line">        <span class="keyword">if</span>(j &lt; v[i])  </span><br><span class="line">            f[i][j] = f[i - <span class="number">1</span>][j];</span><br><span class="line">        <span class="keyword">else</span>    </span><br><span class="line">            f[i][j] = <span class="built_in">max</span>(f[i - <span class="number">1</span>][j], f[i - <span class="number">1</span>][j - v[i]] + w[i]);</span><br><span class="line"><span class="comment">// 一维</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) </span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> j = m; j &gt;= v[i]; j--)  </span><br><span class="line">    	f[j] = <span class="built_in">max</span>(f[j], f[j - v[i]] + w[i]);	<span class="comment">// 选和不选，从上层转移过来，所以逆序</span></span><br><span class="line"><span class="comment">// 边输入边处理</span></span><br><span class="line">cin &gt;&gt; v &gt;&gt; w;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> j = m; j &gt;= v; j--)</span><br><span class="line">    f[j] = <span class="built_in">max</span>(f[j], f[j - v] + w);</span><br></pre></td></tr></table></figure>
-
-<p>解：<a href="https://www.acwing.com/solution/content/1374/">https://www.acwing.com/solution/content/1374/</a></p>
-<p>分析方法：<a href="https://www.acwing.com/problem/content/discussion/content/2807/">https://www.acwing.com/problem/content/discussion/content/2807/</a></p>
-<h4 id="完全背包："><a href="#完全背包：" class="headerlink" title="完全背包："></a>完全背包：</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1. 朴素版本：o(nm*m)</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>; j &lt;= m; j++)</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> k = <span class="number">0</span>; k * v[i] &lt;= j; k++)</span><br><span class="line">            f[i][j] = <span class="built_in">max</span>(f[i][j], f[i<span class="number">-1</span>][j-k*v[i]] + k*w[i]);</span><br><span class="line">    <span class="comment">//  为何括号中第一个是 f[i][j] 而不是 f[i-1][j]</span></span><br><span class="line">    <span class="comment">//  由于 k=0 必执行，这次执行确定性把 f[i][j] 赋值为 f[i-1][j]</span></span><br><span class="line"><span class="comment">// 观察现象：</span></span><br><span class="line">    <span class="comment">//  f[i][j] = max(f[i-1][j],f[i-1][j-v]+w,f[i-1][j-2v]+2w,f[i-1][j-3v]+3w,)</span></span><br><span class="line">    <span class="comment">//  f[i][j-v] = max(       ,f[i-1][j-v],  f[i-1][j-2v]+w ,f[i-1][j-3v]+2v,)</span></span><br><span class="line">    <span class="comment">//  f[i][j] = max(f[i-1][j],f[i][j-v]+w)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 由此，改进版本 O(nm)</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>; j &lt;= m; j++)</span><br><span class="line">    &#123;</span><br><span class="line">        f[i][j] = f[i<span class="number">-1</span>][j];<span class="comment">//v[i] 之前，第 i 个物品放不进去，直接搬下来就行</span></span><br><span class="line">        <span class="keyword">if</span>(j&gt;=v[i]) f[i][j] = <span class="built_in">max</span>(f[i][j],f[i][j-v[i]]+w[i]);</span><br><span class="line">        <span class="comment">// 这次优化可以从上面的max计算的规律去想，也可以从f[i][j]依赖f[i][j-v[i]]去理解</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">// 至此，对比 0-1 背包和完全背包的转移方程</span></span><br><span class="line">    f[i][j] = <span class="built_in">max</span>(f[i<span class="number">-1</span>][j], f[i<span class="number">-1</span>][j-v[i]] + w[i])  <span class="comment">// 都是从上一行转移过来</span></span><br><span class="line">    f[i][j] = <span class="built_in">max</span>(f[i<span class="number">-1</span>][j], f[i][j-v[i]] + w[i])	<span class="comment">// 从上一行和同行的前置位过来，这里依赖同行的前置位，故不能倒序</span></span><br><span class="line">        </span><br><span class="line"><span class="comment">// 3. 改进成一维 O(nm)</span></span><br><span class="line">   <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = v[i]; j &lt;= m; j++)</span><br><span class="line">		f[j] = <span class="built_in">max</span>(f[j],f[j-v[i]]+w[i]);     <span class="comment">// f[j-v[i]] 和 f[j] 有绝对的 w[i] 差值</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="多重背包："><a href="#多重背包：" class="headerlink" title="多重背包："></a>多重背包：</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1. 朴素解法 O(nmm)</span></span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line"><span class="type">int</span> v[N], w[N], s[N];</span><br><span class="line"><span class="type">int</span> f[N][N];</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="comment">// 1 开始，将数据录入和物品编号实际对应，虽然浪费一个空间</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span> ; i &lt;= n; i++) cin &gt;&gt; v[i] &gt;&gt; w[i] &gt;&gt; s[i];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>; j &lt;= m; j++)</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> k = <span class="number">0</span>; k*v[i] &lt;= j &amp;&amp; k &lt;= s[i]; k++)</span><br><span class="line">                f[i][j] = <span class="built_in">max</span>(f[i][j], f[i<span class="number">-1</span>][j-k*v[i]] + k * w[i]); </span><br><span class="line"><span class="comment">// 2. 一维解法 O(nmm)</span></span><br><span class="line">f[i][j] = <span class="built_in">max</span>(f[i<span class="number">-1</span>][j],f[i<span class="number">-1</span>][j-v]+w,f[i<span class="number">-1</span>][j<span class="number">-2</span>v]<span class="number">+2</span>w,f[i<span class="number">-1</span>][j<span class="number">-3</span>v]<span class="number">+3</span>w,...,f[i<span class="number">-1</span>][j-sv]+sw)</span><br><span class="line">f[i][j-v]=<span class="built_in">max</span>(          f[i<span class="number">-1</span>][j-v],  f[i<span class="number">-1</span>][j<span class="number">-2</span>v]+w, f[i<span class="number">-1</span>][j<span class="number">-3</span>v]<span class="number">+2</span>w,...,f[i<span class="number">-1</span>][j-sv]+(s<span class="number">-1</span>)w,f[i<span class="number">-1</span>][j-(s<span class="number">+1</span>)v]+sw)</span><br><span class="line"><span class="comment">// 遗憾的是得知后面的最大值 f[i][j-v] ，并不能推知其子集f[i-1][j-v]+w,f[i-1][j-2v]+2w,f[i-1][j-3v]+3w,...,f[i-1][j-sv]+sw 的最大值，因此不能像完全背包一样依赖前置位。</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = m; j &gt;= <span class="number">0</span>; j--)</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> k = <span class="number">0</span>; k &lt;= s[i]; k++)</span><br><span class="line">            <span class="keyword">if</span>(k*v[i]&lt;=j) f[j]=<span class="built_in">max</span>(f[j],f[j-k*v[i]]+k*w[i]);</span><br><span class="line"><span class="comment">// 3. 二进制拆分优化</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">25000</span>, M = <span class="number">2010</span>;</span><br><span class="line"><span class="comment">//  25000来历：n,s取值都在2000之内，那么s个同类物品最多被分为log(s)组，也即最多11组，2000种物品算起来最多的组为2000*11</span></span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line"><span class="type">int</span> v[N], w[N]; <span class="comment">//逐一枚举最大是N*logS</span></span><br><span class="line"><span class="type">int</span> f[M]; <span class="comment">// 体积&lt;M</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="type">int</span> cnt = <span class="number">0</span>; </span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i &lt;= n;i ++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> a,b,s;</span><br><span class="line">        cin &gt;&gt; a &gt;&gt; b &gt;&gt; s;</span><br><span class="line">        <span class="type">int</span> k = <span class="number">1</span>; </span><br><span class="line">        <span class="keyword">while</span>(k&lt;=s) <span class="comment">// 按2的阶乘分组</span></span><br><span class="line">        &#123;</span><br><span class="line">            cnt ++ ; </span><br><span class="line">            v[cnt] = a * k ;</span><br><span class="line">            w[cnt] = b * k;</span><br><span class="line">            s -= k; </span><br><span class="line">            k *= <span class="number">2</span>; </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(s&gt;<span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            cnt ++ ;</span><br><span class="line">            v[cnt] = a*s; </span><br><span class="line">            w[cnt] = b*s;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    n = cnt ; </span><br><span class="line">    <span class="comment">//01背包一维优化</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i &lt;= n ;i ++)</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j = m ;j &gt;= v[i];j --)</span><br><span class="line">            f[j] = <span class="built_in">max</span>(f[j],f[j-v[i]] + w[i]);</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; f[m] &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="分组背包："><a href="#分组背包：" class="headerlink" title="分组背包："></a>分组背包：</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> N 110</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n,m;</span><br><span class="line"><span class="type">int</span> v[N][N],w[N][N];</span><br><span class="line"><span class="type">int</span> f[N],s[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cin &gt;&gt; s[i];</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>; j &lt; s[i]; j++)</span><br><span class="line">            cin &gt;&gt; v[i][j] &gt;&gt; w[i][j];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j = m; j &gt;= <span class="number">0</span>; j--)</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> k = <span class="number">0</span>; k &lt; s[i]; k++)</span><br><span class="line">                <span class="keyword">if</span>(v[i][k] &lt;= j)</span><br><span class="line">                    f[j] = <span class="built_in">max</span>(f[j], f[j - v[i][k]] + w[i][k]);</span><br><span class="line">      </span><br><span class="line">    cout &lt;&lt; f[m] &lt;&lt; endl;     </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 采用一维时：数据依赖上一行，则倒序；依赖同一行前置位则正序。</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="线性DP"><a href="#线性DP" class="headerlink" title="线性DP"></a>线性DP</h2><h4 id="数字三角形-acwing-898"><a href="#数字三角形-acwing-898" class="headerlink" title="数字三角形 acwing 898"></a>数字三角形 <a href="https://www.acwing.com/problem/content/description/900/">acwing 898</a></h4><ul>
-<li>思路：<ul>
-<li>状态表示（集合，属性）：到达任意坐标（i, j) 的路径和的最大值为 f[i][j]</li>
-<li>状态转移 ： 这个最大值要么从左边转移过来，要么从右边转移过来，故 f[i][j] &#x3D; max(f[i -  1][j - 1] , f[i -  1][j]) +  a[i][j]</li>
-</ul>
-</li>
-<li>其他注意事项：<ul>
-<li>要想让三角形边界选到三角形内的数据，就要把 f 数组中三角形边界设置为负无穷</li>
-<li>题目要求是到最底层，结果要在 f 数组的最后一行中找，极端情况下，所有元素都是最小值，累积出来的路径和会很小，因此，用于遍历最后一行的值也要设无穷小。</li>
-<li>左右的坐标相对位置要找对</li>
-</ul>
-</li>
-<li>其他解法：倒序遍历，相当于从底部走到顶部<a href="https://www.acwing.com/solution/content/128359/">https://www.acwing.com/solution/content/128359/</a></li>
-</ul>
-<h4 id="最长上升子序列-acwing-895"><a href="#最长上升子序列-acwing-895" class="headerlink" title="最长上升子序列 acwing 895"></a>最长上升子序列 <a href="https://www.acwing.com/activity/content/problem/content/1003/">acwing 895</a></h4><ul>
-<li>思路1<ul>
-<li>状态表示（集合，属性）：以 i 结尾的最长单调子序列长度为 f[i]</li>
-<li>状态转移：遍历前面 i - 1个 f 数组元素，遇到 w[i] &gt; w[j] 则，f[i] &#x3D; max(f[i], f[j] +  1), 没遇到则 f[i] &#x3D;  1</li>
-<li>时间复杂度：状态数(n) * 转移数(n)，O(n^2),</li>
-</ul>
-</li>
-<li>思路2<ul>
-<li>维护一个初始为空的递增序列 dp，遍历存储数组中的所有元素，找到其在递增序列中第一个大于等于其值的位置<ul>
-<li>如果找到末尾，就在dp 末尾增加当前元素</li>
-<li>如果是中间，就替换当前位置元素</li>
-</ul>
-</li>
-<li>复杂度分析：O(nlogn) ，状态数(n) * 转移数(logn)</li>
-<li>利用二分的解法： <a href="https://www.acwing.com/solution/content/4807/">https://www.acwing.com/solution/content/4807/</a></li>
-</ul>
-</li>
-</ul>
-<h4 id="最长公共子序列-acwing-897"><a href="#最长公共子序列-acwing-897" class="headerlink" title="最长公共子序列 acwing 897"></a>最长公共子序列 <a href="https://www.acwing.com/activity/content/problem/content/1005/">acwing 897</a></h4><ul>
-<li>思路<ul>
-<li>状态表示：f[i][j] A 的前 i 个字符， B 的前 j 个字符的公共子序列 的最长公共子序列</li>
-<li>状态转移：f[i][j] 可以由以下四个状态变换过来：<ul>
-<li>a[i],b[j] 均存在于 最长公共子序列中 (前提a[i]&#x3D;&#x3D;b[j])</li>
-<li>a[i] 在，b[j] 不在   （无前提），不完全等同于  f[i][j - 1] </li>
-<li>a[i],b[j] 均不在     （无前提）</li>
-<li>a[i]不在，b[j]在     （无前提）</li>
-</ul>
-</li>
-<li>更详细的分析：<a href="https://www.acwing.com/solution/content/48820/">https://www.acwing.com/solution/content/48820/</a></li>
-</ul>
-</li>
-</ul>
-<h4 id="编辑距离"><a href="#编辑距离" class="headerlink" title="编辑距离"></a>编辑距离</h4><ul>
-<li>思路<ul>
-<li>状态表示</li>
-<li>状态转移</li>
-</ul>
-</li>
-</ul>
-<h2 id="区间DP"><a href="#区间DP" class="headerlink" title="区间DP"></a>区间DP</h2><h4 id="石子合并"><a href="#石子合并" class="headerlink" title="石子合并"></a>石子合并</h4><h2 id="计数类DP"><a href="#计数类DP" class="headerlink" title="计数类DP"></a>计数类DP</h2>]]></content>
-      <tags>
-        <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo+typora图片路径设置</title>
-    <url>/2023/09/15/hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/</url>
-    <content><![CDATA[<h4 id="目前的问题："><a href="#目前的问题：" class="headerlink" title="目前的问题："></a>目前的问题：</h4><ol>
-<li>用 hexo n 命令新增博文全部在 _post 文件夹下，博文多了之后很乱，需要按主题分文件夹。</li>
-<li>之前的云对象存储到期以后想把图片直接放在 github 里面</li>
-</ol>
-<p>第一个问题在研究了 hexo 的官方文档之后，可以在新建文章时候用 -p 命令指定文件夹，且 -p 默认相对位置就是 _post 文件夹。</p>
-<p>第二个问题：</p>
-<ul>
-<li>首先在网站配置 <code>_config.yml</code> 中，设置<code>post_asset_folder: true</code>，则会在 <code>hexo n</code> 的时候同时在同路径下生成同名文件夹。</li>
-<li>意味着写作过程中可以将图片放在该文件夹中，但问题是，typora 中对图片路径的引用格式和 hexo 要求的不一致，于是需要在写完文章，编译之前把所有引用路径处理成 hexo 格式。</li>
-</ul>
-<p>下面是一张新闻图片：<br><img src="/2023/09/15/hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155128595.png" alt="image-20240915155128595"></p>
-<p>上面的图片直接在typora 中浏览是正常的，可以正常进行路径解析，但是用 hexo 部署后是这个样子：</p>
-<p><img src="/2023/09/15/hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155502923.png" alt="image-20240915155502923"></p>
-<p>加了所谓的路径转换插件后编译出来，index.html 源码是这样的：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;下面是一张新闻图片：&lt;br&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155128595.png&quot; alt=&quot;image-20240915155128595&quot;&gt;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;上面的图片直接在typora 中浏览是正常的，可以正常进行路径解析，但是用 hexo 部署后是这个样子：&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155502923.png&quot; alt=&quot;image-20240915155502923&quot;&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
-
-<p>但是这仍然是不能访问的，现在去掉编译插件试试。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;下面是一张新闻图片：&lt;br&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155128595.png&quot; alt=&quot;image-20240915155128595&quot;&gt;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;上面的图片直接在typora 中浏览是正常的，可以正常进行路径解析，但是用 hexo 部署后是这个样子：&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155502923.png&quot; alt=&quot;image-20240915155502923&quot;&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
-
-<p>一模一样，说明插件根本没起作用，</p>
-<p>插件用上之后：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;下面是一张新闻图片：&lt;br&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155128595.png&quot; alt=&quot;image-20240915155128595&quot;&gt;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;上面的图片直接在typora 中浏览是正常的，可以正常进行路径解析，但是用 hexo 部署后是这个样子：&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;img src=&quot;/./hexo+typora%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE/image-20240915155502923.png&quot; alt=&quot;image-20240915155502923&quot;&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
-
-<p>看到王预选学长博客是所有文章放在post 文件夹，图片放在asserts下面的pic 中，然后图片链接用camo转换，本地markdown还是<a href></a> 形式，我的github似乎没有将markdown推上去？</p>
-<p>现在靠用 marked 插件确实可以在网页上显示了，但是却要求本地文件写为 <a href="ex.jpg"></a> 意味着本地预览不了</p>
-<p>什么狗屁插件</p>
-]]></content>
-      <tags>
-        <tag>博客搭建</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>秋招笔试真题记录</title>
-    <url>/2024/09/05/%E7%A7%8B%E6%8B%9B%E7%AC%94%E8%AF%95%E7%9C%9F%E9%A2%98%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<p>记录秋招过程中的笔试算法题目</p>
-<span id="more"></span>
-
-<h4 id="0905-小米"><a href="#0905-小米" class="headerlink" title="0905 小米"></a>0905 小米</h4><ol>
-<li><p>做面包</p>
-<p>小明每天早上需要AB两种面包各一个，同时已知小明有 n 个面包机，n 个面包机做 A B 两种面包的时间分别是 a<del>i</del> ，b<del>i</del> 。可以选择用同一台面包机先后制作 A 和 B，这样时间是累加的，也可以选择用不同的面包机并行制作 A B, 这样时间取两块面包制作时间的大者。</p>
-<p><strong>输入格式：</strong></p>
-<p>首行 n, 代表拥有面包机的数量。接下来有两行，每行 n 个数，第一行 n 个数代表 n 台面包机制作 A 面包的时间，第二行 n 个数代表 n 台面包机制作 B 面包的时间。</p>
-<p><strong>输出格式：</strong></p>
-<p>输出一个数，代表最短制作用时</p>
-<p><strong>输入样例：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3</span><br><span class="line">2 5 7</span><br><span class="line">2 6 8</span><br></pre></td></tr></table></figure>
-
-<p><strong>输出样例：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">4</span><br></pre></td></tr></table></figure>
-
-<p>答案：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">s</span><br></pre></td></tr></table></figure>
-
-<p>这个想对简单只需要把各自AB两种面包最小值算出来即可。略</p>
-</li>
-<li><p>序列操作</p>
-<p>给出一个数字序列，你可以有两种操作，一种是把某个元素加 1，第二种是直接删除某元素，最终期望达到的效果是所有元素之和是 x 的倍数</p>
-<p><strong>输入格式：</strong></p>
-<p>首行两个数字 n , x。n 代表数组长度， x 为上文描述的意义。</p>
-<p><strong>输出格式：</strong></p>
-<p>输出最少操作次数</p>
-<p><strong>输入样例：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3 5</span><br><span class="line">2 5 7</span><br></pre></td></tr></table></figure>
-
-<p><strong>输出样例：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 目前 还没有太成熟的解法，想法是直接根据数据总和，以及数据元素，推算用两种方式各自需要多少次</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> N 1010</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; a;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> n, x; cin &gt;&gt; n &gt;&gt; x;</span><br><span class="line">    <span class="type">int</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i ++) &#123;<span class="type">int</span> t; cin &gt;&gt; t; a.<span class="built_in">push_back</span>(t), sum += t;&#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i ++) cout &lt;&lt; a[i] &lt;&lt; <span class="string">&#x27; &#x27;</span>; cout &lt;&lt; endl;</span><br><span class="line">    <span class="built_in">sort</span>(a.<span class="built_in">begin</span>(),a.<span class="built_in">end</span>());</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i ++) cout &lt;&lt; a[i] &lt;&lt; <span class="string">&#x27; &#x27;</span>; cout &lt;&lt; endl;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(sum % x  == <span class="number">0</span>) </span><br><span class="line">        &#123; cout &lt;&lt; <span class="number">0</span> &lt;&lt; endl; <span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>( (sum + <span class="number">1</span>) % x == <span class="number">0</span>) </span><br><span class="line">        &#123; cout &lt;&lt; <span class="number">1</span> &lt;&lt; endl; <span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">auto</span> pos = <span class="built_in">lower_bound</span>(a.<span class="built_in">begin</span>(),a.<span class="built_in">end</span>(), sum % x);</span><br><span class="line">        <span class="keyword">if</span>(pos != a.<span class="built_in">end</span>() &amp;&amp; *pos == sum % x) </span><br><span class="line">            &#123; cout &lt;&lt; <span class="number">1</span> &lt;&lt; endl; <span class="keyword">return</span> <span class="number">0</span>; &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(*pos &gt; sum % x &amp;&amp; pos != a.<span class="built_in">begin</span>())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> s1 = </span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>这个题目有点像动态规划，但是似乎常规方法也可以，暂时没有很好的解法</li>
-</ul>
-</li>
-<li><p>总结：</p>
-<ol>
-<li>其实题目算是很基础了，但一是心态，而是技术，两方面都需要加强<ol>
-<li>心态应该更淡定一些</li>
-<li>技术就是要多练</li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
-<h4 id="0908-饿了吗"><a href="#0908-饿了吗" class="headerlink" title="0908 饿了吗"></a>0908 饿了吗</h4><ol>
-<li><p>排队时间</p>
-<p>给出一个表示任务执行时间的序列，判断是否可以通过交换其中两个任务的位置，使得总等待时间尽可能小，若存在输出两个位置，不存在就输出 -1</p>
-<p><strong>输入格式：</strong></p>
-<p>首行 n, 代表任务的数量。接下来是 n 个数字，表示各个任务的处理时间</p>
-<p><strong>输出格式：</strong></p>
-<p>若存在输出两个位置，不存在就输出 -1</p>
-<p><strong>输入样例：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">5</span><br><span class="line">12131</span><br></pre></td></tr></table></figure>
-
-<p><strong>输出样例：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2 5</span><br></pre></td></tr></table></figure>
-
-<p>答案：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">s</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>权益值最小化</p>
-<p>对整型数 a, b 来说，你可以有两种操作，分别变换为（a - b, b)  或 （a, b -a), 我们称 abs(a-b) 为 这队数字的权益值，给出一组这样的整数对，<strong>在使得他们的权益值之和最小前提下</strong>，问最小的操作次数。</p>
-<p><strong>输入格式：</strong></p>
-<p>首行 n, 代表整数对数量，接下来 n 行，每行是两个整型数， 代表一个数对</p>
-<p><strong>输出格式：</strong></p>
-<p>输出分两行，第一行是最小权益值之和，第二行是对应操作次数</p>
-<p><strong>输入样例：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3</span><br><span class="line">2 5 7</span><br><span class="line">2 6 8</span><br></pre></td></tr></table></figure>
-
-<p><strong>输出样例：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">4</span><br></pre></td></tr></table></figure>
-
-<p>答案：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">s</span><br></pre></td></tr></table></figure>
-
-<p>这个想对简单只需要把各自AB两种面包最小值算出来即可。略</p>
-</li>
-<li><p>都市圈</p>
-<p>n 个城市按批次规划高铁，每次规划会给出规划时间，联通城市数，对应的联通城市；被联通的城市称之为都市圈，然后询问在某个时间点上某个城市圈的人数总数？如果规划时间和询问时间一致，那么按照先执行规划再询问处理</p>
-<p><strong>输入格式：</strong></p>
-<p>首行 n, 代表拥有面包机的数量。接下来有两行，每行 n 个数，第一行 n 个数代表 n 台面包机制作 A 面包的时间，第二行 n 个数代表 n 台面包机制作 B 面包的时间。</p>
-<p><strong>输出格式：</strong></p>
-<p>输出一个数，代表最短制作用时</p>
-<p><strong>输入样例：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">5 3 4</span><br><span class="line">1 2 3 4 5</span><br><span class="line">1 2 1 3</span><br><span class="line">3 2 3 4</span><br><span class="line">5 2 2 5</span><br><span class="line">1 1</span><br><span class="line">5 5</span><br><span class="line">2 1</span><br><span class="line">4 3</span><br></pre></td></tr></table></figure>
-
-<p><strong>输出样例：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">4</span><br></pre></td></tr></table></figure>
-
-<p>答案：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">s</span><br></pre></td></tr></table></figure>
-
-<p>这个想对简单只需要把各自AB两种面包最小值算出来即可。略</p>
-</li>
-</ol>
-<h4 id="0914-小红书"><a href="#0914-小红书" class="headerlink" title="0914 小红书"></a>0914 小红书</h4><ol>
-<li><p>相似笔记（15分）</p>
-<p>小红书笔记有点赞数，如果两篇笔记点赞数异或之后等于我们给定的 k 值，称两篇笔记相似。给你一个表示笔记点赞数的数组，判断这些笔记中有多少相似的。</p>
-<p><strong>输入格式：</strong></p>
-<p>首行 n, k。分别代表笔记数量，上文中的 k 值，接下来是 n 个数字，表示 n 篇笔记点赞数</p>
-<p><strong>输出格式：</strong></p>
-<p>相似笔记的对数</p>
-<p><strong>输入样例：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">4 5</span><br><span class="line">1 1 3 4</span><br></pre></td></tr></table></figure>
-
-<p><strong>输出样例：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>说明：1 ^ 4 &#x3D; 5, 所以相似数量为2，(1,4) 和 (1,4)</p>
-<p>n 的范围 1 - 10^5	k 及 点赞数范围 1 - 10^9</p>
-</blockquote>
-<p>答案：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">   </span><br></pre></td></tr></table></figure>
-</li>
-<li><p>桌子最大摆放方式</p>
-<p>小红书有一个阅览室长宽高分别为 x y z, 这个阅览室是无重力的，因此里面的桌子可以随意漂浮，给你一个体积为 V 的桌子，桌子的边长可以是任意整数，只要保证体积是 v ,让桌子各边平行于阅览室各轴，并且各个角都位于整数坐标。问桌子可能的最大可摆放的位置数量</p>
-<p><strong>输入格式：</strong></p>
-<p>首行T, 代表接下来的数据组数。每组数构成为 x y z v，四个数的意义与上面一致</p>
-<p><strong>输出格式：</strong></p>
-<p>每组情况下桌子的最大摆放方式</p>
-<p><strong>输入样例：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2</span><br><span class="line">3 1 2 2</span><br><span class="line">1 2 3 7</span><br></pre></td></tr></table></figure>
-
-<p><strong>输出样例：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">4</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
-
-<p>答案：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">s</span><br></pre></td></tr></table></figure>
-
-<p>完全没有思路！</p>
-</li>
-<li><p>树上距离</p>
-<p>小红有一棵 n 个节点， n - 1条变构成的树，边的权重为 w<del>i</del>, 定义树的两个点(u,v)权值为，从 u 到 v 的简单路径上全部边的异或和，特别的当 u 和 v 是同一个点，权值为 0，小红会进行 q 次询问，询问有多少个点到 u 的路径和恰好为 k</p>
-<p><strong>输入格式：</strong></p>
-<p>首行 n,q,分别代表树的节点数和询问次数，此后 n -  1 行，每行三个整数 u v w，表示 u v 之间有边，权值为 w, 数据保证树联通，没有重边，此后 q 行，每行 u k, 分别表示询问的节点和限定</p>
-<p><strong>输出格式：</strong></p>
-<p>每个询问输出一个整数，代表到 u 节点距离为 k 的节点数量</p>
-<p><strong>输入样例：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3 2</span><br><span class="line">1 2 2</span><br><span class="line">1 3 3</span><br><span class="line">1 0</span><br><span class="line">2 2</span><br></pre></td></tr></table></figure>
-
-<p><strong>输出样例：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>n q 范围 1 - 10^5,  u &lt;&#x3D; n, k 范围 0 - 2^60</p>
-</blockquote>
-<p>答案：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">s</span><br></pre></td></tr></table></figure>
-
-<p>这个想对简单只需要把各自AB两种面包最小值算出来即可。略</p>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>秋招</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>贪心</title>
     <url>/2024/09/01/%E8%B4%AA%E5%BF%83/</url>
     <content><![CDATA[<p>acwing 贪心算法</p>
@@ -2036,6 +2012,36 @@
       </tags>
   </entry>
   <entry>
+    <title>woxihuannigg</title>
+    <url>/2024/09/15/C++/binggo/</url>
+    <content><![CDATA[<p><img src="/2024/09/15/C++/binggo/image-20240915235059532.png" alt="image-20240915235059532"></p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2024/07/08/%E5%BE%85%E5%A4%84%E7%90%86/0708%E5%AD%97%E8%8A%82%E9%9D%A2%E8%AF%95%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<ol>
+<li>围绕简历自我介绍5min</li>
+<li>拷问<ul>
+<li>多路复用IO</li>
+<li>c++ const static 关键字特性</li>
+<li>智能指针</li>
+<li>虚函数机制</li>
+<li>面向对象三大特性</li>
+</ul>
+</li>
+<li>智力题<ul>
+<li>100层楼，两个球</li>
+</ul>
+</li>
+<li>算法<ul>
+<li>深拷贝随机链表</li>
+</ul>
+</li>
+</ol>
+]]></content>
+  </entry>
+  <entry>
     <title></title>
     <url>/2024/09/06/%E5%BE%85%E5%A4%84%E7%90%86/XP%E7%B3%BB%E7%BB%9F%E4%B8%8A%E5%81%9A%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/</url>
     <content><![CDATA[<p>一个安全网课网站：<a href="http://www.securitytube.net/groups?operation=view&groupId=5">SecurityTube</a>，年久失修，唯一价值可能是参照上面找资源</p>
@@ -2071,48 +2077,6 @@
 <p>gdb调试</p>
 <p>ida使用</p>
 <p>逆向能力</p>
-]]></content>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2024/09/06/%E5%BE%85%E5%A4%84%E7%90%86/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B/</url>
-    <content><![CDATA[<p>来自 dblp 搜索结果，<a href="https://dblp.org/search?q=fuzz%20smart%20contract">https://dblp.org/search?q=fuzz%20smart%20contract</a></p>
-<ol>
-<li>ContractFuzz<strong>er:</strong> Fuzz<strong>ing</strong> Smart Contract<strong>s for Vulnerability Detection</strong></li>
-<li><strong>Fuse: An Architecture for</strong> Smart Contract Fuzz <strong>Testing Service</strong></li>
-<li><strong>Harvey: A Greybox</strong> Fuzz<strong>er for</strong> Smart Contract<strong>s</strong></li>
-<li><strong>A</strong> Fuzz <strong>Testing Service for Assuring</strong> Smart Contract<strong>s</strong></li>
-<li><strong>SoliAudit:</strong> Smart Contract <strong>Vulnerability Assessment Based on Machine Learning and</strong> Fuzz <strong>Testing</strong></li>
-<li><strong>Robot Coalition Formation Based on</strong> Fuzz<strong>y Cooperative Games over Blockchain-Based</strong> Smart Contract<strong>s</strong></li>
-<li>Fuzz<strong>y Cooperative Games Usage in</strong> Smart Contract<strong>s for Dynamic Robot Coalition Formation: Approach and Use Case Description</strong></li>
-<li><strong>Efficient Funds Allocation System Based on</strong> Fuzz<strong>y Logic and</strong> Smart Contract<strong>s.</strong></li>
-<li><strong>Learning to</strong> Fuzz <strong>from Symbolic Execution with Application to</strong> Smart Contract<strong>s.</strong></li>
-<li><strong>EOSFuzzer:</strong> Fuzz<strong>ing EOSIO</strong> Smart Contract<strong>s for Vulnerability Detection</strong></li>
-<li><strong>Towards</strong> Smart <strong>Hybrid</strong> Fuzz<strong>ing for</strong> Smart Contract<strong>s</strong></li>
-<li><strong>sFuzz: An Efficient Adaptive</strong> Fuzz<strong>er for Solidity</strong> Smart Contract<strong>s</strong></li>
-<li><strong>EthPloit: From</strong> Fuzz<strong>ing to Efficient Exploit Generation against</strong> Smart Contract<strong>s.</strong></li>
-<li><strong>Testing Ethereum</strong> Smart Contract<strong>s: A Comparison of Symbolic Analysis and</strong> Fuzz <strong>Testing Tools</strong></li>
-<li><strong>Echidna: effective, usable, and fast</strong> fuzz<strong>ing for</strong> smart contract<strong>s.</strong></li>
-<li><strong>EOSFuzzer:</strong> Fuzz<strong>ing EOSIO</strong> Smart Contract<strong>s for Vulnerability Detection</strong></li>
-<li><strong>sFuzz: an efficient adaptive</strong> fuzz<strong>er for solidity</strong> smart contract<strong>s</strong></li>
-<li><strong>I Can Get Some Satisfaction:</strong> Fuzz<strong>y Ontologies for Partial Agreements in Blockchain</strong> Smart Contract<strong>s</strong></li>
-<li><strong>GasFuzzer:</strong> Fuzz<strong>ing Ethereum</strong> Smart Contract <strong>Binaries to Expose Gas-Oriented Exception Security Vulnerabilities</strong></li>
-<li>HFContractFuzzer: Fuzzing Hyperledger Fabric Smart Contracts for Vulnerability Detection. <a href="https://dblp.org/db/conf/ease/ease2021.html#DingLLZ21">EASE 2021</a>: 321-328</li>
-<li>ConFuzzius: A Data Dependency-Aware Hybrid Fuzzer for Smart Contracts. <a href="https://dblp.org/db/conf/eurosp/eurosp2021.html#TorresIGS21">EuroS&amp;P 2021</a>: 103-119</li>
-<li>echidna-parade: a tool for diverse multicore smart contract fuzzing.<a href="https://dblp.org/db/conf/issta/issta2021.html#GroceG21">ISSTA 2021</a>: 658-661</li>
-<li>SMARTIAN: Enhancing Smart Contract Fuzzing with Static and Dynamic Data-Flow Analyses.<a href="https://dblp.org/db/conf/kbse/ase2021.html#0001K0GGC21">ASE 2021</a>: 227-239</li>
-<li>Increasing Fuzz Testing Coverage for Smart Contracts with Dynamic Taint Analysis.<a href="https://dblp.org/db/conf/qrs/qrs2021.html#JiDQGWW21">QRS 2021</a>: 243-247</li>
-<li>Ambulance Vehicle Routing under Pandemic with Fuzzy Cooperative Game via Smart Contracts. <a href="https://dblp.org/db/conf/vehits/vehits2021.html#SmirnovT21">VEHITS 2021</a>: 538-545</li>
-<li><strong>AntFuzzer: A Grey-Box</strong> Fuzz<strong>ing Framework for EOSIO</strong> Smart Contract<strong>s</strong></li>
-<li><strong>TokenAuditor: Detecting Manipulation Risk in Token Smart Contract by Fuzzing.</strong> <a href="https://dblp.org/db/conf/qrs/qrs2022.html#CaoZFHZ22">QRS 2022</a>: 651-662</li>
-<li><strong>Effectively Generating Vulnerable Transaction Sequences in Smart Contracts with Reinforcement Learning-guided Fuzzing.</strong> <a href="https://dblp.org/db/conf/kbse/ase2022.html#SuDZZL22">ASE 2022</a>: 36:1-36:12</li>
-<li><strong>SynTest-Solidity: Automated Test Case Generation and Fuzzing for Smart Contracts.</strong> <a href="https://dblp.org/db/conf/icse/icse2022c.html#OlsthoornSDP22">ICSE-Companion 2022</a>: 202-206</li>
-<li><strong>Smart Contract Fuzzing for Enterprises: The Language Agnostic Way.</strong> <a href="https://dblp.org/db/conf/comsnets/comsnets2022.html#PaniNPVMR22">COMSNETS 2022</a>: 1-6</li>
-<li><strong>An Empirical Study on the Effects of Entry Function Pairs in Fuzzing Smart Contracts.</strong> <a href="https://dblp.org/db/conf/compsac/compsac2022.html#AshrafC22">COMPSAC 2022</a>: 1716-1721</li>
-<li><strong>Grey-box Fuzzing Based on Execution Feedback for EOSIO Smart Contracts.</strong> <a href="https://dblp.org/db/conf/apsec/apsec2022.html#LiWYSFS22">APSEC 2022</a>: 1-10</li>
-<li><strong>Privacy-preserving smart contracts for fuzzy WordNet-based document representation and clustering using regularised K-means method.</strong> <a href="https://dblp.org/db/journals/ijahuc/ijahuc40.html#ThathaBH22">Int. J. Ad Hoc Ubiquitous Comput. 40(1&#x2F;2&#x2F;3)</a>: 2-9 (2022)</li>
-<li><strong>Are We There Yet? Unraveling the State-of-the-Art Smart Contract Fuzzers.</strong> <a href="https://dblp.org/db/conf/icse/icse2024.html#Wu0YCJWLZ24">ICSE 2024</a>: 127:1-127:13</li>
-</ol>
 ]]></content>
   </entry>
   <entry>
@@ -2358,16 +2322,6 @@
       <tags>
         <tag>LibAFL</tag>
       </tags>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2024/09/06/%E5%BE%85%E5%A4%84%E7%90%86/%E9%9B%B7%E5%86%9B%E5%B9%B4%E5%BA%A6%E6%BC%94%E8%AE%B2/</url>
-    <content><![CDATA[<p>34c: BBA系列入门款</p>
-<p>人生值得被奖励，这就是dream car 的意义</p>
-<p>订货目标：76000</p>
-<p>定价：对标moudle3 21.59</p>
-<p>保底10万，立正12万</p>
-]]></content>
   </entry>
   <entry>
     <title></title>
@@ -2721,6 +2675,16 @@
   </entry>
   <entry>
     <title></title>
+    <url>/2024/09/06/%E5%BE%85%E5%A4%84%E7%90%86/%E9%9B%B7%E5%86%9B%E5%B9%B4%E5%BA%A6%E6%BC%94%E8%AE%B2/</url>
+    <content><![CDATA[<p>34c: BBA系列入门款</p>
+<p>人生值得被奖励，这就是dream car 的意义</p>
+<p>订货目标：76000</p>
+<p>定价：对标moudle3 21.59</p>
+<p>保底10万，立正12万</p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
     <url>/2024/09/06/%E5%BE%85%E5%A4%84%E7%90%86/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/</url>
     <content><![CDATA[<p><strong>符号执行：在好情况下做到最好 — Atredis Partners</strong></p>
 <p>符号执行有时会被误解。通用的符号执行工具在面对足够复杂的目标时，很难证明其价值。然而，我发现在某些特定的情况下，符号执行可以非常有帮助。其中一种情况是在处理来自模糊测试器的大量崩溃时，尤其是在处理复杂或不透明的目标时。这就是我之前遇到的“好情况”，我的模糊测试器给了我大量的崩溃，这些崩溃抵抗了常规的最小化和去重。通过构建一个小型的符号调试器，我管理了一个从模糊测试案例到完全理解的更快的响应时间。</p>
@@ -2828,7 +2792,7 @@
 <li><a href="https://forum.spacehey.com/topic?id=93101">为了好玩，生成一个非常小的崩溃输入</a>。</li>
 </ul>
 <p>微软的官方政策是“所有Sysinternals工具都是‘按原样’提供的，没有官方的微软支持。”我们未能找到一个合适的地方来报告这些问题。如果任何与Sysinternals套件有联系的人想要更多信息，请与我们联系。</p>
-<h2 id="希望这有所帮助！来参加课程吧！"><a href="#希望这有所帮助！来参加课程吧！" class="headerlink" title="希望这有所帮助！来参加课程吧！"></a>希望这有所帮助！来参加课程吧！</h2><p>我希望这篇文章能帮助你看到创造性的符号执行工具如何帮助他们的工作流程！如果有人有任何问题或想要谈论它，可以通过@jordan9001或<a href="mailto:&#x6a;&#111;&#x72;&#x64;&#97;&#110;&#x2e;&#x77;&#104;&#x69;&#116;&#x65;&#104;&#101;&#x61;&#x64;&#64;&#x61;&#116;&#x72;&#x65;&#x64;&#105;&#115;&#x2e;&#99;&#111;&#109;">&#x6a;&#111;&#x72;&#x64;&#97;&#110;&#x2e;&#x77;&#104;&#x69;&#116;&#x65;&#104;&#101;&#x61;&#x64;&#64;&#x61;&#116;&#x72;&#x65;&#x64;&#105;&#115;&#x2e;&#99;&#111;&#109;</a>给我发消息。</p>
+<h2 id="希望这有所帮助！来参加课程吧！"><a href="#希望这有所帮助！来参加课程吧！" class="headerlink" title="希望这有所帮助！来参加课程吧！"></a>希望这有所帮助！来参加课程吧！</h2><p>我希望这篇文章能帮助你看到创造性的符号执行工具如何帮助他们的工作流程！如果有人有任何问题或想要谈论它，可以通过@jordan9001或<a href="mailto:&#x6a;&#x6f;&#x72;&#x64;&#x61;&#110;&#46;&#119;&#104;&#105;&#116;&#x65;&#104;&#x65;&#x61;&#100;&#64;&#x61;&#x74;&#114;&#x65;&#x64;&#x69;&#x73;&#46;&#x63;&#111;&#109;">&#x6a;&#x6f;&#x72;&#x64;&#x61;&#110;&#46;&#119;&#104;&#105;&#116;&#x65;&#104;&#x65;&#x61;&#100;&#64;&#x61;&#x74;&#114;&#x65;&#x64;&#x69;&#x73;&#46;&#x63;&#111;&#109;</a>给我发消息。</p>
 <p>如果你读到了这篇文章的最后，你可能会喜欢我们的课程！</p>
 <p>“实用符号执行用于VR和RE”是动手的。制作它我有很多乐趣，我们查看了应用这些概念的各种方式。学生们花时间熟悉一些框架，去混淆二进制文件，检测检查时间-使用时间的漏洞，以及其他有趣的事情。</p>
 <p>你可以在下面提供你的信息，我们将在下次提供公开课程时通过电子邮件通知你。（没有垃圾邮件或其他任何东西，我保证。）</p>
@@ -2839,9 +2803,45 @@
 ]]></content>
   </entry>
   <entry>
-    <title>woxihuannigg</title>
-    <url>/2024/09/15/C++/binggo/</url>
-    <content><![CDATA[<p><img src="/2024/09/15/C++/binggo/image-20240915235059532.png" alt="image-20240915235059532"></p>
+    <title></title>
+    <url>/2024/09/06/%E5%BE%85%E5%A4%84%E7%90%86/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B/</url>
+    <content><![CDATA[<p>来自 dblp 搜索结果，<a href="https://dblp.org/search?q=fuzz%20smart%20contract">https://dblp.org/search?q=fuzz%20smart%20contract</a></p>
+<ol>
+<li>ContractFuzz<strong>er:</strong> Fuzz<strong>ing</strong> Smart Contract<strong>s for Vulnerability Detection</strong></li>
+<li><strong>Fuse: An Architecture for</strong> Smart Contract Fuzz <strong>Testing Service</strong></li>
+<li><strong>Harvey: A Greybox</strong> Fuzz<strong>er for</strong> Smart Contract<strong>s</strong></li>
+<li><strong>A</strong> Fuzz <strong>Testing Service for Assuring</strong> Smart Contract<strong>s</strong></li>
+<li><strong>SoliAudit:</strong> Smart Contract <strong>Vulnerability Assessment Based on Machine Learning and</strong> Fuzz <strong>Testing</strong></li>
+<li><strong>Robot Coalition Formation Based on</strong> Fuzz<strong>y Cooperative Games over Blockchain-Based</strong> Smart Contract<strong>s</strong></li>
+<li>Fuzz<strong>y Cooperative Games Usage in</strong> Smart Contract<strong>s for Dynamic Robot Coalition Formation: Approach and Use Case Description</strong></li>
+<li><strong>Efficient Funds Allocation System Based on</strong> Fuzz<strong>y Logic and</strong> Smart Contract<strong>s.</strong></li>
+<li><strong>Learning to</strong> Fuzz <strong>from Symbolic Execution with Application to</strong> Smart Contract<strong>s.</strong></li>
+<li><strong>EOSFuzzer:</strong> Fuzz<strong>ing EOSIO</strong> Smart Contract<strong>s for Vulnerability Detection</strong></li>
+<li><strong>Towards</strong> Smart <strong>Hybrid</strong> Fuzz<strong>ing for</strong> Smart Contract<strong>s</strong></li>
+<li><strong>sFuzz: An Efficient Adaptive</strong> Fuzz<strong>er for Solidity</strong> Smart Contract<strong>s</strong></li>
+<li><strong>EthPloit: From</strong> Fuzz<strong>ing to Efficient Exploit Generation against</strong> Smart Contract<strong>s.</strong></li>
+<li><strong>Testing Ethereum</strong> Smart Contract<strong>s: A Comparison of Symbolic Analysis and</strong> Fuzz <strong>Testing Tools</strong></li>
+<li><strong>Echidna: effective, usable, and fast</strong> fuzz<strong>ing for</strong> smart contract<strong>s.</strong></li>
+<li><strong>EOSFuzzer:</strong> Fuzz<strong>ing EOSIO</strong> Smart Contract<strong>s for Vulnerability Detection</strong></li>
+<li><strong>sFuzz: an efficient adaptive</strong> fuzz<strong>er for solidity</strong> smart contract<strong>s</strong></li>
+<li><strong>I Can Get Some Satisfaction:</strong> Fuzz<strong>y Ontologies for Partial Agreements in Blockchain</strong> Smart Contract<strong>s</strong></li>
+<li><strong>GasFuzzer:</strong> Fuzz<strong>ing Ethereum</strong> Smart Contract <strong>Binaries to Expose Gas-Oriented Exception Security Vulnerabilities</strong></li>
+<li>HFContractFuzzer: Fuzzing Hyperledger Fabric Smart Contracts for Vulnerability Detection. <a href="https://dblp.org/db/conf/ease/ease2021.html#DingLLZ21">EASE 2021</a>: 321-328</li>
+<li>ConFuzzius: A Data Dependency-Aware Hybrid Fuzzer for Smart Contracts. <a href="https://dblp.org/db/conf/eurosp/eurosp2021.html#TorresIGS21">EuroS&amp;P 2021</a>: 103-119</li>
+<li>echidna-parade: a tool for diverse multicore smart contract fuzzing.<a href="https://dblp.org/db/conf/issta/issta2021.html#GroceG21">ISSTA 2021</a>: 658-661</li>
+<li>SMARTIAN: Enhancing Smart Contract Fuzzing with Static and Dynamic Data-Flow Analyses.<a href="https://dblp.org/db/conf/kbse/ase2021.html#0001K0GGC21">ASE 2021</a>: 227-239</li>
+<li>Increasing Fuzz Testing Coverage for Smart Contracts with Dynamic Taint Analysis.<a href="https://dblp.org/db/conf/qrs/qrs2021.html#JiDQGWW21">QRS 2021</a>: 243-247</li>
+<li>Ambulance Vehicle Routing under Pandemic with Fuzzy Cooperative Game via Smart Contracts. <a href="https://dblp.org/db/conf/vehits/vehits2021.html#SmirnovT21">VEHITS 2021</a>: 538-545</li>
+<li><strong>AntFuzzer: A Grey-Box</strong> Fuzz<strong>ing Framework for EOSIO</strong> Smart Contract<strong>s</strong></li>
+<li><strong>TokenAuditor: Detecting Manipulation Risk in Token Smart Contract by Fuzzing.</strong> <a href="https://dblp.org/db/conf/qrs/qrs2022.html#CaoZFHZ22">QRS 2022</a>: 651-662</li>
+<li><strong>Effectively Generating Vulnerable Transaction Sequences in Smart Contracts with Reinforcement Learning-guided Fuzzing.</strong> <a href="https://dblp.org/db/conf/kbse/ase2022.html#SuDZZL22">ASE 2022</a>: 36:1-36:12</li>
+<li><strong>SynTest-Solidity: Automated Test Case Generation and Fuzzing for Smart Contracts.</strong> <a href="https://dblp.org/db/conf/icse/icse2022c.html#OlsthoornSDP22">ICSE-Companion 2022</a>: 202-206</li>
+<li><strong>Smart Contract Fuzzing for Enterprises: The Language Agnostic Way.</strong> <a href="https://dblp.org/db/conf/comsnets/comsnets2022.html#PaniNPVMR22">COMSNETS 2022</a>: 1-6</li>
+<li><strong>An Empirical Study on the Effects of Entry Function Pairs in Fuzzing Smart Contracts.</strong> <a href="https://dblp.org/db/conf/compsac/compsac2022.html#AshrafC22">COMPSAC 2022</a>: 1716-1721</li>
+<li><strong>Grey-box Fuzzing Based on Execution Feedback for EOSIO Smart Contracts.</strong> <a href="https://dblp.org/db/conf/apsec/apsec2022.html#LiWYSFS22">APSEC 2022</a>: 1-10</li>
+<li><strong>Privacy-preserving smart contracts for fuzzy WordNet-based document representation and clustering using regularised K-means method.</strong> <a href="https://dblp.org/db/journals/ijahuc/ijahuc40.html#ThathaBH22">Int. J. Ad Hoc Ubiquitous Comput. 40(1&#x2F;2&#x2F;3)</a>: 2-9 (2022)</li>
+<li><strong>Are We There Yet? Unraveling the State-of-the-Art Smart Contract Fuzzers.</strong> <a href="https://dblp.org/db/conf/icse/icse2024.html#Wu0YCJWLZ24">ICSE 2024</a>: 127:1-127:13</li>
+</ol>
 ]]></content>
   </entry>
 </search>
