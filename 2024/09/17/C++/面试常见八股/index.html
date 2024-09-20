@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yimaginer.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="9.3 腾讯pcg客户端一面腾讯pcg客户端开发拷打实习面试官介绍业务八股：  c++多态的理解 c++智能指针 线程安全的理解 协程  数据库：  什么时候用索引  网络：  输入网址到页面显示的过程  get和post区别  C++ 多态  静态多态：函数重载，运算符重载，泛型多态(类模板和函数模版)。特点：编译时 动态多态：也称运行时多态，主要是通过虚函数实现，允许在子类中重写父类的方法，对">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面试常见八股">
+<meta property="og:url" content="https://yimaginer.github.io/2024/09/17/C++/%E9%9D%A2%E8%AF%95%E5%B8%B8%E8%A7%81%E5%85%AB%E8%82%A1/index.html">
+<meta property="og:site_name" content="Focus2flow">
+<meta property="og:description" content="9.3 腾讯pcg客户端一面腾讯pcg客户端开发拷打实习面试官介绍业务八股：  c++多态的理解 c++智能指针 线程安全的理解 协程  数据库：  什么时候用索引  网络：  输入网址到页面显示的过程  get和post区别  C++ 多态  静态多态：函数重载，运算符重载，泛型多态(类模板和函数模版)。特点：编译时 动态多态：也称运行时多态，主要是通过虚函数实现，允许在子类中重写父类的方法，对">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yimaginer.github.io/2024/09/17/C++/%E9%9D%A2%E8%AF%95%E5%B8%B8%E8%A7%81%E5%85%AB%E8%82%A1/image-20240917092921829.png">
+<meta property="og:image" content="https://yimaginer.github.io/2024/09/17/C++/%E9%9D%A2%E8%AF%95%E5%B8%B8%E8%A7%81%E5%85%AB%E8%82%A1/image-20240917200349701.png">
+<meta property="article:published_time" content="2024-09-17T00:36:24.000Z">
+<meta property="article:modified_time" content="2024-09-20T00:06:49.713Z">
+<meta property="article:author" content="sky">
+<meta property="article:tag" content="面试">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yimaginer.github.io/2024/09/17/C++/%E9%9D%A2%E8%AF%95%E5%B8%B8%E8%A7%81%E5%85%AB%E8%82%A1/image-20240917092921829.png">
+
+
+<link rel="canonical" href="https://yimaginer.github.io/2024/09/17/C++/%E9%9D%A2%E8%AF%95%E5%B8%B8%E8%A7%81%E5%85%AB%E8%82%A1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yimaginer.github.io/2024/09/17/C++/%E9%9D%A2%E8%AF%95%E5%B8%B8%E8%A7%81%E5%85%AB%E8%82%A1/","path":"2024/09/17/C++/面试常见八股/","title":"面试常见八股"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>面试常见八股 | Focus2flow</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Focus2flow</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">less is more</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#9-3-%E8%85%BE%E8%AE%AFpcg%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%80%E9%9D%A2"><span class="nav-text">9.3 腾讯pcg客户端一面</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sky</p>
+  <div class="site-description" itemprop="description">技术，人生，思考，自我</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yimaginer.github.io/2024/09/17/C++/%E9%9D%A2%E8%AF%95%E5%B8%B8%E8%A7%81%E5%85%AB%E8%82%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Focus2flow">
+      <meta itemprop="description" content="技术，人生，思考，自我">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="面试常见八股 | Focus2flow">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          面试常见八股
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-17 08:36:24" itemprop="dateCreated datePublished" datetime="2024-09-17T08:36:24+08:00">2024-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-20 08:06:49" itemprop="dateModified" datetime="2024-09-20T08:06:49+08:00">2024-09-20</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h4 id="9-3-腾讯pcg客户端一面"><a href="#9-3-腾讯pcg客户端一面" class="headerlink" title="9.3 腾讯pcg客户端一面"></a>9.3 腾讯pcg客户端一面</h4><p>腾讯pcg客户端开发<br>拷打实习<br>面试官介绍业务<br>八股：</p>
+<ol>
+<li>c++多态的理解</li>
+<li>c++智能指针</li>
+<li>线程安全的理解</li>
+<li>协程</li>
+</ol>
+<p>数据库：</p>
+<ol>
+<li>什么时候用索引</li>
+</ol>
+<p>网络：</p>
+<ol>
+<li><p>输入网址到页面显示的过程</p>
+</li>
+<li><p>get和post区别</p>
+</li>
+<li><p>C++ 多态</p>
+<ul>
+<li>静态多态：函数重载，运算符重载，泛型多态(类模板和函数模版)。特点：编译时</li>
+<li>动态多态：也称运行时多态，主要是通过虚函数实现，允许在子类中重写父类的方法，对函数调用的解析在运行时进行</li>
+</ul>
+</li>
+<li><p>动态多态的实现机制</p>
+<p><img src="/2024/09/17/C++/%E9%9D%A2%E8%AF%95%E5%B8%B8%E8%A7%81%E5%85%AB%E8%82%A1/image-20240917092921829.png" alt="image-20240917092921829"></p>
+<ul>
+<li><p>构建时：父类将需要具体实现的方法定义为虚函数，实现共同逻辑或不实现任何逻辑（纯虚函数）。子类根据具体行为对同名虚函数进行覆盖。</p>
+</li>
+<li><p>编译时：为处理虚函数，编译器在编译时候在子类内存空间的首地址放入虚函数表指针。虚函数表指针指向子类的虚函数表，这个虚函数表继承自父类，然后在这个虚函数表中作两个事，覆盖父类的同名虚函数地址，在末尾增加自己新定义的虚函数。</p>
+</li>
+<li><p>运行时：用父类指针指向子类对象，想当于把子类对象当做父类对象去用，此时按照访问父类虚函数的数据流去访问，由于虚函数已经被覆盖，自然访问到的就是子函数的虚函数了。可以验证的是如果用这种方式访问子类新定义的虚函数将会出错。</p>
+<blockquote>
+<p>所以本质上子函数覆盖了的虚函数其实相当于生成了不同名函数，只不过编译器通过虚表把执行流引到了对应的虚函数位置。这样程序员在编码的时候就可以减少工作量了。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>抽象类</p>
+<ul>
+<li>含有至少一个纯虚函数的类，不能被直接实例化，通常用于定义一个接口或基类。</li>
+<li>纯虚函数是一种没有实现的虚函数，它的存在是为了强制派生类提供这些函数的具体实现。</li>
+</ul>
+</li>
+<li><p>泛型编程</p>
+<ul>
+<li>主要通过模版机制实现，允许编写和类型无关的代码，模版可以是函数模版或类模版</li>
+</ul>
+</li>
+<li><p>函数重载</p>
+<ul>
+<li>参数的个数，类型，或顺序不同</li>
+<li>返回值：参数完全相同，只有返回值类型不同不能构成重载。</li>
+<li>类型：构造函数重载，运算符重载，函数重载，成员函数重载</li>
+<li>运算符重载：+ - * &#x2F; &#x3D;&#x3D; !&#x3D; &lt;&lt; &gt;&gt; () ++ –</li>
+</ul>
+</li>
+<li><p>C++ 类中的四种成员</p>
+<ul>
+<li><strong>非静态数据成员</strong>被放在每一个对象体内作为对象专有的数据成员。</li>
+<li><strong>静态数据成员</strong>被提取出来放在程序的静态数据区内(和全局变量一样的位置)，为该类所有对象共享，只存在一份。</li>
+<li><strong>静态和非静态成员函数</strong>最终都被提取出来放在程序代码段中并为该类所有对象共享，因此每个成员函数也只能存在一份代码实体。C++中类的成员函数都是保存在静态存储区中，静态成员函数也是保存在静态存储区中，他们都是在类中保存同一个备份。</li>
+<li><strong>说明</strong>：构成对象本身的只有数据，任何成员函数都不隶属于任何一个对象，非静态成员函数与对象的关系就是this指针（this详细解释）。成员函数为该类所有对象共享，不仅是处于简化语言实现、节省存储的目的，而且是为了使同类对象有一致的行为。同类对象的行为虽然一致，但是操作不同的数据成员。</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_46535940/article/details/125133512">静态成员函数与非静态成员函数的区别</a></p>
+<ul>
+<li>无论静态函数还是非静态函数，都属于类的（这一点与数据成员的静态非静态不同），对象并不拥有函数的拷贝。</li>
+<li>调用方式：静态成员函数可以通过类或实体调用，但非静态成员函数必须用实例或实例的指针访问。</li>
+<li>this: 非静态成员默认传入 this 指针，而非静态成员函数由于不属于对象而没 this 指针。</li>
+<li>作用对象：静态成员函数用于管理类相关的静态数据成员，而非静态成员函数管理具体对象相关的数据成员。</li>
+<li>多态：静态成员函数不能写成虚函数，而非静态成员函数可以。</li>
+</ul>
+</li>
+<li><p>单继承</p>
+<ul>
+<li><p>虚函数表派生类覆盖的虚函数的地址被放在了基类虚函数表对应的函数原来的位置。（覆盖）</p>
+</li>
+<li><p>派生类没有覆盖的虚函数就延用基类的。同时，虚函数按照其声明顺序放于表中，<strong>父类的虚函数在子类的虚函数前面</strong>。</p>
+</li>
+</ul>
+</li>
+<li><p>多继承</p>
+<ul>
+<li><p>每个基类都有自己的虚函数表</p>
+</li>
+<li><p>派生类的虚函数地址存依照声明顺序<strong>放在第一个基类的虚表最后</strong>.</p>
+</li>
+</ul>
+</li>
+<li><p>override</p>
+<ul>
+<li>在子类书写的虚函数中添加，目的明确告诉编译器这个函数就是父类虚函数的一个覆盖。</li>
+<li>作用：防止手误写错了覆盖函数的签名从而引入新的虚函数。</li>
+</ul>
+</li>
+<li><p>final</p>
+<ul>
+<li>不希望某个类被继承，或不希望某个虚函数被重写，则可以在类名和虚函数后加上 final 关键字，加上 final 关键字后，再被继承或重写，编译器就会报错。</li>
+</ul>
+</li>
+<li><p>菱形继承</p>
+<ul>
+<li>在继承树上，某一个子类由于多重继承，导致在内存空间中同时存在多份基类，也就是间接继承了 &gt;&#x3D; 两次的基类，菱形一般指两次。造成问题就是子类空间含有两份基类数据，当使用不同父类指针访问基类元素时候歧义。</li>
+<li>解决方法：<strong>虚继承</strong></li>
+</ul>
+</li>
+<li><p>虚继承：</p>
+<p><img src="/2024/09/17/C++/%E9%9D%A2%E8%AF%95%E5%B8%B8%E8%A7%81%E5%85%AB%E8%82%A1/image-20240917200349701.png" alt="image-20240917200349701"></p>
+<ul>
+<li>gcc 和 vc 实现不太一样，gcc 内存布局就是再添加一个基类指针，指向基类内存空间</li>
+<li>仍按照继承顺序排列，基类放在最后，每个类拥有自己的虚函数表。最终结果是在子类中没有重复类。因此消除了歧义，缺点是添加了基类指针，造成效率降低。</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/QG-whz/p/4473384.html">static 关键字</a></p>
+<ul>
+<li>会影响变量或者函数的，作用域，生命周期，存储位置，至于怎么影响要分情况</li>
+<li>全局变量：影响了作用域，使其局限于文件本身。不影响生命周期，存储位置</li>
+<li>局部变量：改变了存储位置，生命周期，作用域不变</li>
+<li>普通函数：static使得函数在内存中只有一份，并将函数作用域限制在当前源文件。</li>
+<li>类 static 成员：static使得成员从“属于类对象”变成了“属于类，而不属于类对象”。</li>
+</ul>
+</li>
+<li><p>C++ 智能指针</p>
+<ul>
+<li>auto_ptr,unique_ptr,shared_ptr,weak_ptr。</li>
+<li>智能指针就是这样的一种类。它们的行为类似于指针，同样支持解引用* 或取成员-&gt;运算。智能指针将基本内置类型指针封装为类对象指针，管理着该指针所指向的动态分配资源，并通过类的析构函数对资源进行释放。在C++中，智能指针都是模板类，因为它们要管理的可能是用户自定义类型所分配的内存空间。</li>
+</ul>
+</li>
+<li><p>malloc 和 free</p>
+<ul>
+<li>并不是直接向操作系统申请或者释放内存，而是应用级内存管理。</li>
+<li>最终的申请由 brk 和 mmap 进行</li>
+</ul>
+</li>
+<li><p><strong>explicit</strong> 用于限定函数不能接受隐式类型转换的函数，比如只接受 string 对象，不接受字符串</p>
+</li>
+<li><p>强制转换操作符</p>
+<ul>
+<li><p>static_cast</p>
+<ul>
+<li>基本数据类型之间的转换</li>
+<li>派生类与基类类型指针的转换：注意从下向上的转换是安全的，从上向下的转换不一定安全。</li>
+</ul>
+</li>
+<li><p>const_cast</p>
+<ul>
+<li>作用是转换表达式的const性质。添加或删除</li>
+<li>用处一：改变const 指针指向的数据</li>
+<li>用处二：让 const 变量传参给非 const函数</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>深拷贝和浅拷贝</p>
+</li>
+</ol>
+<pre><code>- 主要区别在于指针和引用的处理，是不是要深入一层拷贝
+</code></pre>
+<ol start="20">
+<li><p>decltype 和 auto</p>
+</li>
+<li><p>线程安全的理解</p>
+<ul>
+<li></li>
+</ul>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag"># 面试</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/06/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="prev" title="动态规划">
+                  <i class="fa fa-angle-left"></i> 动态规划
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/18/%E5%85%AD%E4%BE%BF%E5%A3%AB/%E9%93%B6%E8%A1%8C%E7%A7%91%E6%8A%80%E5%B2%97/" rel="next" title="银行科技岗">
+                  银行科技岗 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sky</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
