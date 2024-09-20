@@ -981,7 +981,9 @@
   <entry>
     <title>面试常见八股</title>
     <url>/2024/09/17/C++/%E9%9D%A2%E8%AF%95%E5%B8%B8%E8%A7%81%E5%85%AB%E8%82%A1/</url>
-    <content><![CDATA[<h4 id="9-3-腾讯pcg客户端一面"><a href="#9-3-腾讯pcg客户端一面" class="headerlink" title="9.3 腾讯pcg客户端一面"></a>9.3 腾讯pcg客户端一面</h4><p>腾讯pcg客户端开发<br>拷打实习<br>面试官介绍业务<br>八股：</p>
+    <content><![CDATA[<p>面试常见八股</p>
+<span id="more"></span>
+<h4 id="9-3-腾讯pcg客户端一面"><a href="#9-3-腾讯pcg客户端一面" class="headerlink" title="9.3 腾讯pcg客户端一面"></a>9.3 腾讯pcg客户端一面</h4><p>腾讯pcg客户端开发<br>拷打实习<br>面试官介绍业务<br>八股：</p>
 <ol>
 <li>c++多态的理解</li>
 <li>c++智能指针</li>
@@ -1344,7 +1346,8 @@
   <entry>
     <title>银行科技岗</title>
     <url>/2024/09/18/%E5%85%AD%E4%BE%BF%E5%A3%AB/%E9%93%B6%E8%A1%8C%E7%A7%91%E6%8A%80%E5%B2%97/</url>
-    <content><![CDATA[<span id="more"></span>
+    <content><![CDATA[<p>银行科技岗调研</p>
+<span id="more"></span>
 <p>B站up-<a href="https://www.bilibili.com/video/BV1P9HeeHEf3/?spm_id_from=333.999.0.0&vd_source=c6f3d03fea55d86e5f601be0590f20b5">草帽信息差</a></p>
 <h2 id="银行现状："><a href="#银行现状：" class="headerlink" title="银行现状："></a>银行现状：</h2><blockquote>
 <p>金融业降薪，但总体上银行还是不错的选择。此外三桶油，国网，烟草也是不错的！</p>
@@ -2810,7 +2813,9 @@
   <entry>
     <title>动态规划</title>
     <url>/2024/09/06/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</url>
-    <content><![CDATA[<h2 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h2><p>问题描述： n 个物体，每个物体重量价值分别为 w v , 在此基础上用承重为 W 的包去装物体，以使所装物体价值最大化。</p>
+    <content><![CDATA[<p>动态规划总结</p>
+<span id="more"></span>
+<h2 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h2><p>问题描述： n 个物体，每个物体重量价值分别为 w v , 在此基础上用承重为 W 的包去装物体，以使所装物体价值最大化。</p>
 <ul>
 <li>0-1 背包 ：每件物品最多用一次</li>
 <li>完全背包：每件物品有无限个</li>
