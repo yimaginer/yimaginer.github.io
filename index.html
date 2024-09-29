@@ -161,7 +161,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-count">25</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -178,94 +178,6 @@
     </div>
 
     <div class="main-inner index posts-expand">
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yimaginer.github.io/2024/09/21/%E6%A0%A1%E6%8B%9B%E6%B1%82%E8%81%8C/acwing%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E8%AF%BE%E6%A8%A1%E6%9D%BF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="sky">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Focus2flow">
-      <meta itemprop="description" content="技术，人生，思考，自我">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Focus2flow">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/21/%E6%A0%A1%E6%8B%9B%E6%B1%82%E8%81%8C/acwing%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E8%AF%BE%E6%A8%A1%E6%9D%BF/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-21 23:45:25" itemprop="dateCreated datePublished" datetime="2024-09-21T23:45:25+08:00">2024-09-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-22 00:16:36" itemprop="dateModified" datetime="2024-09-22T00:16:36+08:00">2024-09-22</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="并查集："><a href="#并查集：" class="headerlink" title="并查集："></a>并查集：</h4><p>主要解决问题：</p>
-<ul>
-<li>将两个集合合并</li>
-<li>询问两个元素是否在一个集合当中</li>
-</ul>
-<p>基本原理：每个集合用一棵树来表示。树根的编号就是整个集合的编号。每个节点存储它的父节点，p[x]表示x的父节点</p>
-<ul>
-<li>问题1：如何判断树根：if(px] &#x3D;&#x3D; x)</li>
-<li>问题2：如何求x的集合编号：while(px]!&#x3D;x)x&#x3D;p[x]:</li>
-<li>问题3：如何合并两个集合：px是x的集合编号，py是y的集合编号。p[x]&#x3D;y</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">100010</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> p[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span> <span class="comment">// 返回祖先 + 路径压缩</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (p[x] != x) p[x] = <span class="built_in">find</span>(p[x]);</span><br><span class="line">    <span class="keyword">return</span> p[x];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n, m;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;n, &amp;m);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i ++ ) p[i] = i;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (m -- )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">char</span> op[<span class="number">2</span>];</span><br><span class="line">        <span class="type">int</span> a, b;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%s%d%d&quot;</span>, op, &amp;a, &amp;b);</span><br><span class="line">        <span class="keyword">if</span> (*op == <span class="string">&#x27;M&#x27;</span>) p[<span class="built_in">find</span>(a)] = <span class="built_in">find</span>(b);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">find</span>(a) == <span class="built_in">find</span>(b)) <span class="built_in">puts</span>(<span class="string">&quot;Yes&quot;</span>);</span><br><span class="line">            <span class="keyword">else</span> <span class="built_in">puts</span>(<span class="string">&quot;No&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
 
     
 
@@ -672,188 +584,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yimaginer.github.io/2024/09/12/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E4%BA%8C%E5%8F%89%E6%A0%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="sky">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Focus2flow">
-      <meta itemprop="description" content="技术，人生，思考，自我">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Focus2flow">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/12/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E4%BA%8C%E5%8F%89%E6%A0%91/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-09-12 19:15:02 / 修改时间：19:19:46" itemprop="dateCreated datePublished" datetime="2024-09-12T19:15:02+08:00">2024-09-12</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="acwing-39-对称二叉树"><a href="#acwing-39-对称二叉树" class="headerlink" title="acwing 39 对称二叉树"></a>acwing 39 对称二叉树</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isSymmetric</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> !root || <span class="built_in">dfs</span>(root-&gt;left, root-&gt;right);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">dfs</span><span class="params">(TreeNode*p, TreeNode*q)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!p || !q) <span class="keyword">return</span> !p &amp;&amp; !q;</span><br><span class="line">        <span class="keyword">return</span> p-&gt;val == q-&gt;val &amp;&amp; <span class="built_in">dfs</span>(p-&gt;left, q-&gt;right) &amp;&amp; <span class="built_in">dfs</span>(p-&gt;right, q-&gt;left);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>dfs 返回 p q 两棵子树是否对称</li>
-<li><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/747/">https://www.acwing.com/solution/content/747/</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yimaginer.github.io/2024/09/11/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/leecode%E6%8C%89%E5%BA%8F%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="sky">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Focus2flow">
-      <meta itemprop="description" content="技术，人生，思考，自我">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Focus2flow">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/11/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/leecode%E6%8C%89%E5%BA%8F%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-09-11 15:31:22" itemprop="dateCreated datePublished" datetime="2024-09-11T15:31:22+08:00">2024-09-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-13 15:01:49" itemprop="dateModified" datetime="2024-09-13T15:01:49+08:00">2024-09-13</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="73-编辑距离"><a href="#73-编辑距离" class="headerlink" title="73 编辑距离"></a>73 编辑距离</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">minDistance</span><span class="params">(string word1, string word2)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> n = word<span class="number">1.</span><span class="built_in">size</span>(), m = word<span class="number">2.</span><span class="built_in">size</span>();</span><br><span class="line">    word1 = <span class="string">&#x27; &#x27;</span> + word1; word2 = <span class="string">&#x27; &#x27;</span> + word2;	<span class="comment">// 单词从 1 开始是为了处理起来更加直观</span></span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">f</span>(n + <span class="number">1</span>, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(m + <span class="number">1</span>));</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt;= n; i ++) f[i][<span class="number">0</span>] = i;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>; j &lt;= m; j ++) f[<span class="number">0</span>][j] = j;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i ++)</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>; j &lt;= m; j ++)</span><br><span class="line">        &#123;</span><br><span class="line">            f[i][j] = <span class="built_in">min</span>(f[i - <span class="number">1</span>][j], f[i][j - <span class="number">1</span>]) + <span class="number">1</span>;</span><br><span class="line">            <span class="type">int</span> t = word1[i] != word2[j]; </span><br><span class="line">                f[i][j] = <span class="built_in">min</span>(f[i][j], f[i - <span class="number">1</span>][j - <span class="number">1</span>] + t); </span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">return</span> f[n][m];</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>这种两个字符串求某种属性，大多数时候可以用这样的二维数组做动态规划</li>
-<li>动态规划之所以快本质上是也因为：1）将前面的处理结果记录下来，2）由此可以每次处理一种集合的情况，而非每种情况单独处理</li>
-</ul>
-<h4 id="112-二叉树路径总和"><a href="#112-二叉树路径总和" class="headerlink" title="112 二叉树路径总和"></a>112 二叉树路径总和</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 按节点类型枚举</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">hasPathSum</span><span class="params">(TreeNode* root, <span class="type">int</span> targetSum)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!root) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span>(!root-&gt;left &amp;&amp; !root-&gt;right) </span><br><span class="line">        <span class="keyword">if</span>(targetSum == root-&gt;val) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span>(root-&gt;left &amp;&amp; root-&gt;right) </span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">hasPathSum</span>(root-&gt;left, targetSum - root-&gt;val) || <span class="built_in">hasPathSum</span>(root-&gt;right, targetSum - root-&gt;val); </span><br><span class="line">    <span class="keyword">if</span>(root-&gt;left) <span class="keyword">return</span> <span class="built_in">hasPathSum</span>(root-&gt;left, targetSum - root-&gt;val);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">hasPathSum</span>(root-&gt;right, targetSum - root-&gt;val);</span><br><span class="line"><span class="comment">// 也是按节点类型，不过相当于合并了情况</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">hasPathSum</span><span class="params">(TreeNode* root, <span class="type">int</span> sum)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!root) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    sum -= root-&gt;val;</span><br><span class="line">    <span class="keyword">if</span>(!root-&gt;left &amp;&amp; !root-&gt;right) <span class="keyword">return</span> !sum;</span><br><span class="line">    <span class="keyword">return</span> root-&gt;left &amp;&amp; <span class="built_in">hasPathSum</span>(root-&gt;left,sum) || root-&gt;right &amp;&amp; <span class="built_in">hasPathSum</span>(root-&gt;right,sum);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>二叉树问题的方法论：<ul>
-<li>思考要统计什么数据</li>
-<li>根据你要统计数据的定义，考虑怎么从左右子树和根节点三方得出这个数据</li>
-<li>分别递归处理左右子树</li>
-</ul>
-</li>
-</ul>
-<h4 id="113-路径总和，记录路径"><a href="#113-路径总和，记录路径" class="headerlink" title="113 路径总和，记录路径"></a>113 路径总和，记录路径</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; ans;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; path;</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">pathSum</span>(TreeNode* root, <span class="type">int</span> targetSum) &#123;</span><br><span class="line">        <span class="keyword">if</span>(!root) <span class="keyword">return</span> ans;</span><br><span class="line">        path.<span class="built_in">push_back</span>(root-&gt;val);</span><br><span class="line">        targetSum -= root-&gt;val;</span><br><span class="line">        <span class="keyword">if</span>(!root-&gt;left &amp;&amp; !root-&gt;right) </span><br><span class="line">            <span class="keyword">if</span>(!targetSum) &#123; ans.<span class="built_in">push_back</span>(path); path.<span class="built_in">pop_back</span>();&#125;</span><br><span class="line">            <span class="keyword">else</span> path.<span class="built_in">pop_back</span>();</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(root-&gt;left) <span class="built_in">pathSum</span>(root-&gt;left,targetSum);</span><br><span class="line">            <span class="keyword">if</span>(root-&gt;right) <span class="built_in">pathSum</span>(root-&gt;right,targetSum);</span><br><span class="line">            path.<span class="built_in">pop_back</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; <span class="string">&#x27;h&#x27;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>这份代码虽然可以过，但思路确实按各种节点分别枚举其行为。并没有采用标准的逐个节点处理逻辑进行递归。</li>
-<li>此外和上一题的区别在于，上一题只要求找到一个符合的路径即可返回，而这道题要遍历所有路径，挑选出可行的</li>
-<li>其实是回溯问题。采用回溯的解法如下</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; ans;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; path;</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">pathSum</span>(TreeNode* root, <span class="type">int</span> targetSum) &#123;</span><br><span class="line">        <span class="keyword">if</span>(root) <span class="built_in">dfs</span>(root,targetSum);</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(TreeNode * root, <span class="type">int</span> targetSum)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        path.<span class="built_in">push_back</span>(root-&gt;val);</span><br><span class="line">        targetSum -= root-&gt;val;</span><br><span class="line">        <span class="keyword">if</span>(!root-&gt;left &amp;&amp; !root-&gt;right &amp;&amp; !targetSum)	<span class="comment">// 收集结果 </span></span><br><span class="line">            ans.<span class="built_in">push_back</span>(path); </span><br><span class="line">        <span class="keyword">if</span>(root-&gt;left) <span class="built_in">pathSum</span>(root-&gt;left,targetSum);	<span class="comment">// 分支向下递归</span></span><br><span class="line">        <span class="keyword">if</span>(root-&gt;right) <span class="built_in">pathSum</span>(root-&gt;right,targetSum);</span><br><span class="line">        path.<span class="built_in">pop_back</span>();	<span class="comment">// 恢复现场</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h4 id="114-二叉树展平"><a href="#114-二叉树展平" class="headerlink" title="114 二叉树展平"></a>114 二叉树展平</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 非递归方法，每次把左枝放进来</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">flatten</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(root)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">auto</span> p = root-&gt;left;</span><br><span class="line">        <span class="keyword">if</span>(p)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">while</span>(p-&gt;right) p = p-&gt;right;</span><br><span class="line">            p-&gt;right = root-&gt;right;</span><br><span class="line">            root-&gt;right = root-&gt;left;</span><br><span class="line">            root-&gt;left = <span class="literal">nullptr</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        root = root-&gt;right;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 递归方法, 先序便利处理</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">visit</span><span class="params">(TreeNode *root, TreeNode ** pre)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!root)  <span class="keyword">return</span>;</span><br><span class="line">    TreeNode * bleft = root-&gt;left;</span><br><span class="line">    TreeNode * bright = root-&gt;right;</span><br><span class="line"></span><br><span class="line">    root-&gt;left = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(*pre != <span class="number">0</span>)</span><br><span class="line">        (*pre)-&gt;right = root;</span><br><span class="line">    *pre = root;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">visit</span>(bleft,pre);</span><br><span class="line">    <span class="built_in">visit</span>(bright,pre);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">flatten</span><span class="params">(TreeNode *root)</span> </span>&#123;</span><br><span class="line">    TreeNode * tmp = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">visit</span>(root,&amp;tmp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="115-不同子序列"><a href="#115-不同子序列" class="headerlink" title="115 不同子序列"></a>115 不同子序列</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">numDistinct</span><span class="params">(string s, string t)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> n = s.<span class="built_in">size</span>(), m = t.<span class="built_in">size</span>();</span><br><span class="line">    s = <span class="string">&#x27; &#x27;</span> + s; t = <span class="string">&#x27; &#x27;</span> + t;</span><br><span class="line">    vector&lt;vector&lt;<span class="type">long</span> <span class="type">long</span>&gt;&gt; <span class="built_in">f</span>(n + <span class="number">1</span>, <span class="built_in">vector</span>&lt;<span class="type">long</span> <span class="type">long</span>&gt;(m + <span class="number">1</span>));</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt;= n; i ++) f[i][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i ++)</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>; j &lt;= m; j ++)</span><br><span class="line">        &#123;</span><br><span class="line">            f[i][j] = f[i - <span class="number">1</span>][j];</span><br><span class="line">            <span class="keyword">if</span>(s[i] == t[j]) f[i][j] += f[i - <span class="number">1</span>][j - <span class="number">1</span>];</span><br><span class="line">            f[i][j] %= <span class="number">1000000007</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">return</span> f[n][m];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>和以往不同之处在于并不是求 min max 而是 count, 状态划分是一样的，但是状态转移方法有变化</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://yimaginer.github.io/2024/09/08/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%80%8E%E6%A0%B7%E5%86%99%E9%80%92%E5%BD%92/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -937,7 +667,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yimaginer.github.io/2024/09/08/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%9B%9E%E6%BA%AF%E9%97%AE%E9%A2%98/">
+    <link itemprop="mainEntityOfPage" href="https://yimaginer.github.io/2024/09/08/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%B9%B6%E6%9F%A5%E9%9B%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -955,7 +685,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/08/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%9B%9E%E6%BA%AF%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">未命名</a>
+          <a href="/2024/09/08/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%B9%B6%E6%9F%A5%E9%9B%86/" class="post-title-link" itemprop="url">并查集</a>
         </h2>
 
         <div class="post-meta-container">
@@ -966,14 +696,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2024-09-08 16:31:49" itemprop="dateCreated datePublished" datetime="2024-09-08T16:31:49+08:00">2024-09-08</time>
+      <time title="创建时间：2024-09-08 22:26:42" itemprop="dateCreated datePublished" datetime="2024-09-08T22:26:42+08:00">2024-09-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-09 00:17:23" itemprop="dateModified" datetime="2024-09-09T00:17:23+08:00">2024-09-09</time>
+      <time title="修改时间：2024-09-29 15:20:45" itemprop="dateModified" datetime="2024-09-29T15:20:45+08:00">2024-09-29</time>
     </span>
 
   
@@ -986,22 +716,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h4 id="理论基础"><a href="#理论基础" class="headerlink" title="理论基础"></a>理论基础</h4><blockquote>
-<p>回溯算法是纯暴力搜索，枚举所有情况，拿到满足的叶子结点 </p>
-</blockquote>
-<p>组合问题：</p>
-<p>切割问题：</p>
-<p>子集问题：</p>
-<p>排列问题：</p>
-<p>棋盘问题：</p>
-<p>可以抽象为树形结构</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">backtrace</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(终止条件) &#123;收集结果，<span class="keyword">return</span>&#125;;</span><br><span class="line">    <span class="keyword">for</span>(集合元素)</span><br><span class="line">    &#123;</span><br><span class="line">        处理节点；</span><br><span class="line">        递归；</span><br><span class="line">        回溯；           </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第一个没出现的正整数</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">firstMissingPositive</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        unordered_set&lt;<span class="type">int</span>&gt; hash;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> e : nums)</span><br><span class="line">            hash.<span class="built_in">insert</span>(e);</span><br><span class="line">        <span class="type">int</span> res = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(hash.<span class="built_in">count</span>(res)) res ++;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">string <span class="title">multiply</span><span class="params">(string num1, string num2)</span> </span>&#123;</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; A,B;</span><br><span class="line">        <span class="type">int</span> n = num<span class="number">1.</span><span class="built_in">size</span>(); <span class="type">int</span> m = num<span class="number">2.</span><span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = n - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i --) A.<span class="built_in">push_back</span>(num1[i] - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = m - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i --) B.<span class="built_in">push_back</span>(num2[i] - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">C</span><span class="params">(n+m)</span></span>;	<span class="comment">// 开辟长度是精髓，一定够用</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i ++)</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>; j &lt; m; j ++)</span><br><span class="line">                C[i + j] += A[i] * B[j]; <span class="comment">// += 是精髓</span></span><br><span class="line">        <span class="type">int</span> t = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; C.<span class="built_in">size</span>(); i ++) <span class="comment">// 这里直到销声匿迹</span></span><br><span class="line">        &#123;</span><br><span class="line">            t += C[i];</span><br><span class="line">            C[i] = t % <span class="number">10</span>;</span><br><span class="line">            t /= <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="type">int</span> k = C.<span class="built_in">size</span>() - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(k &gt; <span class="number">0</span> &amp;&amp; ! C[k]) k --;	<span class="comment">// 过滤</span></span><br><span class="line">        string res;</span><br><span class="line">        <span class="keyword">while</span>(k &gt;= <span class="number">0</span>) res += C[k --] + <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通配符匹配 44</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isMatch</span><span class="params">(string s, string p)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = s.<span class="built_in">size</span>(), m = p.<span class="built_in">size</span>();</span><br><span class="line">        s = <span class="string">&#x27; &#x27;</span> + s; p = <span class="string">&#x27; &#x27;</span> + p;</span><br><span class="line">        vector&lt;vector&lt;<span class="type">bool</span>&gt;&gt; <span class="built_in">f</span>(n<span class="number">+1</span>, <span class="built_in">vector</span>&lt;<span class="type">bool</span>&gt;(m<span class="number">+1</span>));</span><br><span class="line">        f[<span class="number">0</span>][<span class="number">0</span>] = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt;= n; i ++)</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>; j &lt;= m; j ++)</span><br><span class="line">                <span class="keyword">if</span>(p[j] == <span class="string">&#x27;*&#x27;</span>)</span><br><span class="line">                    f[i][j] = f[i][j - <span class="number">1</span>] || i &amp;&amp; f[i - <span class="number">1</span>][j];</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                [i][j] =  (s[i] == p[j] || p[j] == <span class="string">&#x27;?&#x27;</span>) &amp;&amp; i &amp;&amp; f[i - <span class="number">1</span>][j - <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> f[n][m];</span><br><span class="line">&#125;</span><br><span class="line">        </span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 45 跳跃步数</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">jump</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">f</span><span class="params">(n)</span></span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>, j = <span class="number">0</span>; i &lt; n; i ++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">while</span>(j + nums[j] &lt; i) j ++; <span class="comment">// 消极前进</span></span><br><span class="line">            f[i] = f[j] + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i ++)</span><br><span class="line">        <span class="keyword">return</span> f[n<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
+          <p>并查集使用</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/09/08/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%B9%B6%E6%9F%A5%E9%9B%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1163,6 +886,262 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2024/09/06/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%A8%A1%E6%9D%BF/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yimaginer.github.io/2024/09/06/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E7%81%B5%E7%A5%9E%E9%A2%98%E5%8D%952-%E5%8D%95%E8%B0%83%E6%A0%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Focus2flow">
+      <meta itemprop="description" content="技术，人生，思考，自我">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Focus2flow">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/06/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E7%81%B5%E7%A5%9E%E9%A2%98%E5%8D%952-%E5%8D%95%E8%B0%83%E6%A0%88/" class="post-title-link" itemprop="url">灵神题单2-单调栈</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-06 22:26:42" itemprop="dateCreated datePublished" datetime="2024-09-06T22:26:42+08:00">2024-09-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-29 15:15:59" itemprop="dateModified" datetime="2024-09-29T15:15:59+08:00">2024-09-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>单调栈</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/09/06/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E7%81%B5%E7%A5%9E%E9%A2%98%E5%8D%952-%E5%8D%95%E8%B0%83%E6%A0%88/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yimaginer.github.io/2024/09/06/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E7%81%B5%E7%A5%9E%E9%A2%98%E5%8D%951-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E4%B8%8E%E5%8F%8C%E6%8C%87%E9%92%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Focus2flow">
+      <meta itemprop="description" content="技术，人生，思考，自我">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Focus2flow">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/06/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E7%81%B5%E7%A5%9E%E9%A2%98%E5%8D%951-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E4%B8%8E%E5%8F%8C%E6%8C%87%E9%92%88/" class="post-title-link" itemprop="url">灵神题单1-滑动窗口与双指针</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-06 22:26:42" itemprop="dateCreated datePublished" datetime="2024-09-06T22:26:42+08:00">2024-09-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-29 10:06:30" itemprop="dateModified" datetime="2024-09-29T10:06:30+08:00">2024-09-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>滑动窗口</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/09/06/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E7%81%B5%E7%A5%9E%E9%A2%98%E5%8D%951-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E4%B8%8E%E5%8F%8C%E6%8C%87%E9%92%88/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yimaginer.github.io/2024/09/05/C++/STL%E8%AF%A6%E7%BB%86%E6%A2%B3%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Focus2flow">
+      <meta itemprop="description" content="技术，人生，思考，自我">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Focus2flow">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/05/C++/STL%E8%AF%A6%E7%BB%86%E6%A2%B3%E7%90%86/" class="post-title-link" itemprop="url">STL详细梳理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-09-05 20:26:36 / 修改时间：20:43:26" itemprop="dateCreated datePublished" datetime="2024-09-05T20:26:36+08:00">2024-09-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E7%A8%8B%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">工程开发</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E7%A8%8B%E5%BC%80%E5%8F%91/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index"><span itemprop="name">编程语言</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="STL-container"><a href="#STL-container" class="headerlink" title="STL-container"></a>STL-container</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/09/05/C++/STL%E8%AF%A6%E7%BB%86%E6%A2%B3%E7%90%86/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

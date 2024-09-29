@@ -2641,24 +2641,6 @@
       </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>/2024/09/21/%E6%A0%A1%E6%8B%9B%E6%B1%82%E8%81%8C/acwing%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E8%AF%BE%E6%A8%A1%E6%9D%BF/</url>
-    <content><![CDATA[<h4 id="并查集："><a href="#并查集：" class="headerlink" title="并查集："></a>并查集：</h4><p>主要解决问题：</p>
-<ul>
-<li>将两个集合合并</li>
-<li>询问两个元素是否在一个集合当中</li>
-</ul>
-<p>基本原理：每个集合用一棵树来表示。树根的编号就是整个集合的编号。每个节点存储它的父节点，p[x]表示x的父节点</p>
-<ul>
-<li>问题1：如何判断树根：if(px] &#x3D;&#x3D; x)</li>
-<li>问题2：如何求x的集合编号：while(px]!&#x3D;x)x&#x3D;p[x]:</li>
-<li>问题3：如何合并两个集合：px是x的集合编号，py是y的集合编号。p[x]&#x3D;y</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">100010</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> p[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span> <span class="comment">// 返回祖先 + 路径压缩</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (p[x] != x) p[x] = <span class="built_in">find</span>(p[x]);</span><br><span class="line">    <span class="keyword">return</span> p[x];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n, m;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;n, &amp;m);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i ++ ) p[i] = i;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (m -- )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">char</span> op[<span class="number">2</span>];</span><br><span class="line">        <span class="type">int</span> a, b;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%s%d%d&quot;</span>, op, &amp;a, &amp;b);</span><br><span class="line">        <span class="keyword">if</span> (*op == <span class="string">&#x27;M&#x27;</span>) p[<span class="built_in">find</span>(a)] = <span class="built_in">find</span>(b);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">find</span>(a) == <span class="built_in">find</span>(b)) <span class="built_in">puts</span>(<span class="string">&quot;Yes&quot;</span>);</span><br><span class="line">            <span class="keyword">else</span> <span class="built_in">puts</span>(<span class="string">&quot;No&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-  </entry>
-  <entry>
     <title>雷军年度演讲</title>
     <url>/2024/09/05/%E6%A0%A1%E6%8B%9B%E6%B1%82%E8%81%8C/%E9%9B%B7%E5%86%9B%E5%B9%B4%E5%BA%A6%E6%BC%94%E8%AE%B2/</url>
     <content><![CDATA[<p>雷军年度演讲</p>
@@ -2705,15 +2687,20 @@
       </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>/2024/09/12/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E4%BA%8C%E5%8F%89%E6%A0%91/</url>
-    <content><![CDATA[<h4 id="acwing-39-对称二叉树"><a href="#acwing-39-对称二叉树" class="headerlink" title="acwing 39 对称二叉树"></a>acwing 39 对称二叉树</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isSymmetric</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> !root || <span class="built_in">dfs</span>(root-&gt;left, root-&gt;right);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">dfs</span><span class="params">(TreeNode*p, TreeNode*q)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!p || !q) <span class="keyword">return</span> !p &amp;&amp; !q;</span><br><span class="line">        <span class="keyword">return</span> p-&gt;val == q-&gt;val &amp;&amp; <span class="built_in">dfs</span>(p-&gt;left, q-&gt;right) &amp;&amp; <span class="built_in">dfs</span>(p-&gt;right, q-&gt;left);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+    <title>二叉树</title>
+    <url>/2023/02/10/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E4%BA%8C%E5%8F%89%E6%A0%91/</url>
+    <content><![CDATA[<p>二叉树</p>
+<span id="more"></span>
+<h4 id="acwing-39-对称二叉树"><a href="#acwing-39-对称二叉树" class="headerlink" title="acwing 39 对称二叉树"></a>acwing 39 对称二叉树</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isSymmetric</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> !root || <span class="built_in">dfs</span>(root-&gt;left, root-&gt;right);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">dfs</span><span class="params">(TreeNode*p, TreeNode*q)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!p || !q) <span class="keyword">return</span> !p &amp;&amp; !q;</span><br><span class="line">        <span class="keyword">return</span> p-&gt;val == q-&gt;val &amp;&amp; <span class="built_in">dfs</span>(p-&gt;left, q-&gt;right) &amp;&amp; <span class="built_in">dfs</span>(p-&gt;right, q-&gt;left);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>dfs 返回 p q 两棵子树是否对称</li>
 <li><a href="https://www.acwing.com/solution/content/747/">https://www.acwing.com/solution/content/747/</a></li>
 </ul>
 ]]></content>
+      <tags>
+        <tag>数据结构</tag>
+      </tags>
   </entry>
   <entry>
     <title>位运算</title>
@@ -2939,9 +2926,11 @@
       </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>/2024/09/11/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/leecode%E6%8C%89%E5%BA%8F%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<h4 id="73-编辑距离"><a href="#73-编辑距离" class="headerlink" title="73 编辑距离"></a>73 编辑距离</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">minDistance</span><span class="params">(string word1, string word2)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> n = word<span class="number">1.</span><span class="built_in">size</span>(), m = word<span class="number">2.</span><span class="built_in">size</span>();</span><br><span class="line">    word1 = <span class="string">&#x27; &#x27;</span> + word1; word2 = <span class="string">&#x27; &#x27;</span> + word2;	<span class="comment">// 单词从 1 开始是为了处理起来更加直观</span></span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">f</span>(n + <span class="number">1</span>, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(m + <span class="number">1</span>));</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt;= n; i ++) f[i][<span class="number">0</span>] = i;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>; j &lt;= m; j ++) f[<span class="number">0</span>][j] = j;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i ++)</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>; j &lt;= m; j ++)</span><br><span class="line">        &#123;</span><br><span class="line">            f[i][j] = <span class="built_in">min</span>(f[i - <span class="number">1</span>][j], f[i][j - <span class="number">1</span>]) + <span class="number">1</span>;</span><br><span class="line">            <span class="type">int</span> t = word1[i] != word2[j]; </span><br><span class="line">                f[i][j] = <span class="built_in">min</span>(f[i][j], f[i - <span class="number">1</span>][j - <span class="number">1</span>] + t); </span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">return</span> f[n][m];</span><br></pre></td></tr></table></figure>
+    <title>leetcode 按序刷题</title>
+    <url>/2024/09/01/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/leecode%E6%8C%89%E5%BA%8F%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>leetcode 按序刷题</p>
+<span id="more"></span>
+<h4 id="73-编辑距离"><a href="#73-编辑距离" class="headerlink" title="73 编辑距离"></a>73 编辑距离</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">minDistance</span><span class="params">(string word1, string word2)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> n = word<span class="number">1.</span><span class="built_in">size</span>(), m = word<span class="number">2.</span><span class="built_in">size</span>();</span><br><span class="line">    word1 = <span class="string">&#x27; &#x27;</span> + word1; word2 = <span class="string">&#x27; &#x27;</span> + word2;	<span class="comment">// 单词从 1 开始是为了处理起来更加直观</span></span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">f</span>(n + <span class="number">1</span>, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(m + <span class="number">1</span>));</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt;= n; i ++) f[i][<span class="number">0</span>] = i;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>; j &lt;= m; j ++) f[<span class="number">0</span>][j] = j;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i ++)</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>; j &lt;= m; j ++)</span><br><span class="line">        &#123;</span><br><span class="line">            f[i][j] = <span class="built_in">min</span>(f[i - <span class="number">1</span>][j], f[i][j - <span class="number">1</span>]) + <span class="number">1</span>;</span><br><span class="line">            <span class="type">int</span> t = word1[i] != word2[j]; </span><br><span class="line">                f[i][j] = <span class="built_in">min</span>(f[i][j], f[i - <span class="number">1</span>][j - <span class="number">1</span>] + t); </span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">return</span> f[n][m];</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>这种两个字符串求某种属性，大多数时候可以用这样的二维数组做动态规划</li>
@@ -2974,6 +2963,12 @@
 <li>和以往不同之处在于并不是求 min max 而是 count, 状态划分是一样的，但是状态转移方法有变化</li>
 </ul>
 ]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>贪心</tag>
+      </tags>
   </entry>
   <entry>
     <title>字符串 hash</title>
@@ -3143,7 +3138,7 @@
   <entry>
     <title>灵神题单2-单调栈</title>
     <url>/2024/09/06/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E7%81%B5%E7%A5%9E%E9%A2%98%E5%8D%952-%E5%8D%95%E8%B0%83%E6%A0%88/</url>
-    <content><![CDATA[<p>滑动窗口</p>
+    <content><![CDATA[<p>单调栈</p>
 <span id="more"></span>
 
 <p><a href="https://leetcode.cn/problems/daily-temperatures/">739. 每日温度</a></p>
@@ -3190,9 +3185,12 @@
       </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>/2024/09/08/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%9B%9E%E6%BA%AF%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<h4 id="理论基础"><a href="#理论基础" class="headerlink" title="理论基础"></a>理论基础</h4><blockquote>
+    <title>回溯问题</title>
+    <url>/2023/02/10/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%9B%9E%E6%BA%AF%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>回溯思想</p>
+<span id="more"></span>
+
+<h4 id="理论基础"><a href="#理论基础" class="headerlink" title="理论基础"></a>理论基础</h4><blockquote>
 <p>回溯算法是纯暴力搜索，枚举所有情况，拿到满足的叶子结点 </p>
 </blockquote>
 <p>组合问题：</p>
@@ -3208,6 +3206,9 @@
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 第一个没出现的正整数</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">firstMissingPositive</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        unordered_set&lt;<span class="type">int</span>&gt; hash;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> e : nums)</span><br><span class="line">            hash.<span class="built_in">insert</span>(e);</span><br><span class="line">        <span class="type">int</span> res = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(hash.<span class="built_in">count</span>(res)) res ++;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">string <span class="title">multiply</span><span class="params">(string num1, string num2)</span> </span>&#123;</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; A,B;</span><br><span class="line">        <span class="type">int</span> n = num<span class="number">1.</span><span class="built_in">size</span>(); <span class="type">int</span> m = num<span class="number">2.</span><span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = n - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i --) A.<span class="built_in">push_back</span>(num1[i] - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = m - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i --) B.<span class="built_in">push_back</span>(num2[i] - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">C</span><span class="params">(n+m)</span></span>;	<span class="comment">// 开辟长度是精髓，一定够用</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i ++)</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>; j &lt; m; j ++)</span><br><span class="line">                C[i + j] += A[i] * B[j]; <span class="comment">// += 是精髓</span></span><br><span class="line">        <span class="type">int</span> t = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; C.<span class="built_in">size</span>(); i ++) <span class="comment">// 这里直到销声匿迹</span></span><br><span class="line">        &#123;</span><br><span class="line">            t += C[i];</span><br><span class="line">            C[i] = t % <span class="number">10</span>;</span><br><span class="line">            t /= <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="type">int</span> k = C.<span class="built_in">size</span>() - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(k &gt; <span class="number">0</span> &amp;&amp; ! C[k]) k --;	<span class="comment">// 过滤</span></span><br><span class="line">        string res;</span><br><span class="line">        <span class="keyword">while</span>(k &gt;= <span class="number">0</span>) res += C[k --] + <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通配符匹配 44</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isMatch</span><span class="params">(string s, string p)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = s.<span class="built_in">size</span>(), m = p.<span class="built_in">size</span>();</span><br><span class="line">        s = <span class="string">&#x27; &#x27;</span> + s; p = <span class="string">&#x27; &#x27;</span> + p;</span><br><span class="line">        vector&lt;vector&lt;<span class="type">bool</span>&gt;&gt; <span class="built_in">f</span>(n<span class="number">+1</span>, <span class="built_in">vector</span>&lt;<span class="type">bool</span>&gt;(m<span class="number">+1</span>));</span><br><span class="line">        f[<span class="number">0</span>][<span class="number">0</span>] = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt;= n; i ++)</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>; j &lt;= m; j ++)</span><br><span class="line">                <span class="keyword">if</span>(p[j] == <span class="string">&#x27;*&#x27;</span>)</span><br><span class="line">                    f[i][j] = f[i][j - <span class="number">1</span>] || i &amp;&amp; f[i - <span class="number">1</span>][j];</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                [i][j] =  (s[i] == p[j] || p[j] == <span class="string">&#x27;?&#x27;</span>) &amp;&amp; i &amp;&amp; f[i - <span class="number">1</span>][j - <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> f[n][m];</span><br><span class="line">&#125;</span><br><span class="line">        </span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 45 跳跃步数</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">jump</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">f</span><span class="params">(n)</span></span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>, j = <span class="number">0</span>; i &lt; n; i ++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">while</span>(j + nums[j] &lt; i) j ++; <span class="comment">// 消极前进</span></span><br><span class="line">            f[i] = f[j] + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i ++)</span><br><span class="line">        <span class="keyword">return</span> f[n<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 ]]></content>
+      <tags>
+        <tag>算法</tag>
+      </tags>
   </entry>
   <entry>
     <title>贪心 acwing</title>
@@ -3727,6 +3728,29 @@
       </categories>
       <tags>
         <tag>秋招</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>并查集</title>
+    <url>/2024/09/08/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%B9%B6%E6%9F%A5%E9%9B%86/</url>
+    <content><![CDATA[<p>并查集使用</p>
+<span id="more"></span>
+<h4 id="并查集："><a href="#并查集：" class="headerlink" title="并查集："></a>并查集：</h4><p>主要解决问题：</p>
+<ul>
+<li>将两个集合合并</li>
+<li>询问两个元素是否在一个集合当中</li>
+</ul>
+<p>基本原理：每个集合用一棵树来表示。树根的编号就是整个集合的编号。每个节点存储它的父节点，p[x]表示x的父节点</p>
+<ul>
+<li>问题1：如何判断树根：if(px] &#x3D;&#x3D; x)</li>
+<li>问题2：如何求x的集合编号：while(px]!&#x3D;x)x&#x3D;p[x]:</li>
+<li>问题3：如何合并两个集合：px是x的集合编号，py是y的集合编号。p[x]&#x3D;y</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">100010</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> p[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> x)</span> <span class="comment">// 返回祖先 + 路径压缩</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (p[x] != x) p[x] = <span class="built_in">find</span>(p[x]);</span><br><span class="line">    <span class="keyword">return</span> p[x];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n, m;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;n, &amp;m);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i ++ ) p[i] = i;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (m -- )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">char</span> op[<span class="number">2</span>];</span><br><span class="line">        <span class="type">int</span> a, b;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%s%d%d&quot;</span>, op, &amp;a, &amp;b);</span><br><span class="line">        <span class="keyword">if</span> (*op == <span class="string">&#x27;M&#x27;</span>) p[<span class="built_in">find</span>(a)] = <span class="built_in">find</span>(b);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">find</span>(a) == <span class="built_in">find</span>(b)) <span class="built_in">puts</span>(<span class="string">&quot;Yes&quot;</span>);</span><br><span class="line">            <span class="keyword">else</span> <span class="built_in">puts</span>(<span class="string">&quot;No&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>算法</tag>
       </tags>
   </entry>
 </search>
