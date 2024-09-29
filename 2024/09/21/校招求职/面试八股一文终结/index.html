@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yimaginer.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="资料来源https:&#x2F;&#x2F;xiaozhuanlan.com&#x2F;topic&#x2F;2167809435  https:&#x2F;&#x2F;blog.csdn.net&#x2F;wulitaotao96&#x2F;article&#x2F;details&#x2F;95389864 https:&#x2F;&#x2F;blog.csdn.net&#x2F;wulitaotao96&#x2F;article&#x2F;details&#x2F;96168484 https:&#x2F;&#x2F;github.com&#x2F;CyC2018&#x2F;CS-Not">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面试八股一文终结">
+<meta property="og:url" content="https://yimaginer.github.io/2024/09/21/%E6%A0%A1%E6%8B%9B%E6%B1%82%E8%81%8C/%E9%9D%A2%E8%AF%95%E5%85%AB%E8%82%A1%E4%B8%80%E6%96%87%E7%BB%88%E7%BB%93/index.html">
+<meta property="og:site_name" content="Focus2flow">
+<meta property="og:description" content="资料来源https:&#x2F;&#x2F;xiaozhuanlan.com&#x2F;topic&#x2F;2167809435  https:&#x2F;&#x2F;blog.csdn.net&#x2F;wulitaotao96&#x2F;article&#x2F;details&#x2F;95389864 https:&#x2F;&#x2F;blog.csdn.net&#x2F;wulitaotao96&#x2F;article&#x2F;details&#x2F;96168484 https:&#x2F;&#x2F;github.com&#x2F;CyC2018&#x2F;CS-Not">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yimaginer.github.io/2024/09/21/%E6%A0%A1%E6%8B%9B%E6%B1%82%E8%81%8C/%E9%9D%A2%E8%AF%95%E5%85%AB%E8%82%A1%E4%B8%80%E6%96%87%E7%BB%88%E7%BB%93/image-20240923103948887.png">
+<meta property="og:image" content="https://yimaginer.github.io/2024/09/21/%E6%A0%A1%E6%8B%9B%E6%B1%82%E8%81%8C/%E9%9D%A2%E8%AF%95%E5%85%AB%E8%82%A1%E4%B8%80%E6%96%87%E7%BB%88%E7%BB%93/image-20240925135031504.png">
+<meta property="og:image" content="https://yimaginer.github.io/2024/09/21/%E6%A0%A1%E6%8B%9B%E6%B1%82%E8%81%8C/%E9%9D%A2%E8%AF%95%E5%85%AB%E8%82%A1%E4%B8%80%E6%96%87%E7%BB%88%E7%BB%93/image-20240923111657874.png">
+<meta property="og:image" content="https://yimaginer.github.io/2024/09/21/%E6%A0%A1%E6%8B%9B%E6%B1%82%E8%81%8C/%E9%9D%A2%E8%AF%95%E5%85%AB%E8%82%A1%E4%B8%80%E6%96%87%E7%BB%88%E7%BB%93/image-20240923143835900.png">
+<meta property="article:published_time" content="2024-09-21T01:52:35.000Z">
+<meta property="article:modified_time" content="2024-09-25T06:30:19.655Z">
+<meta property="article:author" content="sky">
+<meta property="article:tag" content="秋招">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yimaginer.github.io/2024/09/21/%E6%A0%A1%E6%8B%9B%E6%B1%82%E8%81%8C/%E9%9D%A2%E8%AF%95%E5%85%AB%E8%82%A1%E4%B8%80%E6%96%87%E7%BB%88%E7%BB%93/image-20240923103948887.png">
+
+
+<link rel="canonical" href="https://yimaginer.github.io/2024/09/21/%E6%A0%A1%E6%8B%9B%E6%B1%82%E8%81%8C/%E9%9D%A2%E8%AF%95%E5%85%AB%E8%82%A1%E4%B8%80%E6%96%87%E7%BB%88%E7%BB%93/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yimaginer.github.io/2024/09/21/%E6%A0%A1%E6%8B%9B%E6%B1%82%E8%81%8C/%E9%9D%A2%E8%AF%95%E5%85%AB%E8%82%A1%E4%B8%80%E6%96%87%E7%BB%88%E7%BB%93/","path":"2024/09/21/校招求职/面试八股一文终结/","title":"面试八股一文终结"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>面试八股一文终结 | Focus2flow</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Focus2flow</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">less is more</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B5%84%E6%96%99%E6%9D%A5%E6%BA%90"><span class="nav-text">资料来源</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C"><span class="nav-text">计算机网络</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP-IP"><span class="nav-text">TCP&#x2F;IP</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B1%82%E6%AC%A1%E6%A8%A1%E5%9E%8B"><span class="nav-text">层次模型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8D%8F%E8%AE%AE%E7%B0%87"><span class="nav-text">协议簇</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#TCP-UDP-%E5%AF%B9%E6%AF%94"><span class="nav-text">TCP UDP 对比</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP"><span class="nav-text">HTTP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP"><span class="nav-text">TCP</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B"><span class="nav-text">三次握手</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B"><span class="nav-text">四次挥手</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93"><span class="nav-text">可靠传输</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3"><span class="nav-text">滑动窗口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6"><span class="nav-text">流量控制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6"><span class="nav-text">拥塞控制</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IP"><span class="nav-text">IP</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#IP-%E5%88%86%E7%B1%BB%E5%9C%B0%E5%9D%80"><span class="nav-text">IP 分类地址</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IP-%E5%88%86%E7%B1%BB%E5%9C%B0%E5%9D%80%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-text">IP 分类地址的缺点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%97%A0%E5%88%86%E7%B1%BB%E5%9C%B0%E5%9D%80-CIDR"><span class="nav-text">无分类地址 CIDR</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IP-%E5%8D%8F%E8%AE%AE%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF"><span class="nav-text">IP 协议相关技术</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#DNS-%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90%E8%BF%87%E7%A8%8B"><span class="nav-text">DNS 协议解析过程</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#ARP"><span class="nav-text">ARP</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ICMP-%E4%B8%8A%E5%B1%82%E5%8D%8F%E8%AE%AE%E3%80%82%E5%8C%85%E6%8B%AC%E5%B7%AE%E9%94%99%E6%8A%A5%E5%91%8A%E5%92%8C%E8%AF%A2%E9%97%AE%E3%80%82"><span class="nav-text">ICMP 上层协议。包括差错报告和询问。</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sky</p>
+  <div class="site-description" itemprop="description">技术，人生，思考，自我</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yimaginer.github.io/2024/09/21/%E6%A0%A1%E6%8B%9B%E6%B1%82%E8%81%8C/%E9%9D%A2%E8%AF%95%E5%85%AB%E8%82%A1%E4%B8%80%E6%96%87%E7%BB%88%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Focus2flow">
+      <meta itemprop="description" content="技术，人生，思考，自我">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="面试八股一文终结 | Focus2flow">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          面试八股一文终结
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-21 09:52:35" itemprop="dateCreated datePublished" datetime="2024-09-21T09:52:35+08:00">2024-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-09-25 14:30:19" itemprop="dateModified" datetime="2024-09-25T14:30:19+08:00">2024-09-25</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h4 id="资料来源"><a href="#资料来源" class="headerlink" title="资料来源"></a>资料来源</h4><p><a target="_blank" rel="noopener" href="https://xiaozhuanlan.com/topic/2167809435">https://xiaozhuanlan.com/topic/2167809435</a> </p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wulitaotao96/article/details/95389864">https://blog.csdn.net/wulitaotao96/article/details/95389864</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wulitaotao96/article/details/96168484">https://blog.csdn.net/wulitaotao96/article/details/96168484</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/CyC2018/CS-Notes">https://github.com/CyC2018/CS-Notes</a> 太浅</p>
+<p><a target="_blank" rel="noopener" href="https://cyc2018.xyz/">https://cyc2018.xyz/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nowcoder.com/">https://www.nowcoder.com/</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/cmyyy/Homemade-Java-interview-questions-2021">https://github.com/cmyyy/Homemade-Java-interview-questions-2021</a></p>
+<h2 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h2><h4 id="TCP-IP"><a href="#TCP-IP" class="headerlink" title="TCP&#x2F;IP"></a>TCP&#x2F;IP</h4><ul>
+<li><h5 id="层次模型"><a href="#层次模型" class="headerlink" title="层次模型"></a>层次模型</h5><ul>
+<li>应用层：规定了具体应用的处理协议。如 HTTP，FTP，DNS</li>
+<li>传输层：为应用层提供连接支持，如 TCP，UDP</li>
+<li>网络层：实现点对点的通信，为数据规划合理路径。IP</li>
+<li>链路层：用来处理连接网络的硬件部分。主要是网卡驱动完成</li>
+</ul>
+</li>
+<li><h5 id="协议簇"><a href="#协议簇" class="headerlink" title="协议簇"></a>协议簇</h5><p><img src="/2024/09/21/%E6%A0%A1%E6%8B%9B%E6%B1%82%E8%81%8C/%E9%9D%A2%E8%AF%95%E5%85%AB%E8%82%A1%E4%B8%80%E6%96%87%E7%BB%88%E7%BB%93/image-20240923103948887.png" alt="image-20240923103948887"></p>
+</li>
+<li><h5 id="TCP-UDP-对比"><a href="#TCP-UDP-对比" class="headerlink" title="TCP UDP 对比"></a>TCP UDP 对比</h5><ul>
+<li><strong>有无连接</strong>：TCP 先通过三次握手，建立连接，传输过程中进行流量控制和拥塞控制，保证数据的顺序性和及时性，传输结束之后四次挥手结束连接。而 UDP 是一种无连接协议，直接发送报文，不进行三次握手四次挥手，UDP 速度快，但是不提供数据的可靠性和完整性保证，数据报文可能会丢失或乱序。</li>
+<li><strong>可靠性</strong>：TCP 在传输过程中会对应用层报文进行分段，重传，确认，可以保证数据的完整性和可靠性(校验机制）。</li>
+<li><strong>适用场景</strong>：TCP 由于提供可靠传输，适用于大多数场景，文件传输，网页浏览，电子邮件。UDP 适用于速度要求高，但是可靠性要求不那么高的情景：游戏，音视频，实时通信</li>
+<li><strong>头部结构</strong>：TCP 负责的头部，UDP 只有 8 字节头部</li>
+</ul>
+</li>
+</ul>
+<h4 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h4><ul>
+<li>状态码<ul>
+<li><code>1xx</code> 类状态码属于<strong>提示信息</strong>，是协议处理中的一种中间状态，实际用到的比较少。</li>
+<li><code>2xx</code> 类状态码表示服务器<strong>成功</strong>处理了客户端的请求，也是我们最愿意看到的状态。</li>
+<li><code>3xx</code> 类状态码表示所请求资源发生变动，需要用新的 URL 进行请求，也就是重定向</li>
+<li><code>4xx</code> 类状态码表示客户端发送的<strong>报文有误</strong>，服务器无法处理，也就是错误码的含义。</li>
+<li><code>5xx</code> 类状态码表示客户端请求报文正确，但是<strong>服务器处理时内部发生了错误</strong>，属于服务器端的错误码。</li>
+</ul>
+</li>
+<li>GET 和 POST<ul>
+<li>GET 的语义是请求获取指定的资源。GET 方法是安全、幂等、可被缓存的。</li>
+<li>POST 的语义是根据请求负荷（报文主体）对指定的资源做出处理，具体的处理方式视资源类型而不同。POST 不安全，不幂等，（大部分实现）不可缓存。</li>
+</ul>
+</li>
+<li>从URL 到显示页面的过程<ul>
+<li>DNS 将URL转IP</li>
+<li>有了服务端IP,发送HTTP连接请求，TCP 开始建立连接</li>
+<li>服务器将 html 传回主机，主机交给浏览器进行解析渲染</li>
+</ul>
+</li>
+</ul>
+<h4 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h4><blockquote>
+<p>有连接，可靠，基于字节流</p>
+</blockquote>
+<ul>
+<li><h5 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h5><ul>
+<li>过程<ul>
+<li>发送端首先发送一个带 SYN 标志的数据包给对方。</li>
+<li>接收端收到后，回传一个带有 SYN&#x2F;ACK 标志的数据包以示传达确认信息。</li>
+<li>最后，发送端再回传一个带 ACK 标志的数据包，代表“握手”结束</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/Jiaodaqiaobiluo/article/details/130058180">为什么要三次握手，两次不行</a>？<ul>
+<li>主要是为了在防止在网络拥塞情况下，服务端资源浪费。</li>
+<li>具体来说，假如是两次握手，意味着服务端分配资源建立连接的时机应该是收到客户端的第一次握手立即建立。然而假如网络拥塞导致客户端发送了两个连接请求，就意味着服务端要建立两个连接。</li>
+<li>采用三次握手就可以在客户端第二次确认连接的时候，服务端才分配资源建立连接。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h5 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h5><ul>
+<li>过程<ul>
+<li>客户端发送 FIN</li>
+<li>服务端收到后进入 close-wait 状态，回送客户端 ACK,此时连接进入半关闭，服务端 将未尽事宜处理完，发送给客户端一个 FIN, 自己进入 last-ack 状态。</li>
+<li>客户端收到最后的 FIN,回复 ACK ,并设置 2MSL 的等待时间。之后关闭连接</li>
+<li>服务端收到客户端的 ACK 关闭连接</li>
+</ul>
+</li>
+<li>为什么客户端要 2MSL<ul>
+<li>防止客户端发出去的 ACK 没收到，服务端又发起关闭连接请求。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h5 id="可靠传输"><a href="#可靠传输" class="headerlink" title="可靠传输"></a>可靠传输</h5><ul>
+<li>通过超时重传机制实现，超时标准为加权平均往返时间 RTTs，RTTs 的更新机制是新老往返时间按比例加权</li>
+</ul>
+</li>
+<li><h5 id="滑动窗口"><a href="#滑动窗口" class="headerlink" title="滑动窗口"></a>滑动窗口</h5><ul>
+<li>发送方，接收方都维护一个窗口，当窗口左边确认处理完之后，就可以向右移动到第一个没有确认处理的位置。</li>
+</ul>
+</li>
+<li><h5 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h5><ul>
+<li>接收方用于控制发送方的发送速率，通过确认报文中的窗口字段完成，为 0 表示不让发送</li>
+</ul>
+</li>
+<li><h5 id="拥塞控制"><a href="#拥塞控制" class="headerlink" title="拥塞控制"></a>拥塞控制</h5><p><img src="/2024/09/21/%E6%A0%A1%E6%8B%9B%E6%B1%82%E8%81%8C/%E9%9D%A2%E8%AF%95%E5%85%AB%E8%82%A1%E4%B8%80%E6%96%87%E7%BB%88%E7%BB%93/image-20240925135031504.png" alt="image-20240925135031504"></p>
+<ul>
+<li>流量控制是为了让接收方能来得及接收，而拥塞控制是为了降低整个网络的拥塞程度。</li>
+<li>主要通过 慢开始、拥塞避免、快重传、快恢复 机制实现</li>
+<li>要明白上面四个机制，首先明白 控制窗口 cwnd 和门限 ssthresh 的概念，前者是动态变化，后者是阶段性设置</li>
+<li>慢开始：从 1 开始， 指数增长</li>
+<li>拥塞避免：达到门限后线性增长</li>
+<li>快重传和快恢复：遇到三次连续 ack 时执行，门限和控制窗口同时减半然后线性增长。此时认为并不是网络拥塞，而是个别丢包。</li>
+<li>超时被认为是网络拥塞，采用慢开始策略。</li>
+</ul>
+</li>
+<li><p>粘包</p>
+<ul>
+<li>由于TCP 是面向字节流的，会对上层数据进行拆分。自然的就会发生将上层不同消息的数据放到一个TCP报文的情况，这就叫刚发生了粘包</li>
+<li>解决方法：靠应用层规定好消息的边界。具体的可以规定数据结构，可以用字段专门制定数据大小。</li>
+</ul>
+</li>
+</ul>
+<h4 id="IP"><a href="#IP" class="headerlink" title="IP"></a>IP</h4><ul>
+<li><h5 id="IP-分类地址"><a href="#IP-分类地址" class="headerlink" title="IP 分类地址"></a>IP 分类地址</h5><img src="/2024/09/21/%E6%A0%A1%E6%8B%9B%E6%B1%82%E8%81%8C/%E9%9D%A2%E8%AF%95%E5%85%AB%E8%82%A1%E4%B8%80%E6%96%87%E7%BB%88%E7%BB%93/image-20240923111657874.png" alt="image-20240923111657874" style="zoom:33%;">
+
+<ul>
+<li>A 类、B 类、C 类、D 类、E 类。黄色为类号</li>
+<li>ABC类中最大主机数为 2^n - 2, n 为主机号位数。减去的两个为主机号全零用于指代网络号，全一用于广播。</li>
+<li>广播：分本网络内广播(路由器不转发，本网络内所有主机由于通过以太网直接连接，一定会接受到广播报文)，跨网络广播(一般情况下，出于安全考虑，路由器不转发这类报文。)</li>
+<li>组播：将包发送给特定组内(通过组播号区分)的所有主机。组播 &#x3D; 多播；</li>
+<li>单播，广播，组播 并列概念</li>
+</ul>
+</li>
+<li><h5 id="IP-分类地址的缺点"><a href="#IP-分类地址的缺点" class="headerlink" title="IP 分类地址的缺点"></a>IP 分类地址的缺点</h5><ul>
+<li><strong>类下面没有层次</strong>，如果一个公司用了 B 类地址，无法根据部门关系分配 IP</li>
+<li><strong>网络大小是给死的，不灵活</strong>：C 类 254 个 IP, B 类 6万多个，大部分公司被迫申请 B 却用不完，造成浪费。</li>
+</ul>
+</li>
+<li><h5 id="无分类地址-CIDR"><a href="#无分类地址-CIDR" class="headerlink" title="无分类地址 CIDR"></a>无分类地址 CIDR</h5><ul>
+<li>没有ABC类的概念，采用前缀长度标记网络号的位数。</li>
+</ul>
+</li>
+<li><h5 id="IP-协议相关技术"><a href="#IP-协议相关技术" class="headerlink" title="IP 协议相关技术"></a>IP 协议相关技术</h5><ul>
+<li><h6 id="DNS-协议解析过程"><a href="#DNS-协议解析过程" class="headerlink" title="DNS 协议解析过程"></a>DNS 协议解析过程</h6></li>
+</ul>
+<p><img src="/2024/09/21/%E6%A0%A1%E6%8B%9B%E6%B1%82%E8%81%8C/%E9%9D%A2%E8%AF%95%E5%85%AB%E8%82%A1%E4%B8%80%E6%96%87%E7%BB%88%E7%BB%93/image-20240923143835900.png" alt="image-20240923143835900"></p>
+<ul>
+<li><h6 id="ARP"><a href="#ARP" class="headerlink" title="ARP"></a>ARP</h6><ul>
+<li>ip 地址指示了目的地是哪一个，但是每一步应该给局域网中哪个节点就需要 mac 地址，如果当前的节点不知道目的 ip 对应的 mac 地址，就需要用 arp 协议解析。</li>
+</ul>
+</li>
+<li><h5 id="ICMP-上层协议。包括差错报告和询问。"><a href="#ICMP-上层协议。包括差错报告和询问。" class="headerlink" title="ICMP 上层协议。包括差错报告和询问。"></a>ICMP 上层协议。包括差错报告和询问。</h5><ul>
+<li>ping 实质是发送一个 icmp 询问报文，对方回答之后，计算往返时间。</li>
+<li>Traceroute 通过发送一系列具有不同 ttl 值的 UDP 报文，使得沿途每一个路由节点回送超时的抄错报告报文，从而获得每个路由节点。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>虚拟专用网 VPN</p>
+<ul>
+<li>通过互联网搭建虚拟的内部局域网。<strong>发送端</strong>通过vpn软件在加密报文，然后通过公网ip上隧道进行传输。<strong>接收端</strong>接收后解密，然后更改目的 ip。</li>
+</ul>
+</li>
+<li><p>网络地址转换 NAT 技术</p>
+<ul>
+<li>内部局域网之间用私有地址，访问外部才转换为公网地址。</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%A7%8B%E6%8B%9B/" rel="tag"># 秋招</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/18/%E6%A0%A1%E6%8B%9B%E6%B1%82%E8%81%8C/%E9%93%B6%E8%A1%8C%E7%A7%91%E6%8A%80%E5%B2%97/" rel="prev" title="银行科技岗">
+                  <i class="fa fa-angle-left"></i> 银行科技岗
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/21/%E6%A0%A1%E6%8B%9B%E6%B1%82%E8%81%8C/acwing%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E8%AF%BE%E6%A8%A1%E6%9D%BF/" rel="next" title="">
+                   <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sky</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
