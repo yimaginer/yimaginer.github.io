@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yimaginer.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="本篇文章描述计算机启动过程   BIOS 和 UEFI总体来说，二者都是负责在操作系统加载之前初始化硬件，并为操作系统的启动提供必要的环境。但是二者实现的优雅程度，安全性不太一样。  BIOS 启动流程BIOS 加载 MBR 中的 GRUB x86芯片中，CPU被硬件设置为一加电就从一个硬编码的内存位置（0xFFFFFFF0）开始执行代码。这个内存位置由主板的BIOS代码ROM提供支持。  BIO">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机开机过程">
+<meta property="og:url" content="https://yimaginer.github.io/2024/10/09/linux/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BC%80%E6%9C%BA%E8%BF%87%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Focus2flow">
+<meta property="og:description" content="本篇文章描述计算机启动过程   BIOS 和 UEFI总体来说，二者都是负责在操作系统加载之前初始化硬件，并为操作系统的启动提供必要的环境。但是二者实现的优雅程度，安全性不太一样。  BIOS 启动流程BIOS 加载 MBR 中的 GRUB x86芯片中，CPU被硬件设置为一加电就从一个硬编码的内存位置（0xFFFFFFF0）开始执行代码。这个内存位置由主板的BIOS代码ROM提供支持。  BIO">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yimaginer.github.io/2024/10/09/linux/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BC%80%E6%9C%BA%E8%BF%87%E7%A8%8B/image-20241009144752175.png">
+<meta property="og:image" content="https://yimaginer.github.io/2024/10/09/linux/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BC%80%E6%9C%BA%E8%BF%87%E7%A8%8B/image-20241009145905457.png">
+<meta property="og:image" content="https://yimaginer.github.io/2024/10/09/linux/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BC%80%E6%9C%BA%E8%BF%87%E7%A8%8B/image-20241009152742348.png">
+<meta property="og:image" content="https://yimaginer.github.io/2024/10/09/linux/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BC%80%E6%9C%BA%E8%BF%87%E7%A8%8B/image-20241009155409746.png">
+<meta property="og:image" content="https://yimaginer.github.io/2024/10/09/linux/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BC%80%E6%9C%BA%E8%BF%87%E7%A8%8B/image-20241009155446723.png">
+<meta property="og:image" content="https://yimaginer.github.io/2024/10/09/linux/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BC%80%E6%9C%BA%E8%BF%87%E7%A8%8B/image-20241009150613214.png">
+<meta property="article:published_time" content="2024-10-09T06:20:15.000Z">
+<meta property="article:modified_time" content="2024-10-09T08:59:13.757Z">
+<meta property="article:author" content="sky">
+<meta property="article:tag" content="硬件">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yimaginer.github.io/2024/10/09/linux/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BC%80%E6%9C%BA%E8%BF%87%E7%A8%8B/image-20241009144752175.png">
+
+
+<link rel="canonical" href="https://yimaginer.github.io/2024/10/09/linux/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BC%80%E6%9C%BA%E8%BF%87%E7%A8%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yimaginer.github.io/2024/10/09/linux/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BC%80%E6%9C%BA%E8%BF%87%E7%A8%8B/","path":"2024/10/09/linux/计算机开机过程/","title":"计算机开机过程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>计算机开机过程 | Focus2flow</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Focus2flow</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">less is more</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#BIOS-%E5%92%8C-UEFI"><span class="nav-text">BIOS 和 UEFI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BIOS-%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B"><span class="nav-text">BIOS 启动流程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#BIOS-%E5%8A%A0%E8%BD%BD-MBR-%E4%B8%AD%E7%9A%84-GRUB"><span class="nav-text">BIOS 加载 MBR 中的 GRUB</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GRUB-%E5%8A%A0%E8%BD%BD-bootloader"><span class="nav-text">GRUB 加载 bootloader</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bootloader-%E5%8A%A0%E8%BD%BD%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="nav-text">bootloader 加载操作系统</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A5%E5%90%8E%E8%AE%A8%E8%AE%BA%EF%BC%9A"><span class="nav-text">日后讨论：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MBR-%E5%92%8C-GPT"><span class="nav-text">MBR 和 GPT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88-BIOS-%E5%B0%86MBR-%E5%8A%A0%E8%BD%BD%E5%88%B0-0x7c00"><span class="nav-text">为什么 BIOS 将MBR 加载到 0x7c00</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sky</p>
+  <div class="site-description" itemprop="description">技术，人生，思考，自我</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yimaginer.github.io/2024/10/09/linux/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BC%80%E6%9C%BA%E8%BF%87%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Focus2flow">
+      <meta itemprop="description" content="技术，人生，思考，自我">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="计算机开机过程 | Focus2flow">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          计算机开机过程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-10-09 14:20:15 / 修改时间：16:59:13" itemprop="dateCreated datePublished" datetime="2024-10-09T14:20:15+08:00">2024-10-09</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>本篇文章描述计算机启动过程</p>
+<!---more--->
+
+<h2 id="BIOS-和-UEFI"><a href="#BIOS-和-UEFI" class="headerlink" title="BIOS 和 UEFI"></a>BIOS 和 UEFI</h2><p>总体来说，二者都是负责在操作系统加载之前<strong>初始化硬件</strong>，并为操作系统的启动提供必要的环境。但是二者实现的优雅程度，安全性不太一样。</p>
+<p><img src="/2024/10/09/linux/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BC%80%E6%9C%BA%E8%BF%87%E7%A8%8B/image-20241009144752175.png" alt="image-20241009144752175"></p>
+<h3 id="BIOS-启动流程"><a href="#BIOS-启动流程" class="headerlink" title="BIOS 启动流程"></a>BIOS 启动流程</h3><h4 id="BIOS-加载-MBR-中的-GRUB"><a href="#BIOS-加载-MBR-中的-GRUB" class="headerlink" title="BIOS 加载 MBR 中的 GRUB"></a>BIOS 加载 MBR 中的 GRUB</h4><ul>
+<li><p>x86芯片中，CPU被硬件设置为一加电就从一个硬编码的内存位置（0xFFFFFFF0）开始执行代码。这个内存位置由主板的BIOS代码ROM提供支持。</p>
+</li>
+<li><p>BIOS 程序的主要功能包括：</p>
+<ol>
+<li><strong>加电自检（POST）</strong>：当计算机通电启动时，BIOS执行加电自检，检查硬件组件（如CPU、内存、硬盘、显卡等）是否正常工作。</li>
+<li><strong>硬件初始化</strong>：BIOS初始化系统硬件，包括设置硬件参数、配置中断和DMA通道、初始化即插即用设备等。</li>
+<li><strong>配置设置</strong>：BIOS存储着系统配置信息，如日期、时间、启动顺序等。用户可以通过特定的菜单（通常是在启动时按特定键进入）来修改这些设置。</li>
+<li><strong>中断向量表</strong>：BIOS 在内存0X00~0X3FF处建立中断向量表，这是操作系统和硬件之间进行通信的重要机制。</li>
+<li><strong>引导顺序</strong>：BIOS根据用户设定的引导顺序或默认设置，确定从哪个设备（如硬盘、光驱、USB设备等）加载操作系统。</li>
+<li><strong>引导装载程序</strong>：BIOS加载并执行引导扇区（通常是硬盘上的MBR或GPT上的EFI分区）中的代码，将操作系统的引导程序加载到内存中。此处是BIOS遍历各个硬盘的第一扇区，找到最后两个字节为 0x55AA 的硬盘作为 MBR 分区。</li>
+<li><strong>错误处理</strong>：如果检测到硬件故障或配置问题，BIOS会提供错误信息，如“磁盘引导失败”、“内存检测错误”等。</li>
+<li><strong>系统服务</strong>：BIOS提供一些基本的系统服务，如键盘输入、屏幕输出、磁盘读写等，这些服务在操作系统完全加载之前是必需的。</li>
+<li><strong>即插即用支持</strong>：BIOS支持即插即用（Plug and Play），可以自动识别和配置新添加的硬件设备。</li>
+<li><strong>固件更新</strong>：BIOS允许用户通过特定的程序更新固件，以获得新功能或修复已知问题。</li>
+</ol>
+</li>
+<li><p>找到MBR程序之后，BIOS便将其加载到物理地址 0x7c00 处，然后条状到 0X7c00 处，至此，BIOS完成了它全部的任务，将控制权交给MBR继续运行，MBR 是什么？</p>
+<p><img src="/2024/10/09/linux/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BC%80%E6%9C%BA%E8%BF%87%E7%A8%8B/image-20241009145905457.png" alt="image-20241009145905457"></p>
+<p>MBR处于硬盘的第一个扇区，共 512 字节，最后两个字节为 0x55AA。MBR 内部结构为：</p>
+<p><img src="/2024/10/09/linux/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BC%80%E6%9C%BA%E8%BF%87%E7%A8%8B/image-20241009152742348.png" alt="image-20241009152742348"></p>
+<p>MBR总共 512 字节，使用可谓精打细算，引导程序 446 字节，然后是四个分区表 16 * 4 &#x3D; 64 字节，最后是结束标志 55AA 两字节。</p>
+<p>MBR 中的启动引导程序的功能是什么？</p>
+<p>启动引导程序只有 446 字节，不足以加载现代操作系统，因此，启动引导程序的作用是加载操作系统的 boot loader</p>
+<p>一个更直观的 MBR 分区是这样的：</p>
+<p><img src="/2024/10/09/linux/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BC%80%E6%9C%BA%E8%BF%87%E7%A8%8B/image-20241009155409746.png" alt="image-20241009155409746"></p>
+<p>其所划分的硬盘结构是这样的：</p>
+<p><img src="/2024/10/09/linux/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BC%80%E6%9C%BA%E8%BF%87%E7%A8%8B/image-20241009155446723.png" alt="image-20241009155446723"></p>
+</li>
+</ul>
+<h4 id="GRUB-加载-bootloader"><a href="#GRUB-加载-bootloader" class="headerlink" title="GRUB 加载 bootloader"></a>GRUB 加载 bootloader</h4><ul>
+<li>由 BIOS 查找到合格的 MBR 后，将 MBR 中的 GRUB 加载到内存，GRUB 负责从四个分区中确定活动分区，并加载对应分区的 Boot Sector 中的操作系统引导程序 bootloader</li>
+</ul>
+<blockquote>
+<p>如何确定活动分区？</p>
+</blockquote>
+<h4 id="bootloader-加载操作系统"><a href="#bootloader-加载操作系统" class="headerlink" title="bootloader 加载操作系统"></a>bootloader 加载操作系统</h4><h2 id="日后讨论："><a href="#日后讨论：" class="headerlink" title="日后讨论："></a>日后讨论：</h2><h3 id="MBR-和-GPT"><a href="#MBR-和-GPT" class="headerlink" title="MBR 和 GPT"></a>MBR 和 GPT</h3><p><img src="/2024/10/09/linux/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BC%80%E6%9C%BA%E8%BF%87%E7%A8%8B/image-20241009150613214.png" alt="image-20241009150613214"></p>
+<h3 id="为什么-BIOS-将MBR-加载到-0x7c00"><a href="#为什么-BIOS-将MBR-加载到-0x7c00" class="headerlink" title="为什么 BIOS 将MBR 加载到 0x7c00"></a>为什么 BIOS 将MBR 加载到 0x7c00</h3><p>其实是历史遗留问题，早期电脑 32k 内存，BIOS 设置完中断向量表之后剩余内存的最后 1k, 这个地址就是 31k</p>
+<p>参考文章：<br><a target="_blank" rel="noopener" href="https://c.biancheng.net/view/1015.html">主引导目录（MBR）结构及作用详解</a></p>
+<p><a target="_blank" rel="noopener" href="https://knowitlikepro.com/understanding-master-boot-record-mbr/">Understanding Master Boot Record (MBR)</a></p>
+<p><a target="_blank" rel="noopener" href="https://akaha.blog.csdn.net/article/details/105481086">操作系统的启动都干了些什么</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xiaofeng_yang/article/details/138659090">轻松学Linux文件系统（Ext2&#x2F;Ext3&#x2F;Ext4）</a></p>
+<p><a target="_blank" rel="noopener" href="https://knowitlikepro.com/understanding-boot-sector/">Understanding Master Boot Sector (MBS)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.icviews.cn/semiCommunity/postDetail/6427">一文让你搞懂UEFI</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%A1%AC%E4%BB%B6/" rel="tag"># 硬件</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/21/%E6%A0%A1%E6%8B%9B%E6%B1%82%E8%81%8C/%E9%9D%A2%E8%AF%95%E5%85%AB%E8%82%A1%E4%B8%80%E6%96%87%E7%BB%88%E7%BB%93/" rel="prev" title="面试八股一文终结">
+                  <i class="fa fa-angle-left"></i> 面试八股一文终结
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sky</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

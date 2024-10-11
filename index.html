@@ -150,7 +150,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -161,7 +161,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">27</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -178,6 +178,124 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yimaginer.github.io/2024/10/09/linux/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BC%80%E6%9C%BA%E8%BF%87%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Focus2flow">
+      <meta itemprop="description" content="技术，人生，思考，自我">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Focus2flow">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/10/09/linux/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BC%80%E6%9C%BA%E8%BF%87%E7%A8%8B/" class="post-title-link" itemprop="url">计算机开机过程</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-10-09 14:20:15 / 修改时间：16:59:13" itemprop="dateCreated datePublished" datetime="2024-10-09T14:20:15+08:00">2024-10-09</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本篇文章描述计算机启动过程</p>
+<!---more--->
+
+<h2 id="BIOS-和-UEFI"><a href="#BIOS-和-UEFI" class="headerlink" title="BIOS 和 UEFI"></a>BIOS 和 UEFI</h2><p>总体来说，二者都是负责在操作系统加载之前<strong>初始化硬件</strong>，并为操作系统的启动提供必要的环境。但是二者实现的优雅程度，安全性不太一样。</p>
+<p><img src="/2024/10/09/linux/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BC%80%E6%9C%BA%E8%BF%87%E7%A8%8B/image-20241009144752175.png" alt="image-20241009144752175"></p>
+<h3 id="BIOS-启动流程"><a href="#BIOS-启动流程" class="headerlink" title="BIOS 启动流程"></a>BIOS 启动流程</h3><h4 id="BIOS-加载-MBR-中的-GRUB"><a href="#BIOS-加载-MBR-中的-GRUB" class="headerlink" title="BIOS 加载 MBR 中的 GRUB"></a>BIOS 加载 MBR 中的 GRUB</h4><ul>
+<li><p>x86芯片中，CPU被硬件设置为一加电就从一个硬编码的内存位置（0xFFFFFFF0）开始执行代码。这个内存位置由主板的BIOS代码ROM提供支持。</p>
+</li>
+<li><p>BIOS 程序的主要功能包括：</p>
+<ol>
+<li><strong>加电自检（POST）</strong>：当计算机通电启动时，BIOS执行加电自检，检查硬件组件（如CPU、内存、硬盘、显卡等）是否正常工作。</li>
+<li><strong>硬件初始化</strong>：BIOS初始化系统硬件，包括设置硬件参数、配置中断和DMA通道、初始化即插即用设备等。</li>
+<li><strong>配置设置</strong>：BIOS存储着系统配置信息，如日期、时间、启动顺序等。用户可以通过特定的菜单（通常是在启动时按特定键进入）来修改这些设置。</li>
+<li><strong>中断向量表</strong>：BIOS 在内存0X00~0X3FF处建立中断向量表，这是操作系统和硬件之间进行通信的重要机制。</li>
+<li><strong>引导顺序</strong>：BIOS根据用户设定的引导顺序或默认设置，确定从哪个设备（如硬盘、光驱、USB设备等）加载操作系统。</li>
+<li><strong>引导装载程序</strong>：BIOS加载并执行引导扇区（通常是硬盘上的MBR或GPT上的EFI分区）中的代码，将操作系统的引导程序加载到内存中。此处是BIOS遍历各个硬盘的第一扇区，找到最后两个字节为 0x55AA 的硬盘作为 MBR 分区。</li>
+<li><strong>错误处理</strong>：如果检测到硬件故障或配置问题，BIOS会提供错误信息，如“磁盘引导失败”、“内存检测错误”等。</li>
+<li><strong>系统服务</strong>：BIOS提供一些基本的系统服务，如键盘输入、屏幕输出、磁盘读写等，这些服务在操作系统完全加载之前是必需的。</li>
+<li><strong>即插即用支持</strong>：BIOS支持即插即用（Plug and Play），可以自动识别和配置新添加的硬件设备。</li>
+<li><strong>固件更新</strong>：BIOS允许用户通过特定的程序更新固件，以获得新功能或修复已知问题。</li>
+</ol>
+</li>
+<li><p>找到MBR程序之后，BIOS便将其加载到物理地址 0x7c00 处，然后条状到 0X7c00 处，至此，BIOS完成了它全部的任务，将控制权交给MBR继续运行，MBR 是什么？</p>
+<p><img src="/2024/10/09/linux/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BC%80%E6%9C%BA%E8%BF%87%E7%A8%8B/image-20241009145905457.png" alt="image-20241009145905457"></p>
+<p>MBR处于硬盘的第一个扇区，共 512 字节，最后两个字节为 0x55AA。MBR 内部结构为：</p>
+<p><img src="/2024/10/09/linux/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BC%80%E6%9C%BA%E8%BF%87%E7%A8%8B/image-20241009152742348.png" alt="image-20241009152742348"></p>
+<p>MBR总共 512 字节，使用可谓精打细算，引导程序 446 字节，然后是四个分区表 16 * 4 &#x3D; 64 字节，最后是结束标志 55AA 两字节。</p>
+<p>MBR 中的启动引导程序的功能是什么？</p>
+<p>启动引导程序只有 446 字节，不足以加载现代操作系统，因此，启动引导程序的作用是加载操作系统的 boot loader</p>
+<p>一个更直观的 MBR 分区是这样的：</p>
+<p><img src="/2024/10/09/linux/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BC%80%E6%9C%BA%E8%BF%87%E7%A8%8B/image-20241009155409746.png" alt="image-20241009155409746"></p>
+<p>其所划分的硬盘结构是这样的：</p>
+<p><img src="/2024/10/09/linux/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BC%80%E6%9C%BA%E8%BF%87%E7%A8%8B/image-20241009155446723.png" alt="image-20241009155446723"></p>
+</li>
+</ul>
+<h4 id="GRUB-加载-bootloader"><a href="#GRUB-加载-bootloader" class="headerlink" title="GRUB 加载 bootloader"></a>GRUB 加载 bootloader</h4><ul>
+<li>由 BIOS 查找到合格的 MBR 后，将 MBR 中的 GRUB 加载到内存，GRUB 负责从四个分区中确定活动分区，并加载对应分区的 Boot Sector 中的操作系统引导程序 bootloader</li>
+</ul>
+<blockquote>
+<p>如何确定活动分区？</p>
+</blockquote>
+<h4 id="bootloader-加载操作系统"><a href="#bootloader-加载操作系统" class="headerlink" title="bootloader 加载操作系统"></a>bootloader 加载操作系统</h4><h2 id="日后讨论："><a href="#日后讨论：" class="headerlink" title="日后讨论："></a>日后讨论：</h2><h3 id="MBR-和-GPT"><a href="#MBR-和-GPT" class="headerlink" title="MBR 和 GPT"></a>MBR 和 GPT</h3><p><img src="/2024/10/09/linux/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BC%80%E6%9C%BA%E8%BF%87%E7%A8%8B/image-20241009150613214.png" alt="image-20241009150613214"></p>
+<h3 id="为什么-BIOS-将MBR-加载到-0x7c00"><a href="#为什么-BIOS-将MBR-加载到-0x7c00" class="headerlink" title="为什么 BIOS 将MBR 加载到 0x7c00"></a>为什么 BIOS 将MBR 加载到 0x7c00</h3><p>其实是历史遗留问题，早期电脑 32k 内存，BIOS 设置完中断向量表之后剩余内存的最后 1k, 这个地址就是 31k</p>
+<p>参考文章：<br><a target="_blank" rel="noopener" href="https://c.biancheng.net/view/1015.html">主引导目录（MBR）结构及作用详解</a></p>
+<p><a target="_blank" rel="noopener" href="https://knowitlikepro.com/understanding-master-boot-record-mbr/">Understanding Master Boot Record (MBR)</a></p>
+<p><a target="_blank" rel="noopener" href="https://akaha.blog.csdn.net/article/details/105481086">操作系统的启动都干了些什么</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xiaofeng_yang/article/details/138659090">轻松学Linux文件系统（Ext2&#x2F;Ext3&#x2F;Ext4）</a></p>
+<p><a target="_blank" rel="noopener" href="https://knowitlikepro.com/understanding-boot-sector/">Understanding Master Boot Sector (MBS)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.icviews.cn/semiCommunity/postDetail/6427">一文让你搞懂UEFI</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -223,7 +341,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-09-29 15:27:16" itemprop="dateModified" datetime="2024-09-29T15:27:16+08:00">2024-09-29</time>
+      <time title="修改时间：2024-10-10 09:48:04" itemprop="dateModified" datetime="2024-10-10T09:48:04+08:00">2024-10-10</time>
     </span>
 
   
@@ -904,96 +1022,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2024/09/06/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E7%81%B5%E7%A5%9E%E9%A2%98%E5%8D%951-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E4%B8%8E%E5%8F%8C%E6%8C%87%E9%92%88/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yimaginer.github.io/2024/09/05/C++/STL%E8%AF%A6%E7%BB%86%E6%A2%B3%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="sky">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Focus2flow">
-      <meta itemprop="description" content="技术，人生，思考，自我">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Focus2flow">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/05/C++/STL%E8%AF%A6%E7%BB%86%E6%A2%B3%E7%90%86/" class="post-title-link" itemprop="url">STL详细梳理</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-09-05 20:26:36 / 修改时间：20:43:26" itemprop="dateCreated datePublished" datetime="2024-09-05T20:26:36+08:00">2024-09-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B7%A5%E7%A8%8B%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">工程开发</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B7%A5%E7%A8%8B%E5%BC%80%E5%8F%91/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index"><span itemprop="name">编程语言</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="STL-container"><a href="#STL-container" class="headerlink" title="STL-container"></a>STL-container</h1>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/09/05/C++/STL%E8%AF%A6%E7%BB%86%E6%A2%B3%E7%90%86/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
