@@ -2753,6 +2753,8 @@
 <p><a href="https://cyc2018.xyz/">https://cyc2018.xyz/</a></p>
 <p><a href="https://www.nowcoder.com/">https://www.nowcoder.com/</a></p>
 <p><a href="https://github.com/cmyyy/Homemade-Java-interview-questions-2021">https://github.com/cmyyy/Homemade-Java-interview-questions-2021</a></p>
+<p><a href="https://www.nowcoder.com/discuss/353146924222062592">cyc整理 1</a></p>
+<p><a href="https://blog.csdn.net/wulitaotao96/article/details/95773762">cyc整理2</a></p>
 <h2 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h2><h3 id="TCP-IP"><a href="#TCP-IP" class="headerlink" title="TCP&#x2F;IP"></a>TCP&#x2F;IP</h3><ul>
 <li><h5 id="层次模型"><a href="#层次模型" class="headerlink" title="层次模型"></a>层次模型</h5><ul>
 <li>应用层：规定了具体应用的处理协议。如 HTTP，FTP，DNS</li>
@@ -2791,6 +2793,26 @@
 <li>服务器将 html 传回主机，主机交给浏览器进行解析渲染</li>
 </ul>
 </li>
+<li>长连接和短连接<ul>
+<li>短：客户端与服务器之间建立的连接在完成一次请求后就会关闭。适用于请求频率不高的场景，例如HTTP&#x2F;1.0默认的连接方式。</li>
+<li>长：完成一次请求后不会立即关闭，而是保持一段时间，以便后续的请求可以复用这个连接。适用于请求频率较高的场景，例如HTTP&#x2F;1.1默认的连接方式。</li>
+<li>所以二者区分的核心是一次连接里可以发起请求的数量。</li>
+</ul>
+</li>
+</ul>
+<h3 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h3><ul>
+<li>http是HTTP协议运行在<strong>TCP</strong>之上。所有传输的内容都是<strong>明文</strong>，客户端和服务器端都无法验证对方的<strong>身份</strong>。</li>
+<li>https是HTTP运行在<strong>SSL&#x2F;TLS</strong>之上，SSL&#x2F;TLS运行在TCP之上。所有传输的内容都经过<strong>加密</strong>，加密采用对称加密，但对称加密的密钥用服务器方的<strong>证书</strong>进行了非对称加密。此外客户端可以验证服务器端的身份，如果配置了客户端验证，服务器方也可以验证客户端的身份。</li>
+<li>总结 HTTPS 改进：<strong>通信加密，证书认证，完整性保护</strong>。</li>
+</ul>
+<h3 id="HTTP-1-1"><a href="#HTTP-1-1" class="headerlink" title="HTTP&#x2F;1.1"></a>HTTP&#x2F;1.1</h3><ul>
+<li>持久性连接</li>
+<li>管道机制：请求可以同时发出，但是响应必须按照请求发出的顺序依次返回，<strong>弊端</strong> 是 FIFO 造成的饥饿</li>
+<li>分块传输：服务器产生部分数据，那么就发送部分数据。</li>
+</ul>
+<h3 id="HTTP-2"><a href="#HTTP-2" class="headerlink" title="HTTP&#x2F;2"></a>HTTP&#x2F;2</h3><ul>
+<li><strong>基于二进制</strong>：HTTP1.x 是基于文本，HTTP2 是基于二进制</li>
+<li><strong>多路复用</strong>：连接之间是共享的。一个request对应一个id，这样一个连接上可以有多个request。</li>
 </ul>
 <h3 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h3><blockquote>
 <p>有连接，可靠，基于字节流</p>
@@ -2901,6 +2923,7 @@
 </ul>
 </li>
 </ul>
+<h3 id="socket"><a href="#socket" class="headerlink" title="socket"></a>socket</h3><p><a href="https://blog.csdn.net/wulitaotao96/article/details/95773762">https://blog.csdn.net/wulitaotao96/article/details/95773762</a></p>
 <h2 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h2><h3 id="程序"><a href="#程序" class="headerlink" title="程序"></a>程序</h3><h4 id="静态-动态链接库"><a href="#静态-动态链接库" class="headerlink" title="静态&#x2F;动态链接库"></a>静态&#x2F;动态链接库</h4><ul>
 <li>定义：静态通常为 .lib .a ，动态通常 .dll .so</li>
 <li>编译：静态被直接复制到可执行文件中，动态不复制而是到程序运行时才加载到内存</li>
@@ -3029,7 +3052,36 @@
 <p>参考文献：</p>
 <p><a href="https://blog.csdn.net/xiaofeng_yang/article/details/138659090">轻松学Linux文件系统（Ext2&#x2F;Ext3&#x2F;Ext4）</a></p>
 <p><a href="https://akaha.blog.csdn.net/article/details/125095984">十分钟理解硬链接和软链接</a></p>
-<h3 id="常见命令"><a href="#常见命令" class="headerlink" title="常见命令"></a>常见命令</h3>]]></content>
+<h4 id="僵尸进程和孤儿进程"><a href="#僵尸进程和孤儿进程" class="headerlink" title="僵尸进程和孤儿进程"></a>僵尸进程和孤儿进程</h4><p>由于 linux 的机制是父进程产生子进程后，不能知道子进程何时结束。</p>
+<p><strong>僵尸进程</strong>：子进程结束但是父进程还没调用 wait()  或 waitpid 进行最后的资源清理(释放pid);</p>
+<p><strong>孤儿进程</strong>：父进程结束，子进程继续运行，此时子进程成为孤儿进程。</p>
+<p><strong>守护进程</strong>：进程创建时有意把父进程结束，然后被1号进程init收养。</p>
+<p><strong>僵尸进程的问题和解决方式</strong>：</p>
+<ul>
+<li><p>问题：占用 pid 和一部分系统资源</p>
+</li>
+<li><p>僵尸进程产生原因：在子进程终止后到父进程调用wait()前的时间里，子进程被称为zombie；具体：</p>
+<ul>
+<li>子进程结束后向父进程发出SIGCHLD信号，父进程<strong>默认忽略</strong>了它</li>
+<li>父进程<strong>没有调用wait()或waitpid()函数</strong>来等待子进程的结束</li>
+<li><strong>网络原因</strong>有时会引起僵尸进程；</li>
+</ul>
+</li>
+<li><p>解决：</p>
+<ul>
+<li>杀死父进程，让子进程归于 init 进程</li>
+<li>调用 for() 两次，二子进程是短进程，孙子进程将来会归于 init 函数</li>
+<li>父进程中捕捉SIGCHLD信号，并在信号处理函数中调用wait函数；</li>
+</ul>
+</li>
+<li><p>参考</p>
+</li>
+<li><p><a href="https://blog.csdn.net/zjwson/article/details/53321431">https://blog.csdn.net/zjwson/article/details/53321431</a></p>
+</li>
+<li><p><a href="https://www.cnblogs.com/Anker/p/3271773.html">https://www.cnblogs.com/Anker/p/3271773.html</a></p>
+</li>
+</ul>
+]]></content>
       <tags>
         <tag>秋招</tag>
       </tags>
@@ -3826,6 +3878,14 @@
 <li><p>区间与或</p>
 <p><img src="/2024/09/05/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E7%A7%8B%E6%8B%9B%E7%AC%94%E8%AF%95%E7%9C%9F%E9%A2%98%E8%AE%B0%E5%BD%95/image-20241010122658139.png" alt="image-20241010122658139"></p>
 </li>
+</ol>
+<h4 id="1012-金山"><a href="#1012-金山" class="headerlink" title="1012 金山"></a>1012 金山</h4><ol>
+<li><p>杀死木头人</p>
+<p><img src="/2024/09/05/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E7%A7%8B%E6%8B%9B%E7%AC%94%E8%AF%95%E7%9C%9F%E9%A2%98%E8%AE%B0%E5%BD%95/image-20241012210832513.png" alt="image-20241012210832513"></p>
+</li>
+<li><p>回文串</p>
+<p><img src="/2024/09/05/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E7%A7%8B%E6%8B%9B%E7%AC%94%E8%AF%95%E7%9C%9F%E9%A2%98%E8%AE%B0%E5%BD%95/image-20241012210838804.png" alt="image-20241012210838804"></p>
+</li>
 <li><p>区间与或</p>
 </li>
 </ol>
@@ -4069,6 +4129,95 @@
 ]]></content>
       <tags>
         <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>linux网络io</title>
+    <url>/2024/10/13/linux/linux%E7%BD%91%E7%BB%9Cio/</url>
+    <content><![CDATA[<p>linux 网络 io</p>
+<span id="more"></span>
+
+<p>参考文章：</p>
+<p><a href="https://blog.csdn.net/historyasamirror/article/details/5778378">同步，异步，阻塞，非阻塞</a></p>
+<p><a href="https://segmentfault.com/a/1190000003063859">Linux IO模式及 select、poll、epoll详解</a></p>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><h3 id="阻塞"><a href="#阻塞" class="headerlink" title="阻塞"></a>阻塞</h3><ul>
+<li>阻塞产生的原因是程序等待资源</li>
+<li>阻塞是由系统自动执行阻塞原语(Block)的主动行为</li>
+</ul>
+<blockquote>
+<p>阻塞机制中操作系统内核做了什么？</p>
+</blockquote>
+<h3 id="非阻塞"><a href="#非阻塞" class="headerlink" title="非阻塞"></a>非阻塞</h3><ul>
+<li>尽管程序等待某种资源，但这种资源并非是接下来运行的必要条件</li>
+<li>程序得以在等待资源同时继续运行</li>
+</ul>
+<h3 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h3><ul>
+<li>进程间行为有明显的先后顺序，前者没执行完后者只能阻塞</li>
+</ul>
+<h3 id="异步"><a href="#异步" class="headerlink" title="异步"></a>异步</h3><ul>
+<li>进程间行为有先后顺序，但不是前者的执行结果不是后者的必要条件</li>
+<li>后者得以在前者执行过程中继续执行。</li>
+</ul>
+<blockquote>
+<p>总结：阻塞非阻塞描述的是一个程序的 io 方式，而同步异步是程序间信息传递机制。</p>
+</blockquote>
+<p>另一种说法：</p>
+<ul>
+<li>所谓同步，就是在发出一个调用时，在没有得到结果之前，该调用就不返回.但是一旦调用返回，就得到返回值了；换句话说，就是由调用者主动等待这个调用的结果：</li>
+<li>异步则是相反，调用在发出之后，这个调用就直接返回了，所以没有返回结果：换句话说，当一个异步过程调用发出后，调用者不会立刻得到结果：而是在调用发出后，被调用者通过状态、通知来通知调用者，或通过回调函数处理这个调用</li>
+</ul>
+<h3 id="缓存IO"><a href="#缓存IO" class="headerlink" title="缓存IO"></a>缓存IO</h3><ul>
+<li><p>在 Linux 的缓存 I&#x2F;O 机制中，操作系统会将 I&#x2F;O 的数据拷贝到操作系统内核的缓冲区中，然后才会从操作系统内核的缓冲区拷贝到应用程序的地址空间。</p>
+<p><img src="/2024/10/13/linux/linux%E7%BD%91%E7%BB%9Cio/image-20241013130230393.png" alt="image-20241013130230393"></p>
+</li>
+<li><p>也就是说IO操作其实分为了<strong>两个阶段</strong></p>
+<ol>
+<li>等待数据准备 (Waiting for the data to be ready)</li>
+<li>将数据从内核拷贝到进程中 (Copying the data from the kernel to the process)</li>
+</ol>
+</li>
+</ul>
+<h2 id="linux-网络-IO"><a href="#linux-网络-IO" class="headerlink" title="linux 网络 IO"></a>linux 网络 IO</h2><h3 id="五种模型"><a href="#五种模型" class="headerlink" title="五种模型"></a>五种模型</h3><ol>
+<li>阻塞 I&#x2F;O（blocking IO）</li>
+<li>非阻塞 I&#x2F;O（nonblocking IO）</li>
+<li>I&#x2F;O 多路复用（ IO multiplexing）</li>
+<li>信号驱动 I&#x2F;O（ signal driven IO）</li>
+<li>异步 I&#x2F;O（asynchronous IO）</li>
+</ol>
+<blockquote>
+<p>signal driven IO在实际中并不常用，只讨论剩下的四种IO Model。</p>
+</blockquote>
+<h3 id="示意图"><a href="#示意图" class="headerlink" title="示意图"></a>示意图</h3><p><img src="/2024/10/13/linux/linux%E7%BD%91%E7%BB%9Cio/image-20241013131247401.png" alt="image-20241013131247401"></p>
+<p>总结：</p>
+<ul>
+<li>阻塞IO就是在 <strong>准备数据</strong> 和 <strong>复制数据</strong> 两个过程应用层程序都被 block</li>
+<li>非阻塞IO就是在 <strong>准备数据</strong> 不被block, 但是 <strong>复制数据</strong> 过程被 block</li>
+<li>IO 多路复用也是在 <strong>准备数据</strong> 和 <strong>复制数据</strong> 两个过程应用层程序都被 block，但是不同的是一个进程可以监视多个描述符，一旦某个描述符就绪（一般是读就绪或者写就绪），能够通知程序进行相应的读写操作。</li>
+<li>异步 IO 两个过程都不会阻塞，问题是何时停下来进行读写呢？ 其实是异步 IO 机制本身实现了往应用程序空间复制数据，因而引用程序不用管，只需要等着“数据已到位”的信号。</li>
+</ul>
+<p><img src="/2024/10/13/linux/linux%E7%BD%91%E7%BB%9Cio/image-20241013131416339.png" alt="image-20241013131416339"></p>
+<h3 id="I-O-多路复用详解"><a href="#I-O-多路复用详解" class="headerlink" title="I&#x2F;O 多路复用详解"></a>I&#x2F;O 多路复用详解</h3><h4 id="概念："><a href="#概念：" class="headerlink" title="概念："></a>概念：</h4><p>I&#x2F;O多路复用就是通过一种机制，<strong>一个进程可以监视多个描述符</strong>，一旦某个描述符就绪（一般是读就绪或者写就绪），能够通知程序进行相应的读写操作。select，poll，epoll都是IO多路复用的机制。</p>
+<h4 id="select"><a href="#select" class="headerlink" title="select"></a>select</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">select</span> <span class="params">(<span class="type">int</span> n, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, <span class="keyword">struct</span> timeval *timeout)</span></span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>参数：select 函数监视的文件描述符分3类，分别是writefds、readfds、和exceptfds 三个位图描述监控对象，timeout 为监控超时时间。</li>
+<li>返回值：调用后select函数会阻塞，直到有描述符就绪（有数据 可读、可写、或者有except），或者超时时，select函数返回。此时应用程序通过遍历fdset，来找到就绪的描述符。</li>
+</ul>
+<h4 id="poll"><a href="#poll" class="headerlink" title="poll"></a>poll</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">poll</span> <span class="params">(<span class="keyword">struct</span> pollfd *fds, <span class="type">unsigned</span> <span class="type">int</span> nfds, <span class="type">int</span> timeout)</span></span>;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">pollfd</span> &#123;</span><br><span class="line">    <span class="type">int</span> fd; <span class="comment">/* file descriptor */</span></span><br><span class="line">    <span class="type">short</span> events; <span class="comment">/* requested events to watch */</span></span><br><span class="line">    <span class="type">short</span> revents; <span class="comment">/* returned events witnessed */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>参数：pollfd结构包含了要监视的event和发生的event。</li>
+<li>返回值：遇到有描述符就绪，poll返回。然后应用程序轮询pollfd来获取就绪的描述符。</li>
+</ul>
+<blockquote>
+<p>select和poll都需要在返回后，通过遍历文件描述符来获取已经就绪的socket。然而同时连接的大量客户端在一时刻可能只有很少的处于就绪状态，因此随着监视的描述符数量的增长，其效率也会线性下降。</p>
+</blockquote>
+<h4 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">epoll_create</span><span class="params">(<span class="type">int</span> size)</span>；<span class="comment">//创建一个epoll的句柄，size用来告诉内核这个监听的数目一共有多大</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">epoll_ctl</span><span class="params">(<span class="type">int</span> epfd, <span class="type">int</span> op, <span class="type">int</span> fd, <span class="keyword">struct</span> epoll_event *event)</span>；</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">epoll_wait</span><span class="params">(<span class="type">int</span> epfd, <span class="keyword">struct</span> epoll_event * events, <span class="type">int</span> maxevents, <span class="type">int</span> timeout)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>epoll更加灵活，没有描述符限制。epoll使用一个文件描述符管理多个描述符，将用户关心的文件描述符的事件存放到内核的一个事件表中</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>网络编程</tag>
       </tags>
   </entry>
 </search>
