@@ -3975,7 +3975,7 @@
     <title>计算机开机过程</title>
     <url>/2024/10/09/linux/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BC%80%E6%9C%BA%E8%BF%87%E7%A8%8B/</url>
     <content><![CDATA[<p>本篇文章描述计算机启动过程</p>
-<!---more--->
+<span id="more"></span>
 
 <h2 id="BIOS-和-UEFI"><a href="#BIOS-和-UEFI" class="headerlink" title="BIOS 和 UEFI"></a>BIOS 和 UEFI</h2><p>总体来说，二者都是负责在操作系统加载之前<strong>初始化硬件</strong>，并为操作系统的启动提供必要的环境。但是二者实现的优雅程度，安全性不太一样。</p>
 <p><img src="/2024/10/09/linux/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BC%80%E6%9C%BA%E8%BF%87%E7%A8%8B/image-20241009144752175.png" alt="image-20241009144752175"></p>
