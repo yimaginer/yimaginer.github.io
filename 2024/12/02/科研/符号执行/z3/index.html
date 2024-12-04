@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yimaginer.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="IntroductionSatisfiability Modulo Theories (SMT) problem is a decision problem for logical formulas with respect to combinations of background theories such as arithmetic, bit-vectors, arrays, and uni">
+<meta property="og:type" content="article">
+<meta property="og:title" content="z3">
+<meta property="og:url" content="https://yimaginer.github.io/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/index.html">
+<meta property="og:site_name" content="Focus2flow">
+<meta property="og:description" content="IntroductionSatisfiability Modulo Theories (SMT) problem is a decision problem for logical formulas with respect to combinations of background theories such as arithmetic, bit-vectors, arrays, and uni">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yimaginer.github.io/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241202163058605.png">
+<meta property="og:image" content="https://yimaginer.github.io/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241202183753365.png">
+<meta property="og:image" content="https://yimaginer.github.io/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241202183808026.png">
+<meta property="og:image" content="https://yimaginer.github.io/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241202184543400.png">
+<meta property="og:image" content="https://yimaginer.github.io/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241202184629970.png">
+<meta property="og:image" content="https://yimaginer.github.io/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241202184659482.png">
+<meta property="og:image" content="https://yimaginer.github.io/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241202184739136.png">
+<meta property="og:image" content="https://yimaginer.github.io/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241202184808707.png">
+<meta property="og:image" content="https://yimaginer.github.io/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241202184857114.png">
+<meta property="og:image" content="https://yimaginer.github.io/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241202184942465.png">
+<meta property="og:image" content="https://yimaginer.github.io/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241202185054726.png">
+<meta property="og:image" content="https://yimaginer.github.io/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241202185110692.png">
+<meta property="og:image" content="https://yimaginer.github.io/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241203093137969.png">
+<meta property="og:image" content="https://yimaginer.github.io/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241203093224275.png">
+<meta property="article:published_time" content="2024-12-02T07:41:45.000Z">
+<meta property="article:modified_time" content="2024-12-03T01:36:58.797Z">
+<meta property="article:author" content="sky">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yimaginer.github.io/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241202163058605.png">
+
+
+<link rel="canonical" href="https://yimaginer.github.io/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yimaginer.github.io/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/","path":"2024/12/02/科研/符号执行/z3/","title":"z3"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>z3 | Focus2flow</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Focus2flow</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">less is more</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-text">Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%84%E6%BA%90"><span class="nav-text">资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%A5%E6%BA%90"><span class="nav-text">来源</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Logical-interfaces-to-Z3"><span class="nav-text">Logical interfaces to Z3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%92%E5%BA%8F"><span class="nav-text">排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%BE%E5%90%8D"><span class="nav-text">签名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AF%E8%AF%AD%E5%92%8C%E5%85%AC%E5%BC%8F"><span class="nav-text">术语和公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8F%E8%AF%8D%E5%92%8CLambda%E7%BB%91%E5%AE%9A"><span class="nav-text">量词和Lambda绑定</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Theories"><span class="nav-text">Theories</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#EUF%EF%BC%9AEquality-and-Uninterpreted-Functions"><span class="nav-text">EUF：Equality and Uninterpreted Functions</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8C%E4%BD%99%E9%97%AD%E5%8C%85"><span class="nav-text">同余闭包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#EUF-%E6%A8%A1%E5%9E%8B"><span class="nav-text">EUF 模型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Arithmetic"><span class="nav-text">Arithmetic</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sky</p>
+  <div class="site-description" itemprop="description">技术，人生，思考，自我</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">56</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yimaginer.github.io/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Focus2flow">
+      <meta itemprop="description" content="技术，人生，思考，自我">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="z3 | Focus2flow">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          z3
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-12-02 15:41:45" itemprop="dateCreated datePublished" datetime="2024-12-02T15:41:45+08:00">2024-12-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-12-03 09:36:58" itemprop="dateModified" datetime="2024-12-03T09:36:58+08:00">2024-12-03</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Satisfiability Modulo Theories (SMT) problem is <strong>a decision problem for logical formulas</strong> with respect to combinations of background theories such as <strong>arithmetic</strong>, <strong>bit-vectors,</strong> <strong>arrays</strong>, and <strong>uninterpreted functions</strong>。Z3 是一个高效的 SMT 求解器，带有专门的算法求解背景理论，SMT 擅长于和其他软件分析工具如形式化验证和符号执行工具协同使用。这很大程度上归功于 Z3 对软件分析领域常见问题的支持。在一些场景中，这些工具（软件分析工具)提出的部分查询可以根据受支持逻辑中的公式进行转换。对于工具编写人员来说，了解什么是可用的支持逻辑，以及如何解决公式是很有用的。但是与SMT求解器的交互并不总是局限于将查询作为单个公式。它可能需要一系列的交互来获得可用的答案，并且工具编写人员需要了解可用的方法和旋钮。总之，本教程旨在通过示例和理论来回答以下类型的问题：</p>
+<ul>
+<li><strong>Z3中有哪些可用的特性，它们的设计用途是什么？</strong></li>
+<li><strong>Z3中使用的底层算法是什么？</strong></li>
+<li><strong>如何在Z3之上编写应用程序？</strong></li>
+</ul>
+<p>图1显示了Z3从4.8版本开始的整体系统关系图。左上角总结了到Z3的接口。可以通过作为文本文件或管道提供的 SMT-LIB2 脚本与Z3进行交互，也可以使用来自高级编程语言的API调用，这些编程语言是基于 c 的API调用的代理。我们将重点关注使用 Python 前端作为与 Z3接口的一种方式，并在第 2 节中开始描述 Z3 接受的术语和公式的抽象语法。第 3 节描述理论基础，这些理论定义了 z3 的输出公式及符号。第4、5、6节提供了判定公式可满足性的服务。第7节提供了预处理简化和创建子目标的方法。第8节讲解 Z3 还提供了一些不纯粹是可满足性查询的服务。服务允许用户求解可满足性模目标函数以最大化或最小化值。在第4.6.6节中还描述了用于枚举结果（骨干字面量）的专门过程。</p>
+<p><img src="/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241202163058605.png" alt="image-20241202163058605"></p>
+<h3 id="资源"><a href="#资源" class="headerlink" title="资源"></a>资源</h3><p>GitHub 存储库：<a target="_blank" rel="noopener" href="https://github.com/z3prover/z3">https://github.com/z3prover/z3</a></p>
+<p>Lvy 使用了 z3 : <a target="_blank" rel="noopener" href="https://github.com/Microsoft/ivy">https://github.com/Microsoft/ivy</a></p>
+<p>二进制分析工具包 Angr ： <a target="_blank" rel="noopener" href="https://docs.angr.io/">https://docs.angr.io/</a></p>
+<p>Z3 教程：<a target="_blank" rel="noopener" href="https://microsoft.github.io/z3guide">https://microsoft.github.io/z3guide</a></p>
+<h3 id="来源"><a href="#来源" class="headerlink" title="来源"></a>来源</h3><p>本教程中的材料来自多个来源。一些运行中的例子来自于在SAT和SMT社区中流传的幻灯片。第一个SAT的例子是无耻地从Armin Biere的SAT教程中摘抄的，其他的例子出现在Natarajan Shankar的幻灯片中</p>
+<h2 id="Logical-interfaces-to-Z3"><a href="#Logical-interfaces-to-Z3" class="headerlink" title="Logical interfaces to Z3"></a>Logical interfaces to Z3</h2><p>Z3接受简单排序公式作为输入，这些公式可能包含由理论定义的具有预定义含义的符号。本节介绍可以用作Z3输入的逻辑公式。</p>
+<p>作为基础，命题公式是由原子变量和逻辑连接词构成的。Z3接受的命题逻辑公式示例为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from z3 import *</span><br><span class="line">Tie, Shirt = Bools(&#x27;Tie Shirt&#x27;)</span><br><span class="line">s = Solver()</span><br><span class="line">s.add(Or(Tie, Shirt), </span><br><span class="line">    Or(Not(Tie), Shirt), </span><br><span class="line">    Or(Not(Tie), Not(Shirt)))</span><br><span class="line">print(s.check())</span><br><span class="line">print(s.model())</span><br></pre></td></tr></table></figure>
+
+<p>这个例子引入了两个布尔变量Tie和Shirt。然后创建一个Solver对象并添加三个断言。</p>
+<p>调用 s.check() 会产生一个判决结果；这些公式有一个令人满意的赋值。可以使用 s.model() 提取一个令人满意的模型，其中 Tie 为假，Shirt 为真。为方便起见，Z3 的 Python 前端包含一些简写函数。函数 solve 设置求解器，添加断言，检查可满足性，如果可用则打印模型。</p>
+<p>命题逻辑是 Z3 处理的一个重要但较小的公式子集。它可以对组合了多个理论中的符号的公式进行推理，例如数组和算术的理论：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Z = IntSort()</span><br><span class="line">f = Function(&#x27;f&#x27;, Z, Z)</span><br><span class="line">x, y, z = Ints(&#x27;x y z&#x27;)</span><br><span class="line">A = Array(&#x27;A&#x27;, Z, Z)</span><br><span class="line">fml = Implies(x + 2 == y, f(Store(A, x, 3)[y - 2]) == f(y - x + 1))</span><br><span class="line">solve(Not(fml))</span><br></pre></td></tr></table></figure>
+
+<p>公式 fml 是有效的。它对所有整数 x，y， z，数组A，以及函数 f 的图像都成立。注意，z 甚至没有出现在公式中，但我们在这里声明它，因为我们将使用 z 来表示一个整数变量。注意，我们使用 array[index] 作为 Select（array, index）的简写。我们可以使用以下参数手动验证公式的有效性：整数常量 x 和 y 是使用函数 ints 创建的，该函数创建一个整数常量列表。在 x + 2 &#x3D; y 的假设下，右边的含义很简单等价于 <code>f(Store(A, x, 3)[x]) == f(3)</code></p>
+<p>因为我们用 x + 2 替换了 y。对于 f 是什么没有限制，所以只有当 f 的参数相同时，两边与 f 相等才成立。因此，我们需要确定 <code>Store(A, x, 3)[x] == 3</code></p>
+<p>左边是数组理论中的一个术语，它捕获了应用映射。Store 将位置 x 处的数组 A 更新为值3。然后……[x]检索索引 x 处的数组内容，在本例中是 3。在双重情况下，fml 的否定是不令人满意的，对 Z3 的调用产生 unsat。</p>
+<p>Z3接受的公式通常遵循 SMT-LIB2 标准[4]中描述的格式。这个标准（目前的版本是2.6）定义了一阶多排序逻辑和一组由一系列背景理论定义的逻辑的文本语言。例如，在SMT-LIB2中称为 QF_LIA 的  <em>quantifier-free linear integer arithmetic</em> 的逻辑是一阶逻辑的片段，其中公式是无量词的，变量范围大于整数，解释常数是整数，允许的函数是+，-，整数乘法，除法，余数，带常数的模，允许的关系除了每个理论的一部分相等之外，还有&lt;,&lt;&#x3D;,&gt;&#x3D;,&gt;。作为一个例子，我们提供了一个SMT-LIB和同一个任意公式的Python变体：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(set-logic QF_LIA)</span><br><span class="line">(declare-const x Int)</span><br><span class="line">(declare-const y Int)</span><br><span class="line">(assert (&gt; (+ (mod x 4) (* 3 (div y 2))) (- x y)))</span><br><span class="line">(check-sat)</span><br></pre></td></tr></table></figure>
+
+<p>其对应的 python 版本是 <code>solve((x % 4) + 3 * (y / 2) &gt; x - y)</code></p>
+<p>还可以提取求解器状态的SMT-LIB2表示。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from z3 import *</span><br><span class="line">x, y = Ints(&#x27;x y&#x27;)</span><br><span class="line">s = Solver()</span><br><span class="line">s.add((x % 4) + 3 * (y / 2) &gt; x - y)</span><br><span class="line">print(s.sexpr())</span><br></pre></td></tr></table></figure>
+
+<p>产生输出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(declare-fun y () Int)</span><br><span class="line">(declare-fun x () Int)</span><br><span class="line">(assert (&gt; (+ (mod x 4) (* 3 (div y 2))) (- x y)))</span><br></pre></td></tr></table></figure>
+
+<h3 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h3><p>通常，SMT-LIB2 公式使用一组有限的简单排序。它包括内置的 Bool 排序，支持的理论定义了自己的排序，值得注意的Int， Real, bit-vectors （_ BitVec n）对于每一个正的位宽 n，数组(Array Index Elem) 对于每个排序索引和元素，每个排序S的字符串和序列（Seq S）。也可以声明新的排序。他们的领域可能永远不会是空的。因此，如下公式 <strong>is unsatisfiable</strong>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">S = DeclareSort(<span class="string">&#x27;S&#x27;</span>)</span><br><span class="line">s = Const(<span class="string">&#x27;s&#x27;</span>, S)</span><br><span class="line">solve(ForAll(s, s != s))</span><br></pre></td></tr></table></figure>
+
+<h3 id="签名"><a href="#签名" class="headerlink" title="签名"></a>签名</h3><p>公式可以包含解释函数和自由函数以及常量的混合。例如，整数常量 0 和 28 被解释，而在前面的例子中使用的常量 x、y 是自由的。常量被视为虚函数。可以声明带参数的函数，例如 f &#x3D; Function（’f’， Z， Z）创建一个带整数参数的函数声明，其范围为整数。具有布尔范围的函数可用于创建公式。</p>
+<h3 id="术语和公式"><a href="#术语和公式" class="headerlink" title="术语和公式"></a>术语和公式</h3><p>断言中使用的公式或添加到求解器中的公式是布尔排序的项。否则，在排序匹配的情况下，布尔和非布尔排序的项可能以任何组合混合在一起。例如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">B = BoolSort()</span><br><span class="line">f = Function(&#x27;f&#x27;, B, Z)</span><br><span class="line">g = Function(&#x27;g&#x27;, Z, B)</span><br><span class="line">a = Bool(&#x27;a&#x27;)</span><br><span class="line">solve(g(1+f(a)))</span><br></pre></td></tr></table></figure>
+
+<p>能产生这样的解吗</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[a = False, f = [else -&gt; 0], g = [else -&gt; True]]</span><br></pre></td></tr></table></figure>
+
+<p>模型将a赋值为False， f  将所有参数映射为0，g 将所有值映射为True。标准的内置逻辑连接词是And、Or、Not、Implies、Xor。双蕴涵是等式的一种特殊情况，因此从Python中，当对布尔值 a 和 b 说a &#x3D;&#x3D; b时，它被视为 a 和 b 的双蕴涵的逻辑公式。</p>
+<p>创建表达式后，有一组实用程序可用于遍历表达式。每个函数应用程序都有一个函数声明和一组作为子函数访问的参数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">x = Int(&#x27;x&#x27;)</span><br><span class="line">y = Int(&#x27;y&#x27;)</span><br><span class="line">n = x + y &gt;= 3</span><br><span class="line">print(&quot;num args: &quot;, n.num_args())</span><br><span class="line">print(&quot;children: &quot;, n.children())</span><br><span class="line">print(&quot;1st child:&quot;, n.arg(0))</span><br><span class="line">print(&quot;2nd child:&quot;, n.arg(1))</span><br><span class="line">print(&quot;operator: &quot;, n.decl())</span><br><span class="line">print(&quot;op name:  &quot;, n.decl().name())</span><br></pre></td></tr></table></figure>
+
+<h3 id="量词和Lambda绑定"><a href="#量词和Lambda绑定" class="headerlink" title="量词和Lambda绑定"></a>量词和Lambda绑定</h3><p>全称量词和存在量词将变量绑定到量化公式的范围。例如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">solve([y == x + 1, ForAll([y], Implies(y &lt;= 0, x &lt; y))]) # no solution</span><br></pre></td></tr></table></figure>
+
+<p>没有解因为不管我们赋给 x 什么值，y  都有一个非正的小于这个值的值。y 的限定值与自由值无关其中 y 被限制为 x + 1。等式约束 y &#x3D;&#x3D; x + 1 也不应被误认为是对  y  的赋值。y  的边界出现并不是 x + 1 的同义词。注意，公式略有不同</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">solve([y == x + 1, ForAll([y], Implies(y &lt;= 0, x &gt; y))]) # [y = 3, x = 2]</span><br></pre></td></tr></table></figure>
+
+<p>有一个解，其中<em>x</em>为1，<em>y</em>的自由出现次数为2。</p>
+<p>Z3还支持基于模型构造实例化引擎的基本推理支持。s 在表示数组属性时可能很方便，Z3 使用数组排序来表示 lambda 表达式的排序。因此，memset 的结果是一个从整数到整数的数组，它产生的值 y 在从 lo 到 hi 的范围内，否则表现为范围外的 m。Z3 通过实例化类的主体来推断包含 memset 的无量词公式。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">m, m1 = Array(&#x27;m&#x27;, Z, Z), Array(&#x27;m1&#x27;, Z, Z)</span><br><span class="line">def memset(lo, hi, y, m):</span><br><span class="line">    return Lambda([x], If(And(lo &lt;= x, x &lt;= hi), y, Select(m, x)))</span><br><span class="line">solve([m1 == memset(1, 700, z, m), Select(m1, 6) != z])</span><br></pre></td></tr></table></figure>
+
+<p>Lambda 绑定对于创建闭包很方便。回想一下 Lambda（[x,y], e）的含义，其中 e 是一个自由出现 x 和 y 的表达式，作为一个函数，它接受两个参数，并将它们的值替换为 e 中的 x 和 y。Z3 使用 Lambda 提升，结合Reynold的去功能化，将关于闭包的推理减少到普遍量化的定义。Z3 将数组视为一般的函数空间。所有一阶可定义函数都可以是数组。通过实例化综合项，可以建立一些二阶定理。因此,</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Q = Array(&#x27;Q&#x27;, Z, B)</span><br><span class="line">prove(Implies(ForAll(Q, Implies(Select(Q, x), Select(Q, y))), </span><br><span class="line">              x == y))</span><br></pre></td></tr></table></figure>
+
+<p>可证明的。Z3合成一个实例，对应于Q的Lambda（z, z &#x3D;&#x3D; x）。</p>
+<h2 id="Theories"><a href="#Theories" class="headerlink" title="Theories"></a>Theories</h2><p>我们将在这里总结Z3中支持的主要理论。在少数情况下，我们将简要介绍用于这些理论的决策程序。希望更深入地了解这些决策过程是如何实现的读者可以参考其中的一些引文。</p>
+<h3 id="EUF：Equality-and-Uninterpreted-Functions"><a href="#EUF：Equality-and-Uninterpreted-Functions" class="headerlink" title="EUF：Equality and Uninterpreted Functions"></a>EUF：Equality and Uninterpreted Functions</h3><p>EUF 是一阶谓词逻辑的基本成分，在有理论之前，有常数、函数和谓词符号，以及内在的相等关系。在下面的例子中，f 是一元函数，x 是常数。求解的第一个调用对于一个模型是可行的，其中 x 被解释为 S 中的一个元素，f 是一个恒等函数。第二次调用solve是不可行的；没有模型 f 能将 x 映射到除了它本身以外的任何东西。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">S = DeclareSort(&#x27;S&#x27;)</span><br><span class="line">f = Function(&#x27;f&#x27;, S, S)</span><br><span class="line">x = Const(&#x27;x&#x27;, S)</span><br><span class="line">solve(f(f(x)) == x, f(f(f(x))) == x)</span><br><span class="line">solve(f(f(x)) == x, f(f(f(x))) == x, f(x) != x)</span><br></pre></td></tr></table></figure>
+
+<p>无量词的EUF公式的决策过程通常基于并集查找[59]来维护相等项的等价类。形象地说，一系列相等断言 a &#x3D; b, b &#x3D; c, b &#x3D; s 产生一个等价类，它捕获相等的传递性</p>
+<p><img src="/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241202183753365.png" alt="image-20241202183753365"></p>
+<p>可以通过检查与两个不相等项相关联的等价类是否相同来检查不相等的可满足性。因此，加上 a !&#x3D; d 并不产生矛盾，可以通过比较阶级代表和阶级代表来检验。</p>
+<p><img src="/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241202183808026.png" alt="image-20241202183808026"></p>
+<p>另一方面，当断言 c ！&#x3D; s 时，我们可以推导出冲突，因为断言为不相等的两个项属于同一类。具有联合查找数据结构的类隶属关系在几乎常数时间内平摊。</p>
+<p><img src="/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241202184543400.png" alt="image-20241202184543400"></p>
+<p>当使用函数符号时，仅使用Union-find是不够的，如下例所示：</p>
+<p><img src="/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241202184629970.png" alt="image-20241202184629970"></p>
+<p>在这种情况下，决策过程需要用同余规则进行推理</p>
+<p><img src="/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241202184659482.png" alt="image-20241202184659482"></p>
+<p>作为解决示例的准备，让我们引入可以用作子项简写的常量。因此，引入常数作为四个复合子项的代表。</p>
+<p><img src="/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241202184739136.png" alt="image-20241202184739136"></p>
+<p>只有相等性信息可用，我们得到等价类：</p>
+<p><img src="/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241202184808707.png" alt="image-20241202184808707"></p>
+<p>自底向上工作，同余规则要求和的类应该合并。因此,</p>
+<p><img src="/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241202184857114.png" alt="image-20241202184857114"></p>
+<p>暗含以下等价的粗糙集合。</p>
+<p><img src="/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241202184942465.png" alt="image-20241202184942465"></p>
+<p>此时，同余法则可以再应用一次，</p>
+<p><img src="/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241202185054726.png" alt="image-20241202185054726"></p>
+<p>生成等价类</p>
+<p><img src="/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241202185110692.png" alt="image-20241202185110692"></p>
+<p>v3 和 v4 的类现在被合并了。由于我们的原始公式要求这些是不同的，同余闭包推理确定公式是不可满足的。</p>
+<h4 id="同余闭包"><a href="#同余闭包" class="headerlink" title="同余闭包"></a>同余闭包</h4><p>同余闭包可以用于检验等式的可满足性，</p>
+<h4 id="EUF-模型"><a href="#EUF-模型" class="headerlink" title="EUF 模型"></a>EUF 模型</h4><p>运行示例的一个令人满意的版本是：</p>
+<p><img src="/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241203093137969.png" alt="image-20241203093137969"></p>
+<p>这可以变形为：</p>
+<p><img src="/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/image-20241203093224275.png" alt="image-20241203093224275"></p>
+<p>然后可以输入 Z3:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">S = DeclareSort(&#x27;S&#x27;)</span><br><span class="line">a, b, c, d, e, s, t = Consts(&#x27;a b c d e s t&#x27;, S)</span><br><span class="line">f = Function(&#x27;f&#x27;, S, S, S)</span><br><span class="line">g = Function(&#x27;g&#x27;, S, S)</span><br><span class="line">solve([a == b, b == c, d == e, b == s, </span><br><span class="line">       d == t, f(a, g(d)) != f(g(e), b)])</span><br></pre></td></tr></table></figure>
+
+<p>经过求解，产生如下输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[s = S!val!0, b = S!val!0, a = S!val!0,</span><br><span class="line"> c = S!val!0, d = S!val!1, e = S!val!1, t = S!val!1,</span><br><span class="line"> f = [(S!val!2, S!val!0) -&gt; S!val!4, else -&gt; S!val!3],</span><br><span class="line"> g = [else -&gt; S!val!2]]</span><br></pre></td></tr></table></figure>
+
+<p>在模型中，值 S!val!0 是一个不同于S!val!1的新常数。f 的图映射了参数 S!val!2， S!val!0 到 S!val!4。所有其他参数都通过else子句映射到S!val!3, else子句被用作解释中未列出的参数的默认解释。S的解释是一个有限集合</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;S!val!0, S!val!1, S!val!2, S!val!3, S!val!4&#125;.</span><br></pre></td></tr></table></figure>
+
+<h3 id="Arithmetic"><a href="#Arithmetic" class="headerlink" title="Arithmetic"></a>Arithmetic</h3><p><a target="_blank" rel="noopener" href="https://z3prover.github.io/papers/programmingz3.html">https://z3prover.github.io/papers/programmingz3.html</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/11/29/%E6%9D%82%E9%A1%B9/%E6%A2%85%E7%90%B3%E8%BE%BE%E7%9B%96%E8%8C%A8%E5%9C%A8%E6%96%AF%E5%9D%A6%E7%A6%8F2024%E6%AF%95%E4%B8%9A%E5%85%B8%E7%A4%BC%E4%B8%8A%E7%9A%84%E6%BC%94%E8%AE%B2/" rel="prev" title="梅琳达盖茨在斯坦福2024毕业典礼上的演讲">
+                  <i class="fa fa-angle-left"></i> 梅琳达盖茨在斯坦福2024毕业典礼上的演讲
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/12/02/%E6%9D%82%E9%A1%B9/Azure%E5%AD%A6%E7%94%9F%E4%BC%98%E6%83%A0%E7%94%B3%E8%AF%B7/" rel="next" title="Azure学生优惠申请">
+                  Azure学生优惠申请 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">sky</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
