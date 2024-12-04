@@ -4452,7 +4452,10 @@
   <entry>
     <title>专注力</title>
     <url>/2024/11/19/%E6%9D%82%E9%A1%B9/%E4%B8%93%E6%B3%A8%E5%8A%9B/</url>
-    <content><![CDATA[<ul>
+    <content><![CDATA[<p>专注力</p>
+<!-- -->
+
+<ul>
 <li><p>如何提高孩子的专注力? - 米典的回答 - 知乎<br><a href="https://www.zhihu.com/question/25547062/answer/1326148777">https://www.zhihu.com/question/25547062/answer/1326148777</a></p>
 <p>从顶层理解，提高专注力的最重要的理解是：<strong>让自己拿出全力以赴的状态去做事情，拿出下决心要做成的态度去做。</strong></p>
 </li>
@@ -4469,7 +4472,10 @@
   <entry>
     <title>梅琳达盖茨在斯坦福2024毕业典礼上的演讲</title>
     <url>/2024/11/29/%E6%9D%82%E9%A1%B9/%E6%A2%85%E7%90%B3%E8%BE%BE%E7%9B%96%E8%8C%A8%E5%9C%A8%E6%96%AF%E5%9D%A6%E7%A6%8F2024%E6%AF%95%E4%B8%9A%E5%85%B8%E7%A4%BC%E4%B8%8A%E7%9A%84%E6%BC%94%E8%AE%B2/</url>
-    <content><![CDATA[<p>前几天梅琳达·盖茨在斯坦福毕业典礼上的演讲，挺不错的。</p>
+    <content><![CDATA[<p>梅琳达·盖茨在斯坦福毕业典礼上的演讲</p>
+<!-- -->
+
+<p>前几天梅琳达·盖茨在斯坦福毕业典礼上的演讲，挺不错的。</p>
 <p>她用了一个充满哲理的故事贯穿其中：</p>
 <p>海洋中有两朵浪花，一大一小，正朝着岸边涌去。眼看离岸越来越近，大浪忽然意识到了即将发生的事。它看到前方的浪花一个接一个拍打在岸边，瞬间消失不见。</p>
 <p>大浪顿时慌了神，对小浪喊道：”完了完了，我们就要到头了！”</p>
@@ -4521,7 +4527,12 @@
   <entry>
     <title>Azure学生优惠申请</title>
     <url>/2024/12/02/%E6%9D%82%E9%A1%B9/Azure%E5%AD%A6%E7%94%9F%E4%BC%98%E6%83%A0%E7%94%B3%E8%AF%B7/</url>
-    <content><![CDATA[<p>账户认证成功的部署过程：<a href="https://blog.csdn.net/qq_33177599/article/details/132333921">手把手教你白嫖微软Azure学生免费服务器及配置教程（IPv4+IPv6）_azure ipv6-CSDN博客</a></p>
+    <content><![CDATA[<p>Azure 学生优惠申请</p>
+<!-- -->
+
+
+
+<p>账户认证成功的部署过程：<a href="https://blog.csdn.net/qq_33177599/article/details/132333921">手把手教你白嫖微软Azure学生免费服务器及配置教程（IPv4+IPv6）_azure ipv6-CSDN博客</a></p>
 <p>解决认证无法通过问题：<a href="https://www.bilibili.com/opus/779661621020590113">如何使用 edu 邮箱申请 Azure 云学生优惠 - 哔哩哔哩 (bilibili.com)</a></p>
 ]]></content>
   </entry>
@@ -4836,7 +4847,10 @@
   <entry>
     <title>论文投稿整理</title>
     <url>/2024/12/04/%E7%A7%91%E7%A0%94/%E8%AE%BA%E6%96%87%E6%8A%95%E7%A8%BF%E6%95%B4%E7%90%86/</url>
-    <content><![CDATA[<table>
+    <content><![CDATA[<p>12月份可投论文整理：</p>
+<!-- -->
+
+<table>
 <thead>
 <tr>
 <th>会议名称</th>
@@ -5148,6 +5162,8 @@
     <url>/2024/11/24/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/symcc/</url>
     <content><![CDATA[<p>Symcc 和 AFL 结合实践：<a href="https://www.freebuf.com/articles/system/266815.html">https://www.freebuf.com/articles/system/266815.html</a></p>
 <p>带你搞懂符号执行的前世今生与最近技术：<a href="https://www.anquanke.com/post/id/231413">https://www.anquanke.com/post/id/231413</a></p>
+<!-- -->
+
 <h3 id="symcc-安装"><a href="#symcc-安装" class="headerlink" title="symcc 安装"></a>symcc 安装</h3><p>symcc 官网：<a href="https://www.s3.eurecom.fr/tools/symbolic_execution/symcc.html">https://www.s3.eurecom.fr/tools/symbolic_execution/symcc.html</a></p>
 <ol>
 <li><p>安装前置依赖</p>
@@ -5278,7 +5294,10 @@
   <entry>
     <title>z3</title>
     <url>/2024/12/02/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/z3/</url>
-    <content><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Satisfiability Modulo Theories (SMT) problem is <strong>a decision problem for logical formulas</strong> with respect to combinations of background theories such as <strong>arithmetic</strong>, <strong>bit-vectors,</strong> <strong>arrays</strong>, and <strong>uninterpreted functions</strong>。Z3 是一个高效的 SMT 求解器，带有专门的算法求解背景理论，SMT 擅长于和其他软件分析工具如形式化验证和符号执行工具协同使用。这很大程度上归功于 Z3 对软件分析领域常见问题的支持。在一些场景中，这些工具（软件分析工具)提出的部分查询可以根据受支持逻辑中的公式进行转换。对于工具编写人员来说，了解什么是可用的支持逻辑，以及如何解决公式是很有用的。但是与SMT求解器的交互并不总是局限于将查询作为单个公式。它可能需要一系列的交互来获得可用的答案，并且工具编写人员需要了解可用的方法和旋钮。总之，本教程旨在通过示例和理论来回答以下类型的问题：</p>
+    <content><![CDATA[<p>Z3 介绍</p>
+<!-- -->
+
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Satisfiability Modulo Theories (SMT) problem is <strong>a decision problem for logical formulas</strong> with respect to combinations of background theories such as <strong>arithmetic</strong>, <strong>bit-vectors,</strong> <strong>arrays</strong>, and <strong>uninterpreted functions</strong>。Z3 是一个高效的 SMT 求解器，带有专门的算法求解背景理论，SMT 擅长于和其他软件分析工具如形式化验证和符号执行工具协同使用。这很大程度上归功于 Z3 对软件分析领域常见问题的支持。在一些场景中，这些工具（软件分析工具)提出的部分查询可以根据受支持逻辑中的公式进行转换。对于工具编写人员来说，了解什么是可用的支持逻辑，以及如何解决公式是很有用的。但是与SMT求解器的交互并不总是局限于将查询作为单个公式。它可能需要一系列的交互来获得可用的答案，并且工具编写人员需要了解可用的方法和旋钮。总之，本教程旨在通过示例和理论来回答以下类型的问题：</p>
 <ul>
 <li><strong>Z3中有哪些可用的特性，它们的设计用途是什么？</strong></li>
 <li><strong>Z3中使用的底层算法是什么？</strong></li>
@@ -5386,9 +5405,12 @@
 ]]></content>
   </entry>
   <entry>
-    <title>综述</title>
+    <title>符号执行综述</title>
     <url>/2024/11/22/%E7%A7%91%E7%A0%94/%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C/%E7%BB%BC%E8%BF%B0/</url>
-    <content><![CDATA[<ol>
+    <content><![CDATA[<p>从 symQEMU 说起，符号执行综述：</p>
+<!-- -->
+
+<ol>
 <li>这篇论文主要讲解了 <a href="https://mp.weixin.qq.com/s?__biz=MzA5ODA0NDE2MA==&mid=2649774557&idx=1&sn=fda94410040b518fc0baa3e373de1b71&chksm=889369b2bfe4e0a4d2a9d0c583ea9ab1f45ac637d450b0b966afdbfcf902bffdfffe2efd8d61&scene=27">SymQEMU</a> 这个二进制分析工具，对比了其和之前的工作 symcc 以及经典工具 s2e QSYM 之间的差异</li>
 <li>这篇<a href="https://blog.csdn.net/hmysn/article/details/124797125">文章</a>以下概念的阐述很清晰且有逻辑：符号执行，动态执行，并行执行，选择符号执行。</li>
 <li>一个符号执行的<a href="https://www.cnblogs.com/lqerio/p/15980670.html">综述</a></li>
@@ -5404,9 +5426,10 @@
 <h4 id="SymQEMU"><a href="#SymQEMU" class="headerlink" title="SymQEMU"></a>SymQEMU</h4>]]></content>
   </entry>
   <entry>
-    <title>Bytecode</title>
+    <title>智能合约二进制码漏洞检测工具</title>
     <url>/2024/11/19/%E7%A7%91%E7%A0%94/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/A_Survey_on_Vulnerability_Detection_Tool_%20of_Smart_Contract_Bytecode/</url>
-    <content><![CDATA[<!-- -->
+    <content><![CDATA[<p>智能合约二进制码漏洞检测工具</p>
+<!-- -->
 
 <h3 id="当前工具分类"><a href="#当前工具分类" class="headerlink" title="当前工具分类"></a>当前工具分类</h3><h4 id="code-translation"><a href="#code-translation" class="headerlink" title="code translation"></a>code translation</h4><blockquote>
 <p>使用反汇编从二进制码到源码</p>
@@ -5517,7 +5540,10 @@
   <entry>
     <title>PrivSSO</title>
     <url>/2024/11/19/%E7%A7%91%E7%A0%94/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/PrivSSO/</url>
-    <content><![CDATA[<ul>
+    <content><![CDATA[<p>PrivSSO</p>
+<!-- -->
+
+<ul>
 <li><p>PrivSSO is a tuple of five phases: (Initialize, Register, DevBind, Login, DevUnbind). Each of these phases has one or more algorithms presented as follows.</p>
 </li>
 <li><p><a href="https://blog.csdn.net/GoodLuckAC/article/details/125217887">EUF_CMA</a>：一种验证安全性的方法</p>
